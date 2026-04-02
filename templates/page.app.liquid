@@ -1,0 +1,903 @@
+{% comment %}
+  RADCam App Download Page - Shopify Template
+  This template integrates with your Shopify theme's header and footer
+{% endcomment %}
+
+{% assign radcam_product = all_products['radcam-the-talking-camera-pre-order-now'] %}
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Inter+Tight:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+
+<style>
+    :root {
+        --color-black: #000000;
+        --color-white: #ffffff;
+        --color-accent: #facc15;
+        --color-accent-hover: #f5c400;
+        --color-canvas-default: #ffffff;
+        --color-canvas-subtle: #f6f8fa;
+        --color-border-default: #d0d7de;
+        --color-border-muted: #e1e4e8;
+        --color-fg-default: #0d1117;
+        --color-fg-muted: #57606a;
+        --color-fg-subtle: #6e7781;
+        --container-max: 1280px;
+        --container-padding: 32px;
+        --shadow-sm: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
+        --shadow-md: 0 14px 28px rgba(0,0,0,0.15), 0 10px 10px rgba(0,0,0,0.12);
+        --shadow-lg: 0 24px 80px rgba(0,0,0,0.1);
+        --shadow-yellow: 0 4px 12px rgba(250,204,21,0.2);
+        --shadow-yellow-lg: 0 16px 32px rgba(250,204,21,0.3);
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+        font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif !important;
+        font-size: 17px;
+        line-height: 1.6;
+        color: var(--color-fg-default) !important;
+        background: var(--color-white);
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+    }
+
+    h1, h2, h3, h4, h5, h6 {
+        font-family: 'Inter Tight', -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif !important;
+        line-height: 1.15;
+        font-weight: 500;
+    }
+
+    a { text-decoration: none; color: inherit; }
+    img { max-width: 100%; height: auto; display: block; }
+    button { font-family: inherit; cursor: pointer; border: none; background: none; }
+
+    .container {
+        max-width: var(--container-max);
+        margin: 0 auto;
+        padding: 0 var(--container-padding);
+    }
+
+    .section { padding: 120px 0; }
+    .section-sm { padding: 80px 0; }
+
+    /* BUTTONS */
+    .btn {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        padding: 11px 22px;
+        border-radius: 6px;
+        font-size: 15px;
+        font-weight: 600;
+        transition: all 0.2s;
+        white-space: nowrap;
+        cursor: pointer;
+    }
+
+    .btn-yellow {
+        background: var(--color-accent);
+        color: var(--color-black);
+        border: 1px solid var(--color-accent);
+    }
+
+    .btn-yellow:hover {
+        background: var(--color-accent-hover);
+        transform: translateY(-1px);
+        box-shadow: var(--shadow-yellow);
+    }
+
+    .btn-primary {
+        background: var(--color-black);
+        color: var(--color-white);
+        border: 1px solid var(--color-black);
+    }
+
+    .btn-primary:hover {
+        background: #1a1a1a;
+        transform: translateY(-1px);
+        box-shadow: var(--shadow-sm);
+    }
+
+    .btn-lg { padding: 14px 32px; font-size: 16px; }
+
+    /* HERO */
+    .hero {
+        position: relative;
+        min-height: 640px;
+        display: flex;
+        align-items: center;
+        background: url('https://radcam.ai/cdn/shop/files/13_RADCam_Exterior_Garage.jpg?v=1741641305') center center / cover no-repeat;
+        color: var(--color-white);
+        overflow: hidden;
+    }
+
+    .hero::before {
+        content: '';
+        position: absolute;
+        inset: 0;
+        background: rgba(0,0,0,0.75);
+        pointer-events: none;
+    }
+
+    .hero-content {
+        position: relative;
+        z-index: 1;
+        padding: 100px 0;
+        text-align: center;
+        max-width: 860px;
+        margin: 0 auto;
+    }
+
+    .hero-badge {
+        display: inline-block;
+        padding: 6px 14px;
+        background: rgba(250,204,21,0.12);
+        border: 1px solid var(--color-accent);
+        border-radius: 4px;
+        font-size: 12px;
+        font-weight: 600;
+        text-transform: uppercase;
+        letter-spacing: 0.1em;
+        color: var(--color-accent);
+        margin-bottom: 28px;
+    }
+
+    .hero h1 {
+        font-size: 64px;
+        letter-spacing: -0.04em;
+        margin-bottom: 24px;
+        line-height: 1.1;
+        font-weight: 600;
+        color: var(--color-white) !important;
+    }
+
+    .hero h1 .accent { color: var(--color-accent) !important; }
+
+    .hero-description {
+        font-size: 20px;
+        line-height: 1.6;
+        color: rgba(255,255,255,0.78);
+        max-width: 640px;
+        margin: 0 auto 40px;
+    }
+
+    .hero-buttons {
+        display: flex;
+        gap: 16px;
+        justify-content: center;
+        flex-wrap: wrap;
+    }
+
+    .store-btn {
+        display: inline-flex;
+        align-items: center;
+        gap: 12px;
+        padding: 14px 24px;
+        border-radius: 8px;
+        font-weight: 600;
+        transition: all 0.2s;
+        cursor: pointer;
+        border: 1px solid rgba(255,255,255,0.2);
+        background: rgba(255,255,255,0.08);
+        color: var(--color-white);
+    }
+
+    .store-btn:hover {
+        background: rgba(255,255,255,0.14);
+        border-color: rgba(255,255,255,0.4);
+        transform: translateY(-2px);
+    }
+
+    .store-btn-icon {
+        width: 26px;
+        height: 26px;
+        flex-shrink: 0;
+        fill: var(--color-white);
+    }
+
+    .store-btn-text { text-align: left; line-height: 1.2; }
+    .store-btn-sub { font-size: 11px; font-weight: 400; opacity: 0.65; display: block; }
+    .store-btn-name { font-size: 16px; font-weight: 700; display: block; font-family: 'Inter Tight', sans-serif; letter-spacing: -0.02em; }
+
+    /* SECTION HEADERS */
+    .section-label {
+        font-size: 12px;
+        font-weight: 600;
+        text-transform: uppercase;
+        letter-spacing: 0.1em;
+        color: var(--color-fg-muted);
+        margin-bottom: 14px;
+        display: block;
+    }
+
+    .section-label-yellow { color: var(--color-accent-hover); }
+
+    .section-heading {
+        font-size: 48px;
+        letter-spacing: -0.025em;
+        margin-bottom: 16px;
+        font-weight: 600;
+    }
+
+    .section-subtext {
+        font-size: 18px;
+        color: var(--color-fg-muted);
+        max-width: 680px;
+        line-height: 1.65;
+    }
+
+    .section-header {
+        text-align: center;
+        margin-bottom: 64px;
+    }
+
+    .section-header .section-subtext { margin: 0 auto; }
+
+    /* FEATURES */
+    .features-section { background: var(--color-white); }
+
+    .features-grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 24px;
+    }
+
+    .feature-card {
+        background: var(--color-white);
+        border: 1px solid var(--color-border-default);
+        border-radius: 12px;
+        padding: 36px 32px;
+        transition: transform 0.3s, box-shadow 0.3s, border-color 0.3s;
+    }
+
+    .feature-card:hover {
+        transform: translateY(-4px);
+        box-shadow: var(--shadow-md);
+        border-color: var(--color-accent);
+    }
+
+    .feature-icon {
+        width: 52px;
+        height: 52px;
+        background: rgba(250,204,21,0.1);
+        border: 1px solid rgba(250,204,21,0.25);
+        border-radius: 10px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-bottom: 20px;
+    }
+
+    .feature-icon svg {
+        width: 24px;
+        height: 24px;
+        stroke: var(--color-accent-hover);
+        fill: none;
+        stroke-width: 2;
+        stroke-linecap: round;
+        stroke-linejoin: round;
+    }
+
+    .feature-card h3 {
+        font-size: 19px;
+        margin-bottom: 10px;
+        letter-spacing: -0.01em;
+        font-weight: 600;
+    }
+
+    .feature-card p {
+        font-size: 15px;
+        line-height: 1.7;
+        color: var(--color-fg-muted);
+    }
+
+    /* DOWNLOAD SECTION */
+    .download-section {
+        background: var(--color-black);
+        color: var(--color-white);
+        position: relative;
+        overflow: hidden;
+    }
+
+    .download-section::before {
+        content: '';
+        position: absolute;
+        inset: 0;
+        background-image:
+            linear-gradient(rgba(255,255,255,0.025) 1px, transparent 1px),
+            linear-gradient(90deg, rgba(255,255,255,0.025) 1px, transparent 1px);
+        background-size: 50px 50px;
+        pointer-events: none;
+    }
+
+    .download-section .section-label { color: rgba(255,255,255,0.5); }
+    .download-section .section-heading { color: var(--color-white); }
+
+    .download-platforms {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 24px;
+        position: relative;
+        z-index: 1;
+    }
+
+    .download-card {
+        padding: 52px 48px;
+        background: rgba(255,255,255,0.04);
+        border: 1px solid rgba(255,255,255,0.1);
+        border-radius: 12px;
+        transition: background 0.3s, border-color 0.3s, box-shadow 0.3s;
+    }
+
+    .download-card:hover {
+        background: rgba(255,255,255,0.07);
+        border-color: rgba(250,204,21,0.35);
+        box-shadow: var(--shadow-yellow);
+    }
+
+    .platform-eyebrow {
+        font-size: 11px;
+        font-weight: 600;
+        text-transform: uppercase;
+        letter-spacing: 0.1em;
+        color: var(--color-accent);
+        margin-bottom: 12px;
+        display: block;
+    }
+
+    .download-card h3 {
+        font-size: 28px;
+        font-weight: 600;
+        color: var(--color-white);
+        margin-bottom: 12px;
+        letter-spacing: -0.02em;
+    }
+
+    .download-card p {
+        font-size: 15px;
+        line-height: 1.7;
+        color: rgba(255,255,255,0.6);
+        margin-bottom: 12px;
+    }
+
+    .platform-req {
+        font-size: 13px;
+        color: rgba(255,255,255,0.35);
+        margin-bottom: 32px;
+    }
+
+    .store-btn-dark {
+        display: inline-flex;
+        align-items: center;
+        gap: 12px;
+        padding: 14px 24px;
+        border-radius: 8px;
+        font-weight: 600;
+        transition: all 0.2s;
+        cursor: pointer;
+        background: var(--color-white);
+        color: var(--color-black);
+        border: 1px solid var(--color-white);
+    }
+
+    .store-btn-dark:hover {
+        background: #f0f0f0;
+        transform: translateY(-2px);
+        box-shadow: 0 8px 24px rgba(255,255,255,0.1);
+    }
+
+    .store-btn-dark-icon {
+        width: 26px;
+        height: 26px;
+        fill: var(--color-black);
+        flex-shrink: 0;
+    }
+
+    .store-btn-dark-text { text-align: left; line-height: 1.2; }
+    .store-btn-dark-sub { font-size: 11px; font-weight: 400; color: var(--color-fg-muted); display: block; }
+    .store-btn-dark-name { font-size: 16px; font-weight: 700; display: block; font-family: 'Inter Tight', sans-serif; letter-spacing: -0.02em; }
+
+    /* SETUP STEPS */
+    .setup-section {
+        background: var(--color-black);
+        color: var(--color-white);
+        position: relative;
+        overflow: hidden;
+        border-top: 1px solid rgba(255,255,255,0.08);
+    }
+
+    .setup-section::before {
+        content: '';
+        position: absolute;
+        inset: 0;
+        background-image:
+            linear-gradient(rgba(255,255,255,0.025) 1px, transparent 1px),
+            linear-gradient(90deg, rgba(255,255,255,0.025) 1px, transparent 1px);
+        background-size: 50px 50px;
+        pointer-events: none;
+    }
+
+    .setup-section .section-label { color: rgba(255,255,255,0.5); }
+    .setup-section .section-heading { color: var(--color-white); }
+    .setup-section .section-subtext { color: rgba(255,255,255,0.6); }
+
+    .setup-steps {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 2px;
+        border: 1px solid rgba(255,255,255,0.08);
+        border-radius: 12px;
+        overflow: hidden;
+        position: relative;
+        z-index: 1;
+    }
+
+    .setup-step {
+        padding: 48px 40px;
+        background: rgba(255,255,255,0.03);
+        border-right: 1px solid rgba(255,255,255,0.08);
+        transition: background 0.3s;
+    }
+
+    .setup-step:last-child { border-right: none; }
+    .setup-step:hover { background: rgba(255,255,255,0.06); }
+
+    .setup-step-number {
+        font-family: 'Inter Tight', sans-serif;
+        font-size: 72px;
+        font-weight: 900;
+        color: rgba(250,204,21,0.12);
+        line-height: 1;
+        margin-bottom: 20px;
+        letter-spacing: -0.04em;
+    }
+
+    .setup-step-label {
+        font-size: 11px;
+        font-weight: 600;
+        text-transform: uppercase;
+        letter-spacing: 0.1em;
+        color: var(--color-accent);
+        margin-bottom: 10px;
+        display: block;
+    }
+
+    .setup-step h3 {
+        font-size: 20px;
+        color: var(--color-white);
+        margin-bottom: 12px;
+        font-weight: 600;
+    }
+
+    .setup-step p {
+        font-size: 15px;
+        line-height: 1.7;
+        color: rgba(255,255,255,0.6);
+    }
+
+    /* STATS */
+    .stats-section {
+        background: var(--color-black);
+        color: var(--color-white);
+        position: relative;
+        overflow: hidden;
+    }
+
+    .stats-section::before {
+        content: '';
+        position: absolute;
+        inset: 0;
+        background-image:
+            linear-gradient(rgba(255,255,255,0.025) 1px, transparent 1px),
+            linear-gradient(90deg, rgba(255,255,255,0.025) 1px, transparent 1px);
+        background-size: 50px 50px;
+        pointer-events: none;
+    }
+
+    .stats-inner { position: relative; z-index: 1; }
+
+    .stats-copy {
+        text-align: center;
+        max-width: 640px;
+        margin: 0 auto 72px;
+    }
+
+    .stats-copy .section-label { color: rgba(255,255,255,0.5); display: block; text-align: center; }
+
+    .stats-copy h2 {
+        font-size: 44px;
+        letter-spacing: -0.03em;
+        color: var(--color-white);
+        margin-bottom: 20px;
+        font-weight: 600;
+    }
+
+    .stats-copy h2 .accent { color: var(--color-accent); }
+
+    .stats-copy p {
+        font-size: 18px;
+        line-height: 1.65;
+        color: rgba(255,255,255,0.65);
+    }
+
+    .stats-grid {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 2px;
+        border: 1px solid rgba(255,255,255,0.1);
+        border-radius: 12px;
+        overflow: hidden;
+    }
+
+    .stat-item {
+        padding: 40px 32px;
+        background: rgba(255,255,255,0.03);
+        text-align: center;
+        border-right: 1px solid rgba(255,255,255,0.08);
+        transition: background 0.3s;
+    }
+
+    .stat-item:last-child { border-right: none; }
+    .stat-item:hover { background: rgba(255,255,255,0.06); }
+
+    .stat-number {
+        font-family: 'Inter Tight', sans-serif;
+        font-size: 44px;
+        font-weight: 600;
+        color: var(--color-accent);
+        letter-spacing: -0.03em;
+        margin-bottom: 8px;
+        line-height: 1;
+    }
+
+    .stat-label {
+        font-size: 14px;
+        color: rgba(255,255,255,0.6);
+        line-height: 1.4;
+    }
+
+    /* CTA SECTION */
+    .cta-section { background: var(--color-canvas-subtle); }
+
+    .cta-cards {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 28px;
+    }
+
+    .cta-card {
+        padding: 60px 56px;
+        border-radius: 12px;
+        text-align: center;
+    }
+
+    .cta-card-black {
+        background: var(--color-black);
+        color: var(--color-white);
+        position: relative;
+        overflow: hidden;
+    }
+
+    .cta-card-black::before {
+        content: '';
+        position: absolute;
+        inset: 0;
+        background-image:
+            linear-gradient(rgba(255,255,255,0.03) 1px, transparent 1px),
+            linear-gradient(90deg, rgba(255,255,255,0.03) 1px, transparent 1px);
+        background-size: 50px 50px;
+        pointer-events: none;
+    }
+
+    .cta-card-white {
+        background: var(--color-white);
+        border: 1px solid var(--color-border-default);
+    }
+
+    .cta-card h3 {
+        font-size: 30px;
+        margin-bottom: 14px;
+        position: relative;
+        z-index: 1;
+        letter-spacing: -0.02em;
+    }
+
+    .cta-card p {
+        font-size: 16px;
+        line-height: 1.65;
+        margin-bottom: 32px;
+        position: relative;
+        z-index: 1;
+    }
+
+    .cta-card-black p { color: rgba(255,255,255,0.72); }
+    .cta-card-white p { color: var(--color-fg-muted); }
+
+    .cta-card .btn { position: relative; z-index: 1; }
+
+    /* ANIMATIONS */
+    @keyframes fadeUp {
+        from { opacity: 0; transform: translateY(16px); }
+        to { opacity: 1; transform: translateY(0); }
+    }
+
+    .fade-up { animation: fadeUp 0.5s ease forwards; }
+
+    /* RESPONSIVE */
+    @media (max-width: 1024px) {
+        :root { --container-padding: 24px; }
+        .hero h1 { font-size: 52px; }
+        .section-heading { font-size: 40px; }
+        .features-grid { grid-template-columns: 1fr 1fr; }
+        .download-platforms { grid-template-columns: 1fr; }
+        .setup-steps { grid-template-columns: 1fr 1fr; }
+        .setup-step { border-right: 1px solid rgba(255,255,255,0.08); border-bottom: 1px solid rgba(255,255,255,0.08); }
+        .setup-step:nth-child(2n) { border-right: none; }
+        .setup-step:nth-last-child(-n+2) { border-bottom: none; }
+        .stats-grid { grid-template-columns: repeat(2, 1fr); }
+        .stat-item { border-right: none; border-bottom: 1px solid rgba(255,255,255,0.08); }
+        .stat-item:nth-child(2n) { border-right: none; }
+        .stat-item:nth-last-child(-n+2) { border-bottom: none; }
+        .cta-cards { grid-template-columns: 1fr; }
+    }
+
+    @media (max-width: 768px) {
+        .section { padding: 80px 0; }
+        .hero h1 { font-size: 38px; }
+        .section-heading { font-size: 32px; }
+        .features-grid { grid-template-columns: 1fr; }
+        .setup-steps { grid-template-columns: 1fr; }
+        .setup-step { border-right: none; border-bottom: 1px solid rgba(255,255,255,0.08); }
+        .setup-step:last-child { border-bottom: none; }
+        .stats-copy h2 { font-size: 34px; }
+        .stats-grid { grid-template-columns: 1fr 1fr; }
+        .stat-item:nth-child(2n) { border-right: none; }
+        .cta-card { padding: 40px 28px; }
+        .download-card { padding: 36px 28px; }
+    }
+
+    @media (max-width: 480px) {
+        .hero h1 { font-size: 32px; }
+        .stats-grid { grid-template-columns: 1fr; }
+        .hero-buttons { flex-direction: column; align-items: center; }
+        .store-btn { width: 100%; justify-content: center; }
+    }
+</style>
+
+<!-- HERO -->
+<section class="hero">
+    <div class="container">
+        <div class="hero-content">
+            <span class="hero-badge">Free Download &middot; iOS &amp; Android</span>
+            <h1>Control Is In<br><span class="accent">Your Hands.</span></h1>
+            <p class="hero-description">Live view, smart alerts, detection zones, and full camera control &mdash; the RADCam app puts everything you need right in your pocket.</p>
+            <div class="hero-buttons">
+                <a href="https://apps.apple.com/us/app/radcam-security/id6590634315" target="_blank" class="store-btn">
+                    <svg class="store-btn-icon" viewBox="0 0 814 1000"><path d="M788.1 340.9c-5.8 4.5-108.2 62.2-108.2 190.5 0 148.4 130.3 200.9 134.2 202.2-.6 3.2-20.7 71.9-68.7 141.9-42.8 61.6-87.5 123.1-155.5 123.1s-85.5-39.5-164-39.5c-76 0-103.7 40.8-165.9 40.8s-105-37.5-155.5-127.4C46 790.4 0 663.3 0 541.8c0-207.5 134.7-317.5 267.3-317.5 71 0 130.1 46.4 175.1 46.4 42.7 0 109.6-49.1 189.4-49.1zM549.8 119.1c28.3-38 48.8-90.9 48.8-143.8 0-7.7-.6-15.4-1.9-22.4-46.1 1.6-101.5 30.8-135.3 73.5-26.6 32.9-50.1 86.2-50.1 139.8 0 8.3 1.3 16.6 1.9 19.2 3.2.6 8.4 1.3 13.6 1.3 41.4 0 93.1-27.5 123-67.6z"/></svg>
+                    <div class="store-btn-text">
+                        <span class="store-btn-sub">Download on the</span>
+                        <span class="store-btn-name">App Store</span>
+                    </div>
+                </a>
+                <a href="https://play.google.com/store/apps/details?id=com.rad.rad_r_camera" target="_blank" class="store-btn">
+                    <svg class="store-btn-icon" viewBox="0 0 512 512"><path d="M325.3 234.3L104.6 13l280.8 161.2-60.1 60.1zM47 0C34 6.8 25.3 19.2 25.3 35.3v441.3c0 16.1 8.7 28.5 21.7 35.3l256.6-256L47 0zm425.2 225.6l-58.9-34.1-65.7 64.5 65.7 64.5 60.1-34.1c17.4-9.7 17.4-36.4-.2-60.8zM104.6 499l280.8-161.2-60.1-60.1L104.6 499z"/></svg>
+                    <div class="store-btn-text">
+                        <span class="store-btn-sub">Get it on</span>
+                        <span class="store-btn-name">Google Play</span>
+                    </div>
+                </a>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- APP FEATURES -->
+<section class="section features-section">
+    <div class="container">
+        <div class="section-header">
+            <span class="section-label section-label-yellow">What's in the App</span>
+            <h2 class="section-heading">Your Camera.<br>Your Control.</h2>
+            <p class="section-subtext">Everything RADCam does, you can see, configure, and review from your phone. Live or after the fact.</p>
+        </div>
+        <div class="features-grid">
+            <div class="feature-card">
+                <div class="feature-icon">
+                    <svg viewBox="0 0 24 24"><path d="M23 7l-7 5 7 5V7z"/><rect x="1" y="5" width="15" height="14" rx="2" ry="2"/></svg>
+                </div>
+                <h3>Live View</h3>
+                <p>Stream 1080p footage from any RADCam directly to your phone, in real time, from anywhere in the world.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">
+                    <svg viewBox="0 0 24 24"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg>
+                </div>
+                <h3>Smart Alerts</h3>
+                <p>Only the four alerts that matter: Visitor, Security, Package, and Emergency. No noise. No alert fatigue.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">
+                    <svg viewBox="0 0 24 24"><polygon points="1 6 1 22 8 18 16 22 23 18 23 2 16 6 8 2 1 6"/><line x1="8" y1="2" x2="8" y2="18"/><line x1="16" y1="6" x2="16" y2="22"/></svg>
+                </div>
+                <h3>Detection Zones</h3>
+                <p>Draw your own detection zone directly in the app. Focus RADCam's AI exactly where it's needed.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">
+                    <svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+                </div>
+                <h3>7-Day Scheduling</h3>
+                <p>Set RADCam to automatically switch between Concierge, Security, and Quiet modes on a custom weekly schedule.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">
+                    <svg viewBox="0 0 24 24"><polyline points="1 4 1 10 7 10"/><path d="M3.51 15a9 9 0 1 0 .49-3.51"/></svg>
+                </div>
+                <h3>30-Day Event History</h3>
+                <p>Every event, conversation, and alert stored in the cloud for 30 days. Review clips and replay AI conversations any time.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">
+                    <svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+                </div>
+                <h3>Family Sharing</h3>
+                <p>Share camera access with family members so everyone can stay informed and in control.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- DOWNLOAD CARDS -->
+<section class="section download-section">
+    <div class="container">
+        <div class="section-header">
+            <span class="section-label">Available On</span>
+            <h2 class="section-heading">Download RADCam App</h2>
+        </div>
+        <div class="download-platforms">
+            <div class="download-card">
+                <span class="platform-eyebrow">For iPhone &amp; iPad</span>
+                <h3>RADCam for iOS</h3>
+                <p>Built natively for iPhone and iPad. Fast, reliable, and optimized for Apple's latest hardware and notification system.</p>
+                <p class="platform-req">Requires iOS 14 or later &nbsp;&middot;&nbsp; Free to download</p>
+                <a href="https://apps.apple.com/us/app/radcam-security/id6590634315" target="_blank" class="store-btn-dark">
+                    <svg class="store-btn-dark-icon" viewBox="0 0 814 1000"><path d="M788.1 340.9c-5.8 4.5-108.2 62.2-108.2 190.5 0 148.4 130.3 200.9 134.2 202.2-.6 3.2-20.7 71.9-68.7 141.9-42.8 61.6-87.5 123.1-155.5 123.1s-85.5-39.5-164-39.5c-76 0-103.7 40.8-165.9 40.8s-105-37.5-155.5-127.4C46 790.4 0 663.3 0 541.8c0-207.5 134.7-317.5 267.3-317.5 71 0 130.1 46.4 175.1 46.4 42.7 0 109.6-49.1 189.4-49.1zM549.8 119.1c28.3-38 48.8-90.9 48.8-143.8 0-7.7-.6-15.4-1.9-22.4-46.1 1.6-101.5 30.8-135.3 73.5-26.6 32.9-50.1 86.2-50.1 139.8 0 8.3 1.3 16.6 1.9 19.2 3.2.6 8.4 1.3 13.6 1.3 41.4 0 93.1-27.5 123-67.6z"/></svg>
+                    <div class="store-btn-dark-text">
+                        <span class="store-btn-dark-sub">Download on the</span>
+                        <span class="store-btn-dark-name">App Store</span>
+                    </div>
+                </a>
+            </div>
+            <div class="download-card">
+                <span class="platform-eyebrow">For Android Phones &amp; Tablets</span>
+                <h3>RADCam for Android</h3>
+                <p>Optimized for Android devices across all manufacturers. Full feature parity with iOS &mdash; same live view, same alerts, same control.</p>
+                <p class="platform-req">Requires Android 8.0 or later &nbsp;&middot;&nbsp; Free to download</p>
+                <a href="https://play.google.com/store/apps/details?id=com.rad.rad_r_camera" target="_blank" class="store-btn-dark">
+                    <svg class="store-btn-dark-icon" viewBox="0 0 512 512"><path d="M325.3 234.3L104.6 13l280.8 161.2-60.1 60.1zM47 0C34 6.8 25.3 19.2 25.3 35.3v441.3c0 16.1 8.7 28.5 21.7 35.3l256.6-256L47 0zm425.2 225.6l-58.9-34.1-65.7 64.5 65.7 64.5 60.1-34.1c17.4-9.7 17.4-36.4-.2-60.8zM104.6 499l280.8-161.2-60.1-60.1L104.6 499z"/></svg>
+                    <div class="store-btn-dark-text">
+                        <span class="store-btn-dark-sub">Get it on</span>
+                        <span class="store-btn-dark-name">Google Play</span>
+                    </div>
+                </a>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- SETUP STEPS -->
+<section class="section setup-section">
+    <div class="container">
+        <div class="section-header" style="position: relative; z-index: 1;">
+            <span class="section-label">Get Started</span>
+            <h2 class="section-heading">Up and Running in Minutes</h2>
+            <p class="section-subtext">From download to your first live view &mdash; here's exactly what to expect.</p>
+        </div>
+        <div class="setup-steps">
+            <div class="setup-step">
+                <div class="setup-step-number">01</div>
+                <span class="setup-step-label">Download</span>
+                <h3>Get the App</h3>
+                <p>Download the RADCam app free from the App Store or Google Play. It takes seconds.</p>
+            </div>
+            <div class="setup-step">
+                <div class="setup-step-number">02</div>
+                <span class="setup-step-label">Account</span>
+                <h3>Create Your Account</h3>
+                <p>Sign up with your email. No credit card required &mdash; your subscription activates only after camera setup.</p>
+            </div>
+            <div class="setup-step">
+                <div class="setup-step-number">03</div>
+                <span class="setup-step-label">Connect</span>
+                <h3>Add Your RADCam</h3>
+                <p>Follow the in-app pairing flow to connect your RADCam to your Wi-Fi. Takes about 2 minutes.</p>
+            </div>
+            <div class="setup-step">
+                <div class="setup-step-number">04</div>
+                <span class="setup-step-label">Protect</span>
+                <h3>You're Live</h3>
+                <p>Set your mode, configure your detection zone, and your home is protected. RADCam handles the rest.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- STATS -->
+<section class="section stats-section">
+    <div class="container">
+        <div class="stats-inner">
+            <div class="stats-copy">
+                <span class="section-label">By the Numbers</span>
+                <h2>Security That<br><span class="accent">Actually Performs.</span></h2>
+                <p>RADCam's app and AI are built on the same platform trusted by enterprise security teams worldwide.</p>
+            </div>
+            <div class="stats-grid">
+                <div class="stat-item">
+                    <div class="stat-number">4.8&#9733;</div>
+                    <div class="stat-label">Average App Store Rating</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number">&lt;10s</div>
+                    <div class="stat-label">Average Alert Delivery Time</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number">Free</div>
+                    <div class="stat-label">Always Free to Download</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number">iOS &amp; Android</div>
+                    <div class="stat-label">Full Feature Parity Across Platforms</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- CTA -->
+<section class="section cta-section">
+    <div class="container">
+        <div class="cta-cards">
+            <div class="cta-card cta-card-black">
+                <h3>Don't Have a RADCam Yet?</h3>
+                <p>The app is only as powerful as the camera behind it. Order RADCam and have your home protected before the week is out.</p>
+                <a href="{{ radcam_product.url }}" class="btn btn-yellow btn-lg">Shop RADCam</a>
+            </div>
+            <div class="cta-card cta-card-white">
+                <h3>Need Help Installing?</h3>
+                <p>Step-by-step instructions for mounting, connecting, and configuring your RADCam from scratch.</p>
+                <a href="/pages/install" class="btn btn-primary btn-lg">Installation Guide</a>
+            </div>
+        </div>
+    </div>
+</section>
+
+<script>
+    // Smooth scroll
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener('click', function(e) {
+            const href = this.getAttribute('href');
+            if (href === '#') return;
+            e.preventDefault();
+            const target = document.querySelector(href);
+            if (target) {
+                const top = target.getBoundingClientRect().top + window.pageYOffset - 80;
+                window.scrollTo({ top, behavior: 'smooth' });
+            }
+        });
+    });
+
+    // Fade-up on scroll
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('fade-up');
+                observer.unobserve(entry.target);
+            }
+        });
+    }, { threshold: 0.08, rootMargin: '0px 0px -40px 0px' });
+
+    document.querySelectorAll('.feature-card, .download-card, .setup-step, .stat-item, .cta-card').forEach(el => {
+        observer.observe(el);
+    });
+</script>

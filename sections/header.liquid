@@ -1,0 +1,815 @@
+{% comment %}
+  RADCam Header - Clean & Professional
+  Matches the design conventions from index.html, product.html, about.html, etc.
+{% endcomment %}
+
+<style>
+  :root {
+    --color-black: #000000;
+    --color-white: #ffffff;
+    --color-accent: #facc15;
+    --color-accent-hover: #f5c400;
+    --color-canvas-default: #ffffff;
+    --color-canvas-subtle: #f6f8fa;
+    --color-border-default: #d0d7de;
+    --color-border-muted: #e1e4e8;
+    --color-fg-default: #0d1117;
+    --color-fg-muted: #57606a;
+    --color-fg-subtle: #6e7781;
+    --container-max: 1280px;
+    --container-padding: 32px;
+    --shadow-sm: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
+    --shadow-md: 0 14px 28px rgba(0,0,0,0.15), 0 10px 10px rgba(0,0,0,0.12);
+    --shadow-lg: 0 24px 80px rgba(0,0,0,0.1);
+    --shadow-yellow: 0 4px 12px rgba(250,204,21,0.25);
+    --shadow-yellow-lg: 0 16px 40px rgba(250,204,21,0.35);
+  }
+
+  /* Critical: Make the Shopify section wrapper sticky */
+  #shopify-section-header,
+  .shopify-section-group-header-group,
+  .shopify-section-group-header-group > .shopify-section {
+    position: sticky !important;
+    top: 0 !important;
+    z-index: 100 !important;
+    background: #ffffff !important;
+  }
+
+  .radcam-header {
+    background: #ffffff;
+    border-bottom: none;
+    padding: 16px 0;
+    transition: box-shadow 0.3s ease;
+  }
+
+  .radcam-header.scrolled {
+    box-shadow: 0 1px 3px rgba(0,0,0,0.08);
+  }
+
+  .radcam-header__content {
+    max-width: var(--container-max);
+    margin: 0 auto;
+    padding: 0 var(--container-padding);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .radcam-logo {
+    display: flex;
+    align-items: center;
+    flex-shrink: 0;
+    text-decoration: none;
+  }
+
+  .radcam-logo img {
+    height: 28px;
+    width: auto;
+    display: block;
+  }
+
+  .radcam-nav {
+    display: flex;
+    gap: 32px;
+    align-items: center;
+  }
+
+  .radcam-nav__link {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    font-size: 15px;
+    font-weight: 500;
+    color: var(--color-fg-muted);
+    transition: color 0.2s;
+    text-decoration: none;
+  }
+
+  .radcam-nav__link:hover {
+    color: var(--color-black);
+  }
+
+  .radcam-nav__icons {
+    display: flex;
+    gap: 16px;
+    align-items: center;
+    margin-left: 8px;
+  }
+
+  .radcam-icon-link {
+    color: var(--color-fg-muted);
+    transition: color 0.2s;
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    padding: 4px;
+  }
+
+  .radcam-icon-link:hover {
+    color: var(--color-black);
+  }
+
+  .radcam-icon-link svg {
+    width: 20px;
+    height: 20px;
+  }
+
+  .radcam-cart-count {
+    position: relative;
+  }
+
+  .radcam-cart-count__badge {
+    position: absolute;
+    top: -4px;
+    right: -4px;
+    background: var(--color-accent);
+    color: var(--color-black);
+    font-family: 'Inter', sans-serif;
+    font-size: 10px;
+    font-weight: 600;
+    min-width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  /* Search modal */
+  .radcam-search-modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0,0,0,0.5);
+    z-index: 999;
+    display: none;
+    align-items: flex-start;
+    justify-content: center;
+    padding-top: 100px;
+  }
+
+  .radcam-search-modal.open {
+    display: flex;
+  }
+
+  .radcam-search-modal__content {
+    background: var(--color-white);
+    border-radius: 12px;
+    padding: 24px;
+    width: 90%;
+    max-width: 600px;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+  }
+
+  .radcam-search-modal__form {
+    display: flex;
+    gap: 12px;
+  }
+
+  .radcam-search-modal__input {
+    flex: 1;
+    padding: 11px 16px;
+    border: 1px solid var(--color-border-default);
+    border-radius: 6px;
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    font-size: 15px;
+    color: var(--color-fg-default);
+    transition: border-color 0.2s;
+  }
+
+  .radcam-search-modal__input:focus {
+    outline: none;
+    border-color: var(--color-accent);
+  }
+
+  .radcam-search-modal__submit {
+    padding: 11px 22px;
+    background: var(--color-accent);
+    color: var(--color-black);
+    border: 1px solid var(--color-accent);
+    border-radius: 6px;
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    font-size: 15px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+
+  .radcam-search-modal__submit:hover {
+    background: var(--color-accent-hover);
+    transform: translateY(-1px);
+    box-shadow: var(--shadow-yellow);
+  }
+
+  /* Currency button in nav */
+  .radcam-currency-btn {
+    background: transparent;
+    border: 1px solid var(--color-border-default);
+    border-radius: 6px;
+    padding: 6px 10px;
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--color-fg-default);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    transition: all 0.2s;
+  }
+
+  .radcam-currency-btn:hover {
+    border-color: var(--color-accent);
+  }
+
+  /* Currency picker */
+  .radcam-currency {
+    position: fixed;
+    z-index: 99999;
+    display: none;
+    pointer-events: none;
+  }
+
+  .radcam-currency.open {
+    display: block;
+    pointer-events: auto;
+  }
+
+  .radcam-currency__dropdown {
+    background: var(--color-white);
+    border: 1px solid var(--color-border-default);
+    border-radius: 8px;
+    box-shadow: 0 8px 24px rgba(0,0,0,0.15);
+    padding: 8px 0;
+    min-width: 220px;
+    max-height: 300px;
+    overflow-y: auto;
+  }
+
+  .radcam-currency__option {
+    width: 100%;
+    padding: 10px 16px;
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    font-size: 14px;
+    color: var(--color-fg-default);
+    cursor: pointer;
+    transition: background 0.2s;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    background: none;
+    border: none;
+    text-align: left;
+  }
+
+  .radcam-currency__option:hover {
+    background: var(--color-canvas-subtle);
+  }
+
+  .radcam-currency__option.active {
+    background: rgba(250,204,21,0.1);
+    font-weight: 600;
+  }
+
+  /* Mobile hamburger menu */
+  .radcam-mobile-toggle {
+    display: none;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 8px;
+    color: var(--color-fg-default);
+  }
+
+  .radcam-mobile-toggle svg {
+    width: 24px;
+    height: 24px;
+  }
+
+  @media (max-width: 1024px) {
+    .radcam-header__content {
+      padding: 0 24px;
+    }
+    .radcam-nav {
+      gap: 24px;
+    }
+  }
+
+  @media (max-width: 768px) {
+    .radcam-header {
+      padding: 12px 0;
+    }
+    .radcam-nav {
+      display: none;
+    }
+    .radcam-mobile-toggle {
+      display: block;
+    }
+    .radcam-nav.mobile-open {
+      display: flex;
+      flex-direction: column;
+      position: absolute;
+      top: 100%;
+      left: 0;
+      right: 0;
+      background: var(--color-white);
+      padding: 20px var(--container-padding);
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+      gap: 16px;
+      z-index: 99;
+    }
+    .radcam-nav.mobile-open .radcam-nav__link {
+      font-size: 16px;
+      padding: 8px 0;
+    }
+    .radcam-nav__icons {
+      margin-left: 0;
+      padding-top: 16px;
+      border-top: 1px solid var(--color-border-muted);
+    }
+  }
+
+  /* Cart Drawer */
+  .radcam-cart-drawer {
+    position: fixed;
+    top: 0;
+    right: -420px;
+    width: 420px;
+    height: 100vh;
+    background: var(--color-white);
+    box-shadow: -2px 0 20px rgba(0,0,0,0.15);
+    z-index: 999;
+    transition: right 0.3s ease;
+    display: flex;
+    flex-direction: column;
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  }
+
+  .radcam-cart-drawer.open {
+    right: 0;
+  }
+
+  .radcam-cart-drawer__overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.5);
+    z-index: 998;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s ease;
+  }
+
+  .radcam-cart-drawer__overlay.open {
+    opacity: 1;
+    pointer-events: all;
+  }
+
+  .radcam-cart-drawer__header {
+    padding: 24px;
+    border-bottom: 1px solid var(--color-border-muted);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .radcam-cart-drawer__title {
+    font-family: 'Inter Tight', -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    font-size: 18px;
+    font-weight: 600;
+    color: var(--color-fg-default);
+    letter-spacing: -0.02em;
+  }
+
+  .radcam-cart-drawer__close {
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 8px;
+    color: var(--color-fg-muted);
+    transition: color 0.2s;
+  }
+
+  .radcam-cart-drawer__close:hover {
+    color: var(--color-black);
+  }
+
+  .radcam-cart-drawer__body {
+    flex: 1;
+    overflow-y: auto;
+    padding: 24px;
+  }
+
+  .radcam-cart-drawer__empty {
+    text-align: center;
+    padding: 48px 24px;
+    color: var(--color-fg-subtle);
+  }
+
+  .radcam-cart-drawer__footer {
+    padding: 24px;
+    border-top: 1px solid var(--color-border-muted);
+  }
+
+  .radcam-cart-drawer__total {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 16px;
+    font-family: 'Inter Tight', -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    font-size: 17px;
+    font-weight: 600;
+    color: var(--color-fg-default);
+  }
+
+  .radcam-cart-drawer__checkout {
+    width: 100%;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    padding: 11px 22px;
+    border-radius: 6px;
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    font-size: 15px;
+    font-weight: 600;
+    transition: all 0.2s;
+    cursor: pointer;
+    text-decoration: none;
+    text-align: center;
+  }
+
+  .radcam-cart-drawer__checkout.btn-primary {
+    background: var(--color-black);
+    color: var(--color-white);
+    border: 1px solid var(--color-black);
+  }
+
+  .radcam-cart-drawer__checkout.btn-primary:hover {
+    background: #1a1a1a;
+    transform: translateY(-1px);
+    box-shadow: var(--shadow-sm);
+  }
+
+  .radcam-cart-drawer__checkout.btn-yellow {
+    background: var(--color-accent);
+    color: var(--color-black);
+    border: 1px solid var(--color-accent);
+  }
+
+  .radcam-cart-drawer__checkout.btn-yellow:hover {
+    background: var(--color-accent-hover);
+    transform: translateY(-1px);
+    box-shadow: var(--shadow-yellow);
+  }
+
+  @media (max-width: 480px) {
+    .radcam-cart-drawer {
+      width: 100%;
+      right: -100%;
+    }
+  }
+</style>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Inter+Tight:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+
+<header class="radcam-header" id="radcamHeader">
+  <div class="radcam-header__content">
+    <a href="/" class="radcam-logo">
+      <img src="https://radcam.ai/cdn/shop/files/radcam-800x150.png?v=1726433252&width=600" alt="RADCam">
+    </a>
+
+    <button class="radcam-mobile-toggle" id="mobileToggle" aria-label="Toggle menu">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <line x1="3" y1="12" x2="21" y2="12"></line>
+        <line x1="3" y1="6" x2="21" y2="6"></line>
+        <line x1="3" y1="18" x2="21" y2="18"></line>
+      </svg>
+    </button>
+
+    <nav class="radcam-nav" id="radcamNav">
+      <a href="/" class="radcam-nav__link">Home</a>
+      <a href="/pages/about" class="radcam-nav__link">About</a>
+      <a href="/products/radcam-the-talking-camera-pre-order-now" class="radcam-nav__link">Product</a>
+      <a href="/pages/install" class="radcam-nav__link">Install</a>
+      <a href="/pages/app" class="radcam-nav__link">Get the App</a>
+      <a href="/#faq" class="radcam-nav__link">FAQ</a>
+
+      <div class="radcam-nav__icons">
+        <!-- Search Icon -->
+        <button type="button" class="radcam-icon-link" id="searchToggle" aria-label="Search">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="11" cy="11" r="8"></circle>
+            <path d="m21 21-4.35-4.35"></path>
+          </svg>
+        </button>
+
+        <!-- Currency Toggle Button -->
+        <button type="button" class="radcam-currency-btn" id="currencyBtn" aria-label="Select currency">
+          <span id="currencyBtnLabel">{{ localization.country.currency.iso_code }} {{ localization.country.currency.symbol }}</span>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:12px;height:12px;">
+            <polyline points="6 9 12 15 18 9"></polyline>
+          </svg>
+        </button>
+
+        {%- if shop.customer_accounts_enabled -%}
+          <a href="{{ routes.account_url }}" class="radcam-icon-link" aria-label="Account">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+              <circle cx="12" cy="7" r="4"></circle>
+            </svg>
+          </a>
+        {%- endif -%}
+
+        <button type="button" class="radcam-icon-link radcam-cart-count" aria-label="Cart" onclick="openCartDrawer()">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="9" cy="21" r="1"></circle>
+            <circle cx="20" cy="21" r="1"></circle>
+            <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path>
+          </svg>
+          {%- if cart.item_count > 0 -%}
+            <span class="radcam-cart-count__badge">{{ cart.item_count }}</span>
+          {%- endif -%}
+        </button>
+      </div>
+    </nav>
+  </div>
+</header>
+
+<!-- Search Modal -->
+<div class="radcam-search-modal" id="searchModal">
+  <div class="radcam-search-modal__content">
+    <form action="{{ routes.search_url }}" method="get" class="radcam-search-modal__form">
+      <input
+        type="search"
+        name="q"
+        placeholder="Search products..."
+        class="radcam-search-modal__input"
+        autocomplete="off"
+        autofocus
+        id="searchInput"
+      >
+      <button type="submit" class="radcam-search-modal__submit">Search</button>
+    </form>
+  </div>
+</div>
+
+<!-- Currency Picker (outside nav to avoid z-index/layout issues) -->
+{%- form 'localization', id: 'radcam-currency-form' -%}
+  <div class="radcam-currency" id="currencyPicker">
+    <div class="radcam-currency__dropdown" id="currencyDropdown">
+      {%- for country in localization.available_countries -%}
+        <button
+          type="button"
+          class="radcam-currency__option {% if country.iso_code == localization.country.iso_code %}active{% endif %}"
+          data-country="{{ country.iso_code }}"
+          data-currency="{{ country.currency.iso_code }}"
+        >
+          {{ country.currency.iso_code }} ({{ country.currency.symbol }}) · {{ country.name }}
+        </button>
+      {%- endfor -%}
+    </div>
+    <input type="hidden" name="country_code" id="country_code" value="{{ localization.country.iso_code }}">
+  </div>
+{%- endform -%}
+
+<!-- Cart Drawer -->
+<div class="radcam-cart-drawer__overlay" id="cartOverlay" onclick="closeCartDrawer()"></div>
+<div class="radcam-cart-drawer" id="cartDrawer">
+  <div class="radcam-cart-drawer__header">
+    <h2 class="radcam-cart-drawer__title">Your Cart ({{ cart.item_count }})</h2>
+    <button class="radcam-cart-drawer__close" onclick="closeCartDrawer()" aria-label="Close cart">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <line x1="18" y1="6" x2="6" y2="18"></line>
+        <line x1="6" y1="6" x2="18" y2="18"></line>
+      </svg>
+    </button>
+  </div>
+
+  <div class="radcam-cart-drawer__body">
+    {%- if cart.item_count == 0 -%}
+      <div class="radcam-cart-drawer__empty">
+        <p>Your cart is empty</p>
+      </div>
+    {%- else -%}
+      <div id="cartDrawerItems">
+        {% render 'cart-drawer-items' %}
+      </div>
+    {%- endif -%}
+  </div>
+
+  {%- if cart.item_count > 0 -%}
+    <div class="radcam-cart-drawer__footer">
+      <div class="radcam-cart-drawer__total">
+        <span>Total:</span>
+        <span>{{ cart.total_price | money }}</span>
+      </div>
+      <a href="{{ routes.cart_url }}" class="btn btn-primary radcam-cart-drawer__checkout">View Cart</a>
+      <a href="/checkout" class="btn btn-yellow radcam-cart-drawer__checkout" style="margin-top: 8px;">Checkout</a>
+    </div>
+  {%- endif -%}
+</div>
+
+<script>
+  // Make header section sticky via JavaScript (backup for CSS)
+  (function() {
+    const header = document.getElementById('radcamHeader');
+    if (header) {
+      const shopifySection = header.closest('.shopify-section');
+      if (shopifySection) {
+        shopifySection.style.cssText = 'position: sticky !important; top: 0 !important; z-index: 100 !important; background: #ffffff !important;';
+      }
+    }
+  })();
+
+  // Scroll shadow effect
+  window.addEventListener('scroll', function() {
+    const header = document.getElementById('radcamHeader');
+    if (header) {
+      if (window.scrollY > 10) {
+        header.classList.add('scrolled');
+      } else {
+        header.classList.remove('scrolled');
+      }
+    }
+  });
+
+  // Mobile menu toggle
+  const mobileToggle = document.getElementById('mobileToggle');
+  const radcamNav = document.getElementById('radcamNav');
+
+  if (mobileToggle) {
+    mobileToggle.addEventListener('click', function() {
+      radcamNav.classList.toggle('mobile-open');
+    });
+  }
+
+  // Cart drawer functions - attached to window for global access
+  window.openCartDrawer = function() {
+    document.getElementById('cartDrawer').classList.add('open');
+    document.getElementById('cartOverlay').classList.add('open');
+    document.body.style.overflow = 'hidden';
+  }
+
+  window.closeCartDrawer = function() {
+    document.getElementById('cartDrawer').classList.remove('open');
+    document.getElementById('cartOverlay').classList.remove('open');
+    document.body.style.overflow = '';
+  }
+  
+  // Aliases for inline onclick handlers
+  function openCartDrawer() { window.openCartDrawer(); }
+  function closeCartDrawer() { window.closeCartDrawer(); }
+  
+  // Function to update cart drawer content via Shopify's section rendering API
+  window.updateRadcamCartDrawer = function() {
+    fetch(`${routes.cart_url}?section_id=header`)
+      .then(response => response.text())
+      .then(html => {
+        const parser = new DOMParser();
+        const doc = parser.parseFromString(html, 'text/html');
+        
+        // Update cart drawer body content
+        const newCartDrawerBody = doc.querySelector('.radcam-cart-drawer__body');
+        const currentCartDrawerBody = document.querySelector('.radcam-cart-drawer__body');
+        if (newCartDrawerBody && currentCartDrawerBody) {
+          currentCartDrawerBody.innerHTML = newCartDrawerBody.innerHTML;
+        }
+        
+        // Update cart drawer footer
+        const newCartDrawerFooter = doc.querySelector('.radcam-cart-drawer__footer');
+        const currentCartDrawer = document.getElementById('cartDrawer');
+        const currentCartDrawerFooter = currentCartDrawer.querySelector('.radcam-cart-drawer__footer');
+        
+        if (newCartDrawerFooter) {
+          if (currentCartDrawerFooter) {
+            currentCartDrawerFooter.outerHTML = newCartDrawerFooter.outerHTML;
+          } else {
+            currentCartDrawer.appendChild(newCartDrawerFooter.cloneNode(true));
+          }
+        } else if (currentCartDrawerFooter) {
+          currentCartDrawerFooter.remove();
+        }
+        
+        // Update cart drawer title with new count
+        const newCartTitle = doc.querySelector('.radcam-cart-drawer__title');
+        const currentCartTitle = document.querySelector('.radcam-cart-drawer__title');
+        if (newCartTitle && currentCartTitle) {
+          currentCartTitle.textContent = newCartTitle.textContent;
+        }
+        
+        // Update cart count badge in header
+        const newCartBadge = doc.querySelector('.radcam-cart-count__badge');
+        const currentCartCount = document.querySelector('.radcam-cart-count');
+        const currentCartBadge = currentCartCount?.querySelector('.radcam-cart-count__badge');
+        
+        if (newCartBadge) {
+          if (currentCartBadge) {
+            currentCartBadge.textContent = newCartBadge.textContent;
+          } else if (currentCartCount) {
+            const badge = document.createElement('span');
+            badge.className = 'radcam-cart-count__badge';
+            badge.textContent = newCartBadge.textContent;
+            currentCartCount.appendChild(badge);
+          }
+        } else if (currentCartBadge) {
+          currentCartBadge.remove();
+        }
+      })
+      .catch(err => {
+        console.error('Error updating cart drawer:', err);
+      });
+  }
+
+
+  // Search modal
+  const searchToggle = document.getElementById('searchToggle');
+  const searchModal = document.getElementById('searchModal');
+
+  if (searchToggle && searchModal) {
+    searchToggle.addEventListener('click', function() {
+      searchModal.classList.add('open');
+      document.getElementById('searchInput').focus();
+    });
+
+    searchModal.addEventListener('click', function(e) {
+      if (e.target === searchModal) {
+        searchModal.classList.remove('open');
+      }
+    });
+  }
+
+  document.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape') {
+      closeCartDrawer();
+      if (searchModal) searchModal.classList.remove('open');
+      closeCurrencyPicker();
+    }
+  });
+
+  // Currency picker
+  const currencyBtn = document.getElementById('currencyBtn');
+  const currencyPicker = document.getElementById('currencyPicker');
+  const currencyForm = document.getElementById('radcam-currency-form');
+
+  function openCurrencyPicker() {
+    if (!currencyBtn || !currencyPicker) return;
+    const rect = currencyBtn.getBoundingClientRect();
+    // Use fixed positioning relative to viewport
+    currencyPicker.style.position = 'fixed';
+    currencyPicker.style.top = (rect.bottom + 8) + 'px';
+    currencyPicker.style.right = (window.innerWidth - rect.right) + 'px';
+    currencyPicker.style.left = 'auto';
+    currencyPicker.classList.add('open');
+  }
+
+  function closeCurrencyPicker() {
+    if (currencyPicker) currencyPicker.classList.remove('open');
+  }
+
+  if (currencyBtn) {
+    currencyBtn.addEventListener('click', function(e) {
+      e.preventDefault();
+      e.stopPropagation();
+      if (currencyPicker.classList.contains('open')) {
+        closeCurrencyPicker();
+      } else {
+        openCurrencyPicker();
+      }
+    });
+  }
+
+  document.querySelectorAll('.radcam-currency__option').forEach(function(btn) {
+    btn.addEventListener('click', function() {
+      const countryCode = this.dataset.country;
+      const currencyCode = this.dataset.currency;
+      document.getElementById('country_code').value = countryCode;
+      document.getElementById('currencyBtnLabel').textContent = currencyCode;
+      document.querySelectorAll('.radcam-currency__option').forEach(function(o) { o.classList.remove('active'); });
+      this.classList.add('active');
+      closeCurrencyPicker();
+      currencyForm.submit();
+    });
+  });
+
+  document.addEventListener('click', function(e) {
+    if (currencyPicker && !currencyPicker.contains(e.target) && !currencyBtn.contains(e.target)) {
+      closeCurrencyPicker();
+    }
+  });
+
+  // Close currency picker on scroll to reposition
+  window.addEventListener('scroll', function() {
+    if (currencyPicker && currencyPicker.classList.contains('open')) {
+      closeCurrencyPicker();
+    }
+  }, { passive: true });
+</script>
+
+{% schema %}
+{
+  "name": "RADCam Header",
+  "settings": []
+}
+{% endschema %}

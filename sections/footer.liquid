@@ -1,0 +1,135 @@
+{% comment %}
+  RADCam Footer - Clean & Professional
+  Matches the design from product.html and about.html
+{% endcomment %}
+
+<style>
+  .radcam-footer {
+    padding: 52px 0 32px;
+    border-top: 1px solid #d0d7de;
+    background: #ffffff;
+  }
+
+  .radcam-footer__content {
+    max-width: 1280px;
+    margin: 0 auto;
+    padding: 0 32px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 32px;
+    flex-wrap: wrap;
+    gap: 24px;
+  }
+
+  .radcam-footer__logo {
+    font-family: 'Inter Tight', -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    font-size: 22px;
+    font-weight: 600;
+    color: #000000;
+    letter-spacing: -0.03em;
+    display: flex;
+    align-items: center;
+    flex-shrink: 0;
+    text-decoration: none;
+  }
+
+  .radcam-footer__logo:hover {
+    color: #000000;
+  }
+
+  .radcam-footer__logo-dot {
+    display: inline-block;
+    width: 8px;
+    height: 8px;
+    background: #facc15;
+    border-radius: 50%;
+    margin-left: 1px;
+    margin-bottom: 10px;
+  }
+
+  .radcam-footer__links {
+    display: flex;
+    gap: 24px;
+    flex-wrap: wrap;
+  }
+
+  .radcam-footer__link {
+    font-size: 14px;
+    color: #57606a;
+    transition: color 0.2s;
+    text-decoration: none;
+  }
+
+  .radcam-footer__link:hover {
+    color: #000000;
+  }
+
+  .radcam-footer__bottom {
+    max-width: 1280px;
+    margin: 0 auto;
+    padding: 24px 32px 0;
+    text-align: center;
+    font-size: 13px;
+    color: #6e7781;
+    border-top: 1px solid #e1e4e8;
+  }
+
+  @media (max-width: 1024px) {
+    .radcam-footer__content,
+    .radcam-footer__bottom {
+      padding-left: 24px;
+      padding-right: 24px;
+    }
+  }
+
+  @media (max-width: 768px) {
+    .radcam-footer__content {
+      flex-direction: column;
+      align-items: flex-start;
+    }
+
+    .radcam-footer__links {
+      flex-direction: column;
+      gap: 12px;
+    }
+  }
+</style>
+
+<footer class="radcam-footer">
+  <div class="radcam-footer__content">
+    <a href="/" class="radcam-footer__logo">
+      RADCam<span class="radcam-footer__logo-dot"></span>
+    </a>
+
+    <nav class="radcam-footer__links">
+      <a href="/" class="radcam-footer__link">Home</a>
+      <a href="/pages/about" class="radcam-footer__link">About</a>
+      <a href="/products/radcam-the-talking-camera-pre-order-now" class="radcam-footer__link">Shop</a>
+      <a href="/pages/install" class="radcam-footer__link">Install</a>
+      <a href="/pages/app" class="radcam-footer__link">Get the App</a>
+      <a href="/#faq" class="radcam-footer__link">FAQ</a>
+      <a href="https://radsecurity.com" target="_blank" rel="noopener" class="radcam-footer__link">RAD Security</a>
+      {%- if shop.privacy_policy.url -%}
+        <a href="{{ shop.privacy_policy.url }}" class="radcam-footer__link">Privacy Policy</a>
+      {%- endif -%}
+      {%- if shop.terms_of_service.url -%}
+        <a href="{{ shop.terms_of_service.url }}" class="radcam-footer__link">Terms of Service</a>
+      {%- endif -%}
+      {%- if shop.refund_policy.url -%}
+        <a href="{{ shop.refund_policy.url }}" class="radcam-footer__link">Refund Policy</a>
+      {%- endif -%}
+    </nav>
+  </div>
+
+  <div class="radcam-footer__bottom">
+    &copy; {{ 'now' | date: '%Y' }} RAD-R / Robotic Assistance Devices Inc. All rights reserved. RADCam is a product of AITX.
+  </div>
+</footer>
+
+{% schema %}
+{
+  "name": "RADCam Footer",
+  "settings": []
+}
+{% endschema %}

@@ -1,0 +1,303 @@
+{{ 'component-cart.css' | asset_url | stylesheet_tag }}
+{{ 'component-totals.css' | asset_url | stylesheet_tag }}
+{{ 'component-price.css' | asset_url | stylesheet_tag }}
+{{ 'component-discounts.css' | asset_url | stylesheet_tag }}
+
+<style>
+  /* RADCam Cart Footer Styling */
+  #main-cart-footer {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  }
+
+  .cart__footer {
+    padding-top: 32px;
+    border-top: 1px solid #e1e4e8;
+  }
+
+  .cart__blocks {
+    max-width: 400px;
+    margin-left: auto;
+  }
+
+  /* Totals */
+  .totals {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 16px;
+  }
+
+  .totals__subtotal {
+    font-family: 'Inter Tight', -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    font-size: 18px;
+    font-weight: 600;
+    color: #0d1117;
+  }
+
+  .totals__subtotal-value {
+    font-family: 'Inter Tight', -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    font-size: 24px;
+    font-weight: 600;
+    color: #0d1117;
+  }
+
+  /* Tax note */
+  .tax-note {
+    font-size: 13px;
+    color: #57606a;
+    text-align: right;
+    margin-bottom: 24px;
+  }
+
+  .tax-note a {
+    color: #57606a;
+    text-decoration: underline;
+  }
+
+  .tax-note a:hover {
+    color: #0d1117;
+  }
+
+  /* Cart note */
+  .cart__note {
+    margin-bottom: 24px;
+  }
+
+  .cart__note label {
+    display: block;
+    font-size: 14px;
+    font-weight: 500;
+    color: #0d1117;
+    margin-bottom: 8px;
+  }
+
+  .cart__note .text-area {
+    width: 100%;
+    min-height: 80px;
+    padding: 12px;
+    border: 1px solid #d0d7de;
+    border-radius: 6px;
+    font-family: 'Inter', sans-serif;
+    font-size: 14px;
+    color: #0d1117;
+    resize: vertical;
+    transition: border-color 0.2s;
+  }
+
+  .cart__note .text-area:focus {
+    outline: none;
+    border-color: #facc15;
+  }
+
+  /* Checkout button */
+  .cart__ctas {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .cart__checkout-button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    padding: 14px 32px;
+    border-radius: 6px;
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    font-size: 16px;
+    font-weight: 600;
+    background: #facc15;
+    color: #000000;
+    border: 1px solid #facc15;
+    text-decoration: none;
+    transition: all 0.2s;
+    cursor: pointer;
+    width: 100%;
+  }
+
+  .cart__checkout-button:hover {
+    background: #f5c400;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(250,204,21,0.25);
+  }
+
+  .cart__update-button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    padding: 11px 22px;
+    border-radius: 6px;
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    font-size: 15px;
+    font-weight: 600;
+    background: transparent;
+    color: #0d1117;
+    border: 1px solid #d0d7de;
+    text-decoration: none;
+    transition: all 0.2s;
+    cursor: pointer;
+    width: 100%;
+  }
+
+  .cart__update-button:hover {
+    background: #f6f8fa;
+    border-color: #57606a;
+  }
+
+  /* Dynamic checkout buttons */
+  .cart__dynamic-checkout-buttons {
+    margin-top: 12px;
+  }
+
+  /* Discounts in footer */
+  #main-cart-footer .discounts__discount {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 12px;
+    background: rgba(250, 204, 21, 0.1);
+    border-radius: 6px;
+    font-size: 14px;
+    font-weight: 500;
+    color: #0d1117;
+    margin-bottom: 12px;
+  }
+
+  #main-cart-footer .discounts__discount svg {
+    color: #f5c400;
+  }
+</style>
+
+<div class="page-width{% if cart == empty %} is-empty{% endif %}" id="main-cart-footer" data-id="{{ section.id }}">
+  <div>
+    <div class="cart__footer">
+      {%- if settings.show_cart_note -%}
+        <cart-note class="cart__note field">
+          <label for="Cart-note">{{ 'sections.cart.note' | t }}</label>
+          <textarea
+            class="text-area field__input"
+            name="note"
+            form="cart"
+            id="Cart-note"
+            placeholder="{{ 'sections.cart.note' | t }}"
+          >{{ cart.note }}</textarea>
+        </cart-note>
+      {%- endif -%}
+
+      <div class="cart__blocks">
+        {% for block in section.blocks %}
+          {%- case block.type -%}
+            {%- when '@app' -%}
+              {% render block %}
+            {%- when 'subtotal' -%}
+              <div class="js-contents" {{ block.shopify_attributes }}>
+                <div class="totals">
+                  <h2 class="totals__subtotal">{{ 'sections.cart.subtotal' | t }}</h2>
+                  <p class="totals__subtotal-value">{{ cart.total_price | money_with_currency }}</p>
+                </div>
+
+                <div>
+                  {%- if cart.cart_level_discount_applications.size > 0 -%}
+                    <ul class="discounts list-unstyled" role="list" aria-label="{{ 'customer.order.discount' | t }}">
+                      {%- for discount in cart.cart_level_discount_applications -%}
+                        <li class="discounts__discount discounts__discount--position">
+                          {%- render 'icon-discount' -%}
+                          {{ discount.title }}
+                          (-{{ discount.total_allocated_amount | money }})
+                        </li>
+                      {%- endfor -%}
+                    </ul>
+                  {%- endif -%}
+                </div>
+
+                <small class="tax-note caption-large rte">
+                  {%- if cart.taxes_included and shop.shipping_policy.body != blank -%}
+                    {{ 'sections.cart.taxes_included_and_shipping_policy_html' | t: link: shop.shipping_policy.url }}
+                  {%- elsif cart.taxes_included -%}
+                    {{ 'sections.cart.taxes_included_but_shipping_at_checkout' | t }}
+                  {%- elsif shop.shipping_policy.body != blank -%}
+                    {{ 'sections.cart.taxes_and_shipping_policy_at_checkout_html' | t: link: shop.shipping_policy.url }}
+                  {%- else -%}
+                    {{ 'sections.cart.taxes_and_shipping_at_checkout' | t }}
+                  {%- endif -%}
+                </small>
+              </div>
+            {%- else -%}
+              <div class="cart__ctas" {{ block.shopify_attributes }}>
+                <noscript>
+                  <button type="submit" class="cart__update-button button button--secondary" form="cart">
+                    {{ 'sections.cart.update' | t }}
+                  </button>
+                </noscript>
+
+                <button
+                  type="submit"
+                  id="checkout"
+                  class="cart__checkout-button button"
+                  name="checkout"
+                  {% if cart == empty %}
+                    disabled
+                  {% endif %}
+                  form="cart"
+                >
+                  {{ 'sections.cart.checkout' | t }}
+                </button>
+              </div>
+
+              {%- if additional_checkout_buttons -%}
+                <div class="cart__dynamic-checkout-buttons additional-checkout-buttons">
+                  {{ content_for_additional_checkout_buttons }}
+                </div>
+              {%- endif -%}
+          {%- endcase -%}
+        {% endfor %}
+
+        <div id="cart-errors"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    function isIE() {
+      const ua = window.navigator.userAgent;
+      const msie = ua.indexOf('MSIE ');
+      const trident = ua.indexOf('Trident/');
+
+      return msie > 0 || trident > 0;
+    }
+
+    if (!isIE()) return;
+    const cartSubmitInput = document.createElement('input');
+    cartSubmitInput.setAttribute('name', 'checkout');
+    cartSubmitInput.setAttribute('type', 'hidden');
+    document.querySelector('#cart').appendChild(cartSubmitInput);
+    document.querySelector('#checkout').addEventListener('click', function (event) {
+      document.querySelector('#cart').submit();
+    });
+  });
+</script>
+
+{% schema %}
+{
+  "name": "t:sections.main-cart-footer.name",
+  "class": "cart__footer-wrapper",
+  "blocks": [
+    {
+      "type": "subtotal",
+      "name": "t:sections.main-cart-footer.blocks.subtotal.name",
+      "limit": 1
+    },
+    {
+      "type": "buttons",
+      "name": "t:sections.main-cart-footer.blocks.buttons.name",
+      "limit": 1
+    },
+    {
+      "type": "@app"
+    }
+  ]
+}
+{% endschema %}

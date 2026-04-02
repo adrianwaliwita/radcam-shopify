@@ -1,0 +1,91 @@
+{% comment %}
+  Simple cart drawer items list
+{% endcomment %}
+
+<style>
+  .cart-drawer-item {
+    display: flex;
+    gap: 16px;
+    padding-bottom: 20px;
+    margin-bottom: 20px;
+    border-bottom: 1px solid #e1e4e8;
+  }
+
+  .cart-drawer-item:last-child {
+    border-bottom: none;
+    margin-bottom: 0;
+  }
+
+  .cart-drawer-item__image {
+    width: 80px;
+    height: 80px;
+    object-fit: cover;
+    border-radius: 8px;
+    flex-shrink: 0;
+  }
+
+  .cart-drawer-item__details {
+    flex: 1;
+    min-width: 0;
+  }
+
+  .cart-drawer-item__title {
+    font-size: 15px;
+    font-weight: 600;
+    margin-bottom: 4px;
+    color: #000000;
+  }
+
+  .cart-drawer-item__title a {
+    color: inherit;
+    text-decoration: none;
+  }
+
+  .cart-drawer-item__title a:hover {
+    color: #facc15;
+  }
+
+  .cart-drawer-item__variant {
+    font-size: 13px;
+    color: #6e7781;
+    margin-bottom: 8px;
+  }
+
+  .cart-drawer-item__price {
+    font-size: 15px;
+    font-weight: 600;
+    color: #000000;
+  }
+
+  .cart-drawer-item__quantity {
+    font-size: 13px;
+    color: #57606a;
+    margin-top: 4px;
+  }
+</style>
+
+{%- for item in cart.items -%}
+  <div class="cart-drawer-item">
+    {%- if item.image -%}
+      <img class="cart-drawer-item__image" src="{{ item.image | image_url: width: 160 }}" alt="{{ item.title | escape }}">
+    {%- endif -%}
+
+    <div class="cart-drawer-item__details">
+      <div class="cart-drawer-item__title">
+        <a href="{{ item.url }}">{{ item.product.title }}</a>
+      </div>
+
+      {%- if item.variant.title != 'Default Title' -%}
+        <div class="cart-drawer-item__variant">{{ item.variant.title }}</div>
+      {%- endif -%}
+
+      <div class="cart-drawer-item__price">
+        {{ item.final_line_price | money }}
+      </div>
+
+      <div class="cart-drawer-item__quantity">
+        Qty: {{ item.quantity }}
+      </div>
+    </div>
+  </div>
+{%- endfor -%}

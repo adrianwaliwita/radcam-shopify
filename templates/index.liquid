@@ -1,0 +1,1606 @@
+{% comment %}
+  RADCam Home Page - Shopify Template
+  This template integrates with your Shopify theme's header and footer
+{% endcomment %}
+
+<style>
+    :root {
+        --color-black: #000000;
+        --color-white: #ffffff;
+        --color-accent: #facc15;
+        --color-accent-hover: #f5c400;
+        --color-canvas-default: #ffffff;
+        --color-canvas-subtle: #f6f8fa;
+        --color-border-default: #d0d7de;
+        --color-border-muted: #e1e4e8;
+        --color-fg-default: #0d1117;
+        --color-fg-muted: #57606a;
+        --color-fg-subtle: #6e7781;
+        --container-max: 1280px;
+        --container-padding: 32px;
+        --shadow-sm: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
+        --shadow-md: 0 14px 28px rgba(0,0,0,0.15), 0 10px 10px rgba(0,0,0,0.12);
+        --shadow-lg: 0 24px 80px rgba(0,0,0,0.1);
+        --shadow-yellow: 0 4px 12px rgba(250,204,21,0.25);
+        --shadow-yellow-lg: 0 16px 40px rgba(250,204,21,0.35);
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+        font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+        font-size: 17px;
+        line-height: 1.6;
+        color: var(--color-fg-default);
+        background: var(--color-white);
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+    }
+
+    h1, h2, h3, h4, h5, h6 {
+        font-family: 'Inter Tight', -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+        line-height: 1.15;
+        font-weight: 500;
+    }
+
+    a { text-decoration: none; color: inherit; }
+    img { max-width: 100%; height: auto; display: block; }
+    button { font-family: inherit; cursor: pointer; border: none; background: none; }
+
+    .container {
+        max-width: var(--container-max);
+        margin: 0 auto;
+        padding: 0 var(--container-padding);
+    }
+
+    .section { padding: 120px 0; }
+    .section-sm { padding: 80px 0; }
+
+    /* ===========================
+       BUTTONS
+       =========================== */
+    .btn {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        padding: 11px 22px;
+        border-radius: 6px;
+        font-size: 15px;
+        font-weight: 600;
+        transition: all 0.2s;
+        white-space: nowrap;
+        cursor: pointer;
+    }
+
+    .btn-yellow {
+        background: var(--color-accent);
+        color: var(--color-black);
+        border: 1px solid var(--color-accent);
+    }
+
+    .btn-yellow:hover {
+        background: var(--color-accent-hover);
+        transform: translateY(-1px);
+        box-shadow: var(--shadow-yellow);
+    }
+
+    .btn-primary {
+        background: var(--color-black);
+        color: var(--color-white);
+        border: 1px solid var(--color-black);
+    }
+
+    .btn-primary:hover {
+        background: #1a1a1a;
+        transform: translateY(-1px);
+        box-shadow: var(--shadow-sm);
+    }
+
+    .btn-outline-white {
+        background: transparent;
+        color: var(--color-white);
+        border: 1px solid rgba(255,255,255,0.4);
+    }
+
+    .btn-outline-white:hover {
+        border-color: var(--color-white);
+        background: rgba(255,255,255,0.08);
+    }
+
+    .btn-secondary {
+        background: transparent;
+        color: var(--color-fg-default);
+        border: 1px solid var(--color-border-default);
+    }
+
+    .btn-secondary:hover {
+        background: var(--color-canvas-subtle);
+        border-color: var(--color-fg-muted);
+    }
+
+    .btn-lg { padding: 14px 32px; font-size: 16px; }
+    .btn-xl { padding: 17px 40px; font-size: 17px; }
+
+    /* ===========================
+       HERO
+       =========================== */
+    .hero {
+        position: relative;
+        min-height: 100vh;
+        display: flex;
+        align-items: center;
+        background: var(--color-black);
+        color: var(--color-white);
+        overflow: hidden;
+    }
+
+    .hero::before {
+        display: none;
+    }
+
+    .hero-bg-image {
+        position: absolute;
+        inset: 0;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        opacity: 0.18;
+        z-index: 0;
+    }
+
+    .hero-content {
+        position: relative;
+        z-index: 1;
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 80px;
+        align-items: center;
+        padding: 100px 0;
+        width: 100%;
+    }
+
+    .hero-text { }
+
+    .hero-badge {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        padding: 4px 10px;
+        background: rgba(250,204,21,0.12);
+        border: 1px solid var(--color-accent);
+        border-radius: 4px;
+        font-size: 10px;
+        font-weight: 600;
+        text-transform: uppercase;
+        letter-spacing: 0.1em;
+        color: var(--color-accent);
+        margin-bottom: 28px;
+    }
+
+    .hero-badge-dot {
+        width: 5px;
+        height: 5px;
+        background: var(--color-accent);
+        border-radius: 50%;
+        animation: pulse 2s infinite;
+    }
+
+    @keyframes pulse {
+        0%, 100% { opacity: 1; transform: scale(1); }
+        50% { opacity: 0.5; transform: scale(0.8); }
+    }
+
+    .hero h1 {
+        font-size: 68px;
+        letter-spacing: -0.04em;
+        margin-bottom: 24px;
+        line-height: 1.05;
+        color: var(--color-white) !important;
+    }
+
+    .hero h1 .accent {
+        color: var(--color-accent) !important;
+    }
+
+    .hero-description {
+        font-size: 19px;
+        line-height: 1.65;
+        color: rgba(255,255,255,0.75);
+        margin-bottom: 40px;
+        max-width: 520px;
+    }
+
+    .hero-buttons {
+        display: flex;
+        gap: 14px;
+        flex-wrap: wrap;
+        margin-bottom: 48px;
+    }
+
+    .hero-trust {
+        display: flex;
+        align-items: center;
+        gap: 20px;
+        flex-wrap: wrap;
+    }
+
+    .hero-trust-item {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        font-size: 13px;
+        color: rgba(255,255,255,0.55);
+    }
+
+    .hero-trust-item svg {
+        width: 16px;
+        height: 16px;
+        stroke: var(--color-accent);
+        fill: none;
+        stroke-width: 2.5;
+        stroke-linecap: round;
+        stroke-linejoin: round;
+        flex-shrink: 0;
+    }
+
+    .hero-visual {
+        position: relative;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .hero-product-wrap {
+        position: relative;
+        width: 100%;
+        max-width: 480px;
+        margin: 0 auto;
+    }
+
+    .hero-product-glow {
+        position: absolute;
+        inset: -40px;
+        background: radial-gradient(ellipse at center, rgba(250,204,21,0.12) 0%, transparent 70%);
+        pointer-events: none;
+    }
+
+    .hero-product-img {
+        width: 100%;
+        aspect-ratio: 1;
+        object-fit: cover;
+        border-radius: 16px;
+        position: relative;
+        z-index: 1;
+        box-shadow: 0 40px 100px rgba(0,0,0,0.6), 0 0 0 1px rgba(255,255,255,0.06);
+    }
+
+    .hero-product-badge {
+        position: absolute;
+        bottom: 24px;
+        left: 24px;
+        right: 24px;
+        background: rgba(0,0,0,0.85);
+        backdrop-filter: blur(12px);
+        border: 1px solid rgba(255,255,255,0.1);
+        border-radius: 10px;
+        padding: 16px 20px;
+        z-index: 2;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+    }
+
+    .hero-product-badge-text {
+        font-size: 14px;
+        font-weight: 600;
+        color: var(--color-white);
+    }
+
+    .hero-product-badge-sub {
+        font-size: 12px;
+        color: rgba(255,255,255,0.5);
+        margin-top: 2px;
+    }
+
+    .hero-product-badge-price {
+        font-family: 'Inter Tight', sans-serif;
+        font-size: 22px;
+        font-weight: 600;
+        color: var(--color-accent);
+        letter-spacing: -0.02em;
+    }
+
+    /* ===========================
+       FEATURES SECTION
+       =========================== */
+    .features-section {
+        background: var(--color-white);
+    }
+
+    .section-label {
+        font-size: 12px;
+        font-weight: 600;
+        text-transform: uppercase;
+        letter-spacing: 0.1em;
+        color: var(--color-fg-muted);
+        margin-bottom: 14px;
+        display: block;
+    }
+
+    .section-label-yellow { color: var(--color-accent-hover); }
+
+    .section-heading {
+        font-size: 48px;
+        letter-spacing: -0.025em;
+        margin-bottom: 16px;
+    }
+
+    .section-subtext {
+        font-size: 18px;
+        color: var(--color-fg-muted);
+        max-width: 680px;
+        line-height: 1.65;
+    }
+
+    .section-header {
+        text-align: center;
+        margin-bottom: 64px;
+    }
+
+    .section-header .section-subtext { margin: 0 auto; }
+
+    .features-grid {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 28px;
+    }
+
+    .feature-card {
+        background: var(--color-white);
+        border: 1px solid var(--color-border-default);
+        border-radius: 12px;
+        overflow: hidden;
+        transition: transform 0.3s cubic-bezier(0.4,0,0.2,1),
+                    box-shadow 0.3s cubic-bezier(0.4,0,0.2,1),
+                    border-color 0.3s cubic-bezier(0.4,0,0.2,1);
+    }
+
+    .feature-card:hover {
+        transform: translateY(-4px);
+        box-shadow: var(--shadow-md);
+        border-color: var(--color-accent);
+    }
+
+    .feature-card-img {
+        width: 100%;
+        aspect-ratio: 16/9;
+        object-fit: cover;
+        display: block;
+    }
+
+    .feature-card-body {
+        padding: 28px 32px 32px;
+    }
+
+    .feature-card h3 {
+        font-size: 20px;
+        margin-bottom: 10px;
+        color: var(--color-fg-default);
+    }
+
+    .feature-card p {
+        font-size: 15px;
+        line-height: 1.7;
+        color: var(--color-fg-muted);
+    }
+
+    /* ===========================
+       PRODUCT SHOWCASE
+       =========================== */
+    .showcase-section {
+        background: var(--color-canvas-subtle);
+    }
+
+    .showcase-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 80px;
+        align-items: center;
+    }
+
+    .showcase-visual {
+        position: relative;
+    }
+
+    .showcase-img-main {
+        width: 100%;
+        aspect-ratio: 1;
+        object-fit: cover;
+        border-radius: 16px;
+        box-shadow: var(--shadow-lg);
+    }
+
+    .showcase-img-thumb-row {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 12px;
+        margin-top: 12px;
+    }
+
+    .showcase-img-thumb {
+        aspect-ratio: 1;
+        object-fit: cover;
+        border-radius: 8px;
+        cursor: pointer;
+        opacity: 0.7;
+        transition: opacity 0.2s, box-shadow 0.2s;
+        border: 2px solid transparent;
+    }
+
+    .showcase-img-thumb:hover,
+    .showcase-img-thumb.active {
+        opacity: 1;
+        border-color: var(--color-accent);
+        box-shadow: var(--shadow-yellow);
+    }
+
+    .showcase-content { }
+
+    .showcase-content h2 {
+        font-size: 40px;
+        letter-spacing: -0.025em;
+        margin-bottom: 20px;
+    }
+
+    .showcase-content p {
+        font-size: 17px;
+        line-height: 1.75;
+        color: var(--color-fg-muted);
+        margin-bottom: 32px;
+    }
+
+    .spec-list {
+        list-style: none;
+        margin-bottom: 36px;
+    }
+
+    .spec-item {
+        display: flex;
+        align-items: flex-start;
+        gap: 14px;
+        padding: 16px 0;
+        border-bottom: 1px solid var(--color-border-muted);
+    }
+
+    .spec-item:first-child { border-top: 1px solid var(--color-border-muted); }
+
+    .spec-check {
+        width: 22px;
+        height: 22px;
+        background: var(--color-accent);
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-shrink: 0;
+        margin-top: 1px;
+    }
+
+    .spec-check svg {
+        width: 12px;
+        height: 12px;
+        stroke: var(--color-black);
+        fill: none;
+        stroke-width: 3;
+        stroke-linecap: round;
+        stroke-linejoin: round;
+    }
+
+    .spec-text strong {
+        display: block;
+        font-size: 15px;
+        font-weight: 600;
+        color: var(--color-fg-default);
+        margin-bottom: 2px;
+    }
+
+    .spec-text span {
+        font-size: 14px;
+        color: var(--color-fg-muted);
+    }
+
+    /* ===========================
+       HOW IT WORKS
+       =========================== */
+    .hiw-section {
+        background: var(--color-black);
+        color: var(--color-white);
+        position: relative;
+        overflow: hidden;
+    }
+
+    .hiw-section::before {
+        content: '';
+        position: absolute;
+        inset: 0;
+        background-image:
+            linear-gradient(rgba(255,255,255,0.025) 1px, transparent 1px),
+            linear-gradient(90deg, rgba(255,255,255,0.025) 1px, transparent 1px);
+        background-size: 50px 50px;
+        pointer-events: none;
+    }
+
+    .hiw-section .section-label { color: rgba(255,255,255,0.5); }
+    .hiw-section .section-heading { color: var(--color-white); }
+    .hiw-section .section-subtext { color: rgba(255,255,255,0.6); }
+
+    .hiw-steps {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 2px;
+        position: relative;
+        z-index: 1;
+        border: 1px solid rgba(255,255,255,0.08);
+        border-radius: 12px;
+        overflow: hidden;
+    }
+
+    .hiw-step {
+        padding: 48px 40px;
+        background: rgba(255,255,255,0.03);
+        border-right: 1px solid rgba(255,255,255,0.08);
+        transition: background 0.3s;
+        position: relative;
+    }
+
+    .hiw-step:last-child { border-right: none; }
+    .hiw-step:hover { background: rgba(255,255,255,0.06); }
+
+    .hiw-step-number {
+        font-family: 'Inter Tight', sans-serif;
+        font-size: 72px;
+        font-weight: 900;
+        color: rgba(250,204,21,0.12);
+        line-height: 1;
+        margin-bottom: 20px;
+        letter-spacing: -0.04em;
+    }
+
+    .hiw-step-label {
+        font-size: 11px;
+        font-weight: 600;
+        text-transform: uppercase;
+        letter-spacing: 0.1em;
+        color: var(--color-accent);
+        margin-bottom: 10px;
+        display: block;
+    }
+
+    .hiw-step h3 {
+        font-size: 22px;
+        color: var(--color-white);
+        margin-bottom: 12px;
+    }
+
+    .hiw-step p {
+        font-size: 15px;
+        line-height: 1.7;
+        color: rgba(255,255,255,0.6);
+    }
+
+    /* ===========================
+       PRICING SECTION
+       =========================== */
+    .pricing-section {
+        background: var(--color-white);
+    }
+
+    .pricing-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 24px;
+        max-width: 900px;
+        margin: 0 auto;
+    }
+
+    .pricing-card {
+        border: 1px solid var(--color-border-default);
+        border-radius: 12px;
+        overflow: hidden;
+        transition: transform 0.3s, box-shadow 0.3s, border-color 0.3s;
+        position: relative;
+        display: flex;
+        flex-direction: column;
+        min-height: 600px;
+    }
+
+    .pricing-card:hover {
+        transform: translateY(-4px);
+        box-shadow: var(--shadow-md);
+    }
+
+    .pricing-card-featured {
+        border-color: var(--color-accent);
+        box-shadow: var(--shadow-yellow-lg);
+    }
+
+    .pricing-card-featured:hover {
+        box-shadow: 0 20px 60px rgba(250,204,21,0.3);
+    }
+
+    .pricing-badge {
+        background: var(--color-accent);
+        color: var(--color-black);
+        font-size: 12px;
+        font-weight: 600;
+        text-transform: uppercase;
+        letter-spacing: 0.08em;
+        padding: 8px 20px;
+        text-align: center;
+    }
+
+    .pricing-body {
+        padding: 40px 36px;
+        display: flex;
+        flex-direction: column;
+        flex: 1;
+    }
+
+    .pricing-name {
+        font-size: 14px;
+        font-weight: 600;
+        text-transform: uppercase;
+        letter-spacing: 0.08em;
+        color: var(--color-fg-muted);
+        margin-bottom: 12px;
+    }
+
+    .pricing-price {
+        display: flex;
+        align-items: baseline;
+        gap: 10px;
+        margin-bottom: 6px;
+    }
+
+    .pricing-amount {
+        font-family: 'Inter Tight', sans-serif;
+        font-size: 52px;
+        font-weight: 600;
+        color: var(--color-fg-default);
+        letter-spacing: -0.04em;
+        line-height: 1;
+    }
+
+    .pricing-was {
+        font-size: 18px;
+        color: var(--color-fg-subtle);
+        text-decoration: line-through;
+    }
+
+    .pricing-save {
+        display: inline-block;
+        align-self: flex-start;
+        background: rgba(250,204,21,0.15);
+        color: var(--color-accent-hover);
+        font-size: 13px;
+        font-weight: 600;
+        padding: 3px 10px;
+        border-radius: 4px;
+        margin-bottom: 24px;
+    }
+
+    .pricing-features {
+        list-style: none;
+        margin-bottom: 32px;
+        flex: 1;
+    }
+
+    .pricing-features li {
+        font-size: 14px;
+        line-height: 1.6;
+        color: var(--color-fg-muted);
+        padding-left: 22px;
+        margin-bottom: 10px;
+        position: relative;
+    }
+
+    .pricing-features li::before {
+        content: '✓';
+        position: absolute;
+        left: 0;
+        color: var(--color-accent-hover);
+        font-weight: 600;
+    }
+
+    /* ===========================
+       TESTIMONIALS
+       =========================== */
+    .testimonials-section {
+        background: var(--color-canvas-subtle);
+    }
+
+    .testimonials-slider-wrap {
+        position: relative;
+        overflow: hidden;
+        width: 100%;
+    }
+
+    .testimonials-track {
+        display: flex;
+        flex-wrap: nowrap;
+        width: 100%;
+        transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+        will-change: transform;
+    }
+
+    .testimonials-slide {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 24px;
+        width: 100%;
+        min-width: 100%;
+        flex: 0 0 100%;
+        box-sizing: border-box;
+    }
+
+    .testimonials-dots {
+        display: flex;
+        justify-content: center;
+        gap: 12px;
+        margin-top: 40px;
+    }
+
+    .testimonials-dot {
+        width: 10px;
+        height: 10px;
+        border-radius: 50%;
+        background: rgba(0, 0, 0, 0.18);
+        border: none;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        padding: 0;
+        flex-shrink: 0;
+    }
+
+    .testimonials-dot:hover {
+        background: rgba(0, 0, 0, 0.35);
+    }
+
+    .testimonials-dot.active {
+        background: var(--color-accent);
+        width: 32px;
+        border-radius: 999px;
+    }
+
+    .testimonial-card {
+        background: var(--color-white);
+        border: 1px solid var(--color-border-default);
+        border-radius: 10px;
+        padding: 36px 32px;
+        transition: transform 0.2s, box-shadow 0.2s;
+    }
+
+    .testimonial-card:hover {
+        transform: translateY(-3px);
+        box-shadow: var(--shadow-md);
+    }
+
+    .testimonial-stars {
+        display: flex;
+        gap: 4px;
+        margin-bottom: 20px;
+    }
+
+    .star {
+        width: 18px;
+        height: 18px;
+        fill: var(--color-accent);
+    }
+
+    .testimonial-quote {
+        font-size: 16px;
+        line-height: 1.7;
+        color: var(--color-fg-default);
+        margin-bottom: 24px;
+        font-style: italic;
+    }
+
+    .testimonial-author {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+    }
+
+    .testimonial-avatar {
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        background: var(--color-accent);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 16px;
+        font-weight: 600;
+        color: var(--color-black);
+        font-family: 'Inter Tight', sans-serif;
+        flex-shrink: 0;
+    }
+
+    .testimonial-name {
+        font-size: 14px;
+        font-weight: 600;
+        color: var(--color-fg-default);
+    }
+
+    .testimonial-location {
+        font-size: 13px;
+        color: var(--color-fg-muted);
+    }
+
+    /* ===========================
+       FAQ SECTION
+       =========================== */
+    .faq-section {
+        background: var(--color-white);
+    }
+
+    .faq-inner {
+        max-width: 800px;
+        margin: 0 auto;
+    }
+
+    .faq-item {
+        border-bottom: 1px solid var(--color-border-default);
+    }
+
+    .faq-item:first-child { border-top: 1px solid var(--color-border-default); }
+
+    .faq-question {
+        width: 100%;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 24px 0;
+        text-align: left;
+        cursor: pointer;
+        background: none;
+        gap: 20px;
+    }
+
+    .faq-question:hover { background: rgba(0,0,0,0.01); }
+
+    .faq-question h3 {
+        font-size: 18px;
+        font-weight: 600;
+        color: var(--color-fg-default);
+        flex: 1;
+    }
+
+    .faq-icon {
+        width: 32px;
+        height: 32px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 50%;
+        background: var(--color-canvas-subtle);
+        border: 1px solid var(--color-border-default);
+        font-size: 18px;
+        color: var(--color-fg-muted);
+        transition: transform 0.3s, background 0.2s;
+        flex-shrink: 0;
+    }
+
+    .faq-item.active .faq-icon {
+        transform: rotate(45deg);
+        background: var(--color-accent);
+        border-color: var(--color-accent);
+        color: var(--color-black);
+    }
+
+    .faq-answer {
+        max-height: 0;
+        overflow: hidden;
+        transition: max-height 0.4s ease;
+    }
+
+    .faq-answer-inner {
+        padding: 0 0 24px 0;
+        font-size: 15px;
+        line-height: 1.75;
+        color: var(--color-fg-muted);
+    }
+
+    /* ===========================
+       FINAL CTA
+       =========================== */
+    .final-cta {
+        background: var(--color-black);
+        color: var(--color-white);
+        position: relative;
+        overflow: hidden;
+        text-align: center;
+    }
+
+    .final-cta::before {
+        content: '';
+        position: absolute;
+        inset: 0;
+        background-image:
+            linear-gradient(rgba(255,255,255,0.03) 1px, transparent 1px),
+            linear-gradient(90deg, rgba(255,255,255,0.03) 1px, transparent 1px);
+        background-size: 50px 50px;
+        pointer-events: none;
+    }
+
+    .final-cta-inner {
+        position: relative;
+        z-index: 1;
+        max-width: 720px;
+        margin: 0 auto;
+        text-align: center;
+    }
+
+    .final-cta h2 {
+        font-size: 52px;
+        letter-spacing: -0.03em;
+        margin-bottom: 20px;
+        color: var(--color-white);
+    }
+
+    .final-cta h2 .accent { color: var(--color-accent); }
+
+    .final-cta p {
+        font-size: 19px;
+        line-height: 1.65;
+        color: rgba(255,255,255,0.7);
+        margin-bottom: 40px;
+    }
+
+    .final-cta-buttons {
+        display: flex;
+        gap: 16px;
+        justify-content: center;
+        flex-wrap: wrap;
+    }
+
+    /* ===========================
+       ANIMATIONS
+       =========================== */
+    @keyframes fadeUp {
+        from { opacity: 0; transform: translateY(16px); }
+        to { opacity: 1; transform: translateY(0); }
+    }
+
+    .fade-up { animation: fadeUp 0.5s ease forwards; }
+
+    /* ===========================
+       RESPONSIVE
+       =========================== */
+    @media (max-width: 1024px) {
+        :root { --container-padding: 24px; }
+
+        .hero h1 { font-size: 52px; }
+        .section-heading { font-size: 40px; }
+
+        .hero-content {
+            grid-template-columns: 1fr;
+            gap: 56px;
+            text-align: center;
+        }
+
+        .hero-description { max-width: 100%; }
+        .hero-buttons { justify-content: center; }
+        .hero-trust { justify-content: center; }
+
+        .features-grid { grid-template-columns: 1fr; }
+
+        .showcase-grid {
+            grid-template-columns: 1fr;
+            gap: 48px;
+        }
+
+        .hiw-steps { grid-template-columns: 1fr; }
+        .hiw-step { border-right: none; border-bottom: 1px solid rgba(255,255,255,0.08); }
+        .hiw-step:last-child { border-bottom: none; }
+
+        .pricing-grid { grid-template-columns: 1fr; max-width: 480px; }
+    }
+
+    @media (max-width: 768px) {
+        .section { padding: 80px 0; }
+        .hero { min-height: auto; }
+        .hero h1 { font-size: 38px; }
+        .section-heading { font-size: 32px; }
+        .final-cta h2 { font-size: 36px; }
+
+        .features-grid { grid-template-columns: 1fr; }
+
+        .testimonials-slide { grid-template-columns: 1fr; }
+    }
+
+    @media (max-width: 480px) {
+        .hero h1 { font-size: 32px; }
+        .hero-description { font-size: 16px; }
+        .final-cta h2 { font-size: 28px; }
+    }
+</style>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Inter+Tight:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+
+{% comment %} Get product for dynamic data {% endcomment %}
+{% assign radcam_product = all_products['radcam-the-talking-camera-pre-order-now'] %}
+{% assign radcam_variant = radcam_product.selected_or_first_available_variant %}
+
+<!-- HERO -->
+<section class="hero">
+    <img src="https://radcam.ai/cdn/shop/files/13_RADCam_Exterior_Garage.jpg?v=1741641305" alt="" class="hero-bg-image">
+    <div class="container">
+        <div class="hero-content">
+            <div class="hero-text">
+                <div class="hero-badge">
+                    <span class="hero-badge-dot"></span>
+                    World's First AI Talking Camera
+                </div>
+                <h1>Your Home Has a<br><span class="accent">Voice Now.</span></h1>
+                <p class="hero-description">RADCam detects who's at your door, understands what they're doing, and responds, out loud, before you even pick up your phone. Powered by the same AI trusted by Fortune 500 security teams.</p>
+                <div class="hero-buttons">
+                    <a href="{{ radcam_product.url }}" class="btn btn-yellow btn-xl">Shop RADCam</a>
+                    <a href="/pages/about" class="btn btn-outline-white btn-xl">Learn More</a>
+                </div>
+                <div class="hero-trust">
+                    <div class="hero-trust-item">
+                        <svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
+                        No subscription to start
+                    </div>
+                    <div class="hero-trust-item">
+                        <svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
+                        Works right out of the box
+                    </div>
+                    <div class="hero-trust-item">
+                        <svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
+                        Indoor & outdoor ready
+                    </div>
+                </div>
+            </div>
+            <div class="hero-visual">
+                <div class="hero-product-wrap">
+                    <div class="hero-product-glow"></div>
+                    <video class="hero-product-img" autoplay muted loop playsinline>
+                        <source src="https://cdn.shopify.com/videos/c/o/v/e82559dd23394f8492704147aff63904.mp4" type="video/mp4">
+                    </video>
+                    <div class="hero-product-badge">
+                        <div>
+                            <div class="hero-product-badge-text">{{ radcam_product.title }}</div>
+                            <div class="hero-product-badge-sub">Free shipping · {% if radcam_product.available %}In stock{% else %}Pre-order{% endif %}</div>
+                        </div>
+                        <div class="hero-product-badge-price">{{ radcam_variant.price | money }}</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- FEATURES -->
+<section class="section features-section">
+    <div class="container">
+        <div class="section-header">
+            <span class="section-label section-label-yellow">More Than Just a Camera</span>
+            <h2 class="section-heading">Your Home's First<br>Active Line of Defense</h2>
+            <p class="section-subtext">Every other camera on the market is a passive witness. RADCam is a participant: it sees, understands, and acts.</p>
+        </div>
+        <div class="features-grid">
+            <div class="feature-card">
+                <img class="feature-card-img" src="{{ 'notification.jpg' | asset_url }}" alt="RADCam smart notification system">
+                <div class="feature-card-body">
+                    <h3>No More Alert Overload</h3>
+                    <p>RADCam's AI filters out the noise: passing cars, blowing leaves, neighborhood animals. You're only notified when something genuinely requires your attention.</p>
+                </div>
+            </div>
+            <div class="feature-card">
+                <img class="feature-card-img" src="{{ 'poarch.jpg' | asset_url }}" alt="RADCam detecting porch pirate">
+                <div class="feature-card-body">
+                    <h3>Stop Porch Pirates</h3>
+                    <p>RADCam watches your deliveries. The moment someone approaches a package without authorization, it questions their intentions out loud before they can grab it and run.</p>
+                </div>
+            </div>
+            <div class="feature-card">
+                <img class="feature-card-img" src="{{ 'instant-talk-back.webp' | asset_url }}" alt="RADCam talking to intruder at door">
+                <div class="feature-card-body">
+                    <h3>It Talks Back, Instantly</h3>
+                    <p>The moment RADCam identifies a threat, it speaks. Intruders hear a clear, confident voice telling them they're being monitored and that authorities are being notified. Most don't stick around.</p>
+                </div>
+            </div>
+            <div class="feature-card">
+                <img class="feature-card-img" src="{{ 'smart-visit.webp' | asset_url }}" alt="RADCam greeting delivery driver">
+                <div class="feature-card-body">
+                    <h3>Smart Visitor Greetings</h3>
+                    <p>Delivery drivers and expected visitors get a friendly, professional greeting. RADCam knows the difference between a welcome guest and an unwelcome one, and responds accordingly.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- PRODUCT SHOWCASE -->
+<section class="section showcase-section">
+    <div class="container">
+        <div class="showcase-grid">
+            <div class="showcase-visual">
+                <img id="mainShowcaseImg" src="https://radcam.ai/cdn/shop/files/10_RADCam_Front_Callout.jpg?v=1741641236" alt="RADCam front callout" class="showcase-img-main">
+                <div class="showcase-img-thumb-row">
+                    <img src="https://radcam.ai/cdn/shop/files/10_RADCam_Front_Callout.jpg?v=1741641236" alt="Front view" class="showcase-img-thumb active" onclick="swapShowcase(this, 'https://radcam.ai/cdn/shop/files/10_RADCam_Front_Callout.jpg?v=1741641236')">
+                    <img src="https://radcam.ai/cdn/shop/files/11_RADCam_Side_Callout.jpg?v=1741641236" alt="Side view" class="showcase-img-thumb" onclick="swapShowcase(this, 'https://radcam.ai/cdn/shop/files/11_RADCam_Side_Callout.jpg?v=1741641236')">
+                    <img src="https://radcam.ai/cdn/shop/files/12_RADCam_Exterior.jpg?v=1741641289" alt="Exterior" class="showcase-img-thumb" onclick="swapShowcase(this, 'https://radcam.ai/cdn/shop/files/12_RADCam_Exterior.jpg?v=1741641289')">
+                </div>
+            </div>
+            <div class="showcase-content">
+                <span class="section-label section-label-yellow">The Device</span>
+                <h2>Built to Perform.<br>Designed to Deter.</h2>
+                <p>RADCam isn't designed to blend in. It's designed to be seen. A visible, intelligent security presence that makes potential threats think twice before they act.</p>
+                <ul class="spec-list">
+                    <li class="spec-item">
+                        <div class="spec-check">
+                            <svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
+                        </div>
+                        <div class="spec-text">
+                            <strong>AIR™ Autonomous Intelligent Response</strong>
+                            <span>Real-time, contextual AI conversations, on-device, no cloud delay</span>
+                        </div>
+                    </li>
+                    <li class="spec-item">
+                        <div class="spec-check">
+                            <svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
+                        </div>
+                        <div class="spec-text">
+                            <strong>Two-Way Audio with Active Deterrence</strong>
+                            <span>Speaks to visitors, warns intruders, and escalates when needed</span>
+                        </div>
+                    </li>
+                    <li class="spec-item">
+                        <div class="spec-check">
+                            <svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
+                        </div>
+                        <div class="spec-text">
+                            <strong>Smart Alert Filtering</strong>
+                            <span>Only 4 alert types: visitor, security, package, and emergency</span>
+                        </div>
+                    </li>
+                    <li class="spec-item">
+                        <div class="spec-check">
+                            <svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
+                        </div>
+                        <div class="spec-text">
+                            <strong>Weather-Resistant Housing</strong>
+                            <span>Performs indoors and outdoors in all weather conditions</span>
+                        </div>
+                    </li>
+                    <li class="spec-item">
+                        <div class="spec-check">
+                            <svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
+                        </div>
+                        <div class="spec-text">
+                            <strong>Night Vision & Low-Light Performance</strong>
+                            <span>24/7 monitoring regardless of lighting conditions</span>
+                        </div>
+                    </li>
+                    <li class="spec-item">
+                        <div class="spec-check">
+                            <svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
+                        </div>
+                        <div class="spec-text">
+                            <strong>Mobile App Integration</strong>
+                            <span>Real-time alerts, live view, and event history on your phone</span>
+                        </div>
+                    </li>
+                </ul>
+                <a href="{{ radcam_product.url }}" class="btn btn-yellow btn-lg">Get RADCam</a>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- HOW IT WORKS -->
+<section class="section hiw-section">
+    <div class="container">
+        <div class="section-header" style="position: relative; z-index: 1;">
+            <span class="section-label">How It Works</span>
+            <h2 class="section-heading">Three Steps.<br>Zero Hesitation.</h2>
+            <p class="section-subtext">From the moment something happens at your door to the moment it's resolved. RADCam handles it automatically.</p>
+        </div>
+        <div class="hiw-steps">
+            <div class="hiw-step">
+                <div class="hiw-step-number">01</div>
+                <span class="hiw-step-label">Detect</span>
+                <h3>AI Sees It First</h3>
+                <p>RADCam's edge AI identifies people, packages, and vehicles the instant they enter the frame, classifying intent before you're even aware anything happened.</p>
+            </div>
+            <div class="hiw-step">
+                <div class="hiw-step-number">02</div>
+                <span class="hiw-step-label">Verify</span>
+                <h3>Context Determines Response</h3>
+                <p>AIR™ technology understands the situation: driver, expected visitor, or suspicious activity. The response is calibrated to what's actually happening, not just motion detected.</p>
+            </div>
+            <div class="hiw-step">
+                <div class="hiw-step-number">03</div>
+                <span class="hiw-step-label">Respond</span>
+                <h3>RADCam Acts. You're Notified.</h3>
+                <p>RADCam speaks immediately. Greets, questions, or warns, depending on the situation. You only get an alert when it truly matters. No noise. No hesitation.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- PRICING -->
+<section class="section pricing-section" id="pricing">
+    <div class="container">
+        <div class="section-header">
+            <span class="section-label section-label-yellow">Pricing</span>
+            <h2 class="section-heading">Protect More. Pay Less.</h2>
+            <p class="section-subtext">Enterprise-grade AI security for your home. No long-term contracts. No hidden fees. Subscription activated after setup.</p>
+        </div>
+        <div class="pricing-grid">
+            <div class="pricing-card">
+                <div class="pricing-body">
+                    <div class="pricing-name">Single RADCam</div>
+                    <div class="pricing-price">
+                        <span class="pricing-amount">$84.99</span>
+                        <span class="pricing-was">$99.00</span>
+                    </div>
+                    <span class="pricing-save">Save 15%</span>
+                    <ul class="pricing-features">
+                        <li>1x RADCam™ device</li>
+                        <li>AIR™ AI response technology</li>
+                        <li>Two-way audio & active deterrence</li>
+                        <li>Smart alert filtering</li>
+                        <li>Mobile app access</li>
+                        <li>Indoor & outdoor ready</li>
+                        <li>Subscription activated after setup</li>
+                    </ul>
+                    <a href="{{ radcam_product.url }}" class="btn btn-primary" style="width: 100%; justify-content: center;">Get Single RADCam</a>
+                </div>
+            </div>
+            <div class="pricing-card pricing-card-featured">
+                <div class="pricing-badge">Best Value, Save 16%</div>
+                <div class="pricing-body">
+                    <div class="pricing-name">3-Pack RADCam</div>
+                    <div class="pricing-price">
+                        <span class="pricing-amount">$249</span>
+                        <span class="pricing-was">$297.00</span>
+                    </div>
+                    <span class="pricing-save">Save $48</span>
+                    <ul class="pricing-features">
+                        <li>3x RADCam™ devices</li>
+                        <li>AIR™ AI response technology on all units</li>
+                        <li>Full front, back & side coverage</li>
+                        <li>Two-way audio & active deterrence</li>
+                        <li>Smart alert filtering</li>
+                        <li>Mobile app access</li>
+                        <li>Indoor & outdoor ready</li>
+                        <li>Subscription activated after setup</li>
+                    </ul>
+                    <a href="{{ radcam_product.url }}" class="btn btn-yellow" style="width: 100%; justify-content: center;">Get 3-Pack RADCam</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- TESTIMONIALS -->
+<section class="section testimonials-section">
+    <div class="container">
+        <div class="section-header">
+            <span class="section-label section-label-yellow">What People Are Saying</span>
+            <h2 class="section-heading">Homeowners Who Made<br>the Switch</h2>
+        </div>
+        <div class="testimonials-slider-wrap">
+            <div class="testimonials-track" id="testimonialsTrack">
+
+                <!-- Slide 1 -->
+                <div class="testimonials-slide">
+                    <div class="testimonial-card">
+                        <div class="testimonial-stars">
+                            <svg class="star" viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+                            <svg class="star" viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+                            <svg class="star" viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+                            <svg class="star" viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+                            <svg class="star" viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+                        </div>
+                        <p class="testimonial-quote">"I had three packages stolen in two months. Since I installed RADCam, not one has gone missing. It actually spoke to someone who was eyeing my porch. They walked away immediately."</p>
+                        <div class="testimonial-author">
+                            <div class="testimonial-avatar">M</div>
+                            <div>
+                                <div class="testimonial-name">Marcus T.</div>
+                                <div class="testimonial-location">Atlanta, GA</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="testimonial-card">
+                        <div class="testimonial-stars">
+                            <svg class="star" viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+                            <svg class="star" viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+                            <svg class="star" viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+                            <svg class="star" viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+                            <svg class="star" viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+                        </div>
+                        <p class="testimonial-quote">"I used to get 50+ notifications a day from my old camera. RADCam sends me maybe 3 or 4, and every single one actually matters. It's a completely different experience."</p>
+                        <div class="testimonial-author">
+                            <div class="testimonial-avatar">S</div>
+                            <div>
+                                <div class="testimonial-name">Sarah K.</div>
+                                <div class="testimonial-location">Austin, TX</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="testimonial-card">
+                        <div class="testimonial-stars">
+                            <svg class="star" viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+                            <svg class="star" viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+                            <svg class="star" viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+                            <svg class="star" viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+                            <svg class="star" viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+                        </div>
+                        <p class="testimonial-quote">"The fact that this is the same technology used in enterprise security, but for my house, is wild. Setup took 10 minutes. It greeted my mail carrier the next morning. I was sold."</p>
+                        <div class="testimonial-author">
+                            <div class="testimonial-avatar">D</div>
+                            <div>
+                                <div class="testimonial-name">David R.</div>
+                                <div class="testimonial-location">Seattle, WA</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Slide 2 -->
+                <div class="testimonials-slide">
+                    <div class="testimonial-card">
+                        <div class="testimonial-stars">
+                            <svg class="star" viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+                            <svg class="star" viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+                            <svg class="star" viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+                            <svg class="star" viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+                            <svg class="star" viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+                        </div>
+                        <p class="testimonial-quote">"Huge step forward, great product, crystal clear video. Plan to add to my commercial properties also!"</p>
+                        <div class="testimonial-author">
+                            <div class="testimonial-avatar">J</div>
+                            <div>
+                                <div class="testimonial-name">John Danis</div>
+                                <div class="testimonial-location">Verified Purchase</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="testimonial-card">
+                        <div class="testimonial-stars">
+                            <svg class="star" viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+                            <svg class="star" viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+                            <svg class="star" viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+                            <svg class="star" viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+                            <svg class="star" viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+                        </div>
+                        <p class="testimonial-quote">"Finally something better than Ring! It can actually tell if someone is stealing your packages or just deciphering what is a human or an animal. No more 10,000 notifications."</p>
+                        <div class="testimonial-author">
+                            <div class="testimonial-avatar">F</div>
+                            <div>
+                                <div class="testimonial-name">Fife</div>
+                                <div class="testimonial-location">Verified Purchase</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="testimonial-card">
+                        <div class="testimonial-stars">
+                            <svg class="star" viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+                            <svg class="star" viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+                            <svg class="star" viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+                            <svg class="star" viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+                            <svg class="star" viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+                        </div>
+                        <p class="testimonial-quote">"I love that AI is used to engage a visitor or intruder and the ability to automatically escalate to calling the police if necessary. Can't wait to get it!"</p>
+                        <div class="testimonial-author">
+                            <div class="testimonial-avatar">T</div>
+                            <div>
+                                <div class="testimonial-name">Thomas L. Brown</div>
+                                <div class="testimonial-location">Verified Purchase</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <!-- Dot notch navigation -->
+        <div class="testimonials-dots" id="testimonialsDots"></div>
+    </div>
+</section>
+
+<!-- FAQ -->
+<section class="section faq-section" id="faq">
+    <div class="container">
+        <div class="section-header">
+            <span class="section-label section-label-yellow">FAQ</span>
+            <h2 class="section-heading">Common Questions</h2>
+            <p class="section-subtext">Everything you need to know before you buy, and after.</p>
+        </div>
+        <div class="faq-inner">
+            <div class="faq-item active">
+                <button class="faq-question">
+                    <h3>How does RADCam's AI know what to say?</h3>
+                    <span class="faq-icon">+</span>
+                </button>
+                <div class="faq-answer" style="max-height: 500px;">
+                    <div class="faq-answer-inner">
+                        RADCam uses AITX's AIR™ (Autonomous Intelligent Response) technology to engage in real-time, contextual conversations. It's not scripted. The AI understands what it's seeing (a delivery, a visitor, suspicious activity) and responds accordingly. It can welcome visitors, question suspicious individuals, warn intruders, and monitor packages, all autonomously and in real time.
+                    </div>
+                </div>
+            </div>
+            <div class="faq-item">
+                <button class="faq-question">
+                    <h3>What kinds of alerts will I receive?</h3>
+                    <span class="faq-icon">+</span>
+                </button>
+                <div class="faq-answer">
+                    <div class="faq-answer-inner">
+                        RADCam filters out nuisance notifications and only sends you four types of meaningful alerts: <strong>Visitor Alerts</strong> (someone at your door who wants to speak with you or needs a signature), <strong>Security Alerts</strong> (suspicious behavior or someone who refused to leave after being warned), <strong>Package Alerts</strong> (delivery confirmed or package removed), and <strong>Emergency Alerts</strong> (SOS triggered or situation escalated to law enforcement).
+                    </div>
+                </div>
+            </div>
+            <div class="faq-item">
+                <button class="faq-question">
+                    <h3>Does RADCam work outdoors?</h3>
+                    <span class="faq-icon">+</span>
+                </button>
+                <div class="faq-answer">
+                    <div class="faq-answer-inner">
+                        Yes. RADCam's weather-resistant housing is designed for both indoor and outdoor deployment. It performs in rain, heat, cold, and low-light conditions. Mount it at your front door, garage, driveway, backyard, anywhere you need intelligent coverage.
+                    </div>
+                </div>
+            </div>
+            <div class="faq-item">
+                <button class="faq-question">
+                    <h3>When does the subscription start?</h3>
+                    <span class="faq-icon">+</span>
+                </button>
+                <div class="faq-answer">
+                    <div class="faq-answer-inner">
+                        Your RADCam subscription is activated after the hardware is received and the camera is set up through the mobile app. You won't be charged until you've completed the activation process, so you can take your time getting it installed.
+                    </div>
+                </div>
+            </div>
+            <div class="faq-item">
+                <button class="faq-question">
+                    <h3>How is RADCam different from Ring or Nest?</h3>
+                    <span class="faq-icon">+</span>
+                </button>
+                <div class="faq-answer">
+                    <div class="faq-answer-inner">
+                        Ring and Nest record what happens. RADCam responds to what's happening, in real time, autonomously, without you needing to intervene. It's built on the same enterprise AI platform that secures Fortune 500 campuses and government facilities. The core difference: RADCam is an active security responder, not a passive recording device.
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- FINAL CTA -->
+<section class="section final-cta">
+    <div class="container">
+        <div class="final-cta-inner">
+            <h2>Stop Recording Crimes.<br><span class="accent">Start Preventing Them.</span></h2>
+            <p>RADCam is the only home security camera that acts the moment something happens, not after. Enterprise AI, residential price. Right out of the box.</p>
+            <div class="final-cta-buttons">
+                <a href="{{ radcam_product.url }}" class="btn btn-yellow btn-xl">Shop RADCam</a>
+                <a href="/pages/about" class="btn btn-outline-white btn-xl">Our Story</a>
+            </div>
+        </div>
+    </div>
+</section>
+
+<script>
+    // Product image swap
+    function swapShowcase(thumb, src) {
+        document.getElementById('mainShowcaseImg').src = src;
+        document.querySelectorAll('.showcase-img-thumb').forEach(t => t.classList.remove('active'));
+        thumb.classList.add('active');
+    }
+
+    // FAQ accordion
+    document.querySelectorAll('.faq-question').forEach(btn => {
+        btn.addEventListener('click', () => {
+            const item = btn.parentElement;
+            const answer = item.querySelector('.faq-answer');
+            const isActive = item.classList.contains('active');
+
+            document.querySelectorAll('.faq-item').forEach(i => {
+                i.classList.remove('active');
+                i.querySelector('.faq-answer').style.maxHeight = '0';
+            });
+
+            if (!isActive) {
+                item.classList.add('active');
+                answer.style.maxHeight = answer.scrollHeight + 'px';
+            }
+        });
+    });
+
+    // Smooth scroll
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener('click', function(e) {
+            const href = this.getAttribute('href');
+            if (href === '#') return;
+            e.preventDefault();
+            const target = document.querySelector(href);
+            if (target) {
+                const offset = 80;
+                const top = target.getBoundingClientRect().top + window.pageYOffset - offset;
+                window.scrollTo({ top, behavior: 'smooth' });
+            }
+        });
+    });
+
+    // Intersection Observer for fade-up
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('fade-up');
+                observer.unobserve(entry.target);
+            }
+        });
+    }, { threshold: 0.08, rootMargin: '0px 0px -40px 0px' });
+
+    document.querySelectorAll('.feature-card, .testimonial-card, .pricing-card, .hiw-step').forEach(el => {
+        observer.observe(el);
+    });
+
+    // ===========================
+    // Testimonials slider
+    // ===========================
+    (function() {
+        const track = document.getElementById('testimonialsTrack');
+        const dotsContainer = document.getElementById('testimonialsDots');
+        const slides = track.querySelectorAll('.testimonials-slide');
+        const total = slides.length;
+        let current = 0;
+        let autoTimer;
+
+        // Build dots
+        slides.forEach((_, i) => {
+            const dot = document.createElement('button');
+            dot.classList.add('testimonials-dot');
+            if (i === 0) dot.classList.add('active');
+            dot.addEventListener('click', () => goTo(i));
+            dotsContainer.appendChild(dot);
+        });
+
+        function goTo(index) {
+            current = index;
+            track.style.transform = 'translateX(-' + (current * 100) + '%)';
+            dotsContainer.querySelectorAll('.testimonials-dot').forEach((d, i) => {
+                d.classList.toggle('active', i === current);
+            });
+            resetTimer();
+        }
+
+        function next() {
+            goTo((current + 1) % total);
+        }
+
+        function resetTimer() {
+            clearInterval(autoTimer);
+            autoTimer = setInterval(next, 7000);
+        }
+
+        // Touch/swipe support
+        let touchStartX = 0;
+        track.addEventListener('touchstart', e => { touchStartX = e.touches[0].clientX; }, { passive: true });
+        track.addEventListener('touchend', e => {
+            const diff = touchStartX - e.changedTouches[0].clientX;
+            if (Math.abs(diff) > 50) diff > 0 ? goTo((current + 1) % total) : goTo((current - 1 + total) % total);
+        });
+
+        resetTimer();
+    })();
+</script>

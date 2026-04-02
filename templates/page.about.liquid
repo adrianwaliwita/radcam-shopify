@@ -1,0 +1,1074 @@
+{% comment %}
+  RADCam About Page - Shopify Template
+  This template integrates with your Shopify theme's header and footer
+{% endcomment %}
+
+{% assign radcam_product = all_products['radcam-the-talking-camera-pre-order-now'] %}
+{% assign radcam_variant = radcam_product.selected_or_first_available_variant %}
+
+<style>
+    :root {
+        --color-black: #000000;
+        --color-white: #ffffff;
+        --color-accent: #facc15;
+        --color-accent-hover: #f5c400;
+        --color-canvas-default: #ffffff;
+        --color-canvas-subtle: #f6f8fa;
+        --color-border-default: #d0d7de;
+        --color-border-muted: #e1e4e8;
+        --color-fg-default: #0d1117;
+        --color-fg-muted: #57606a;
+        --color-fg-subtle: #6e7781;
+        --container-max: 1280px;
+        --container-padding: 32px;
+        --shadow-sm: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
+        --shadow-md: 0 14px 28px rgba(0,0,0,0.15), 0 10px 10px rgba(0,0,0,0.12);
+        --shadow-lg: 0 24px 80px rgba(0,0,0,0.1);
+        --shadow-yellow: 0 4px 12px rgba(250,204,21,0.2);
+        --shadow-yellow-lg: 0 16px 32px rgba(250,204,21,0.3);
+    }
+
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+    }
+
+    body {
+        font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif !important;
+        font-size: 17px;
+        line-height: 1.6;
+        color: var(--color-fg-default) !important;
+        background: var(--color-white);
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+    }
+
+    h1, h2, h3, h4, h5, h6 {
+        font-family: 'Inter Tight', -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif !important;
+        line-height: 1.15;
+        font-weight: 500;
+    }
+
+    a { text-decoration: none; color: inherit; }
+    img { max-width: 100%; height: auto; display: block; }
+    button { font-family: inherit; cursor: pointer; border: none; background: none; }
+
+    .container {
+        max-width: var(--container-max);
+        margin: 0 auto;
+        padding: 0 var(--container-padding);
+    }
+
+    .section { padding: 120px 0; }
+    .section-sm { padding: 80px 0; }
+
+    /* BUTTONS */
+    .btn {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        padding: 11px 22px;
+        border-radius: 6px;
+        font-size: 15px;
+        font-weight: 600;
+        transition: all 0.2s;
+        white-space: nowrap;
+        cursor: pointer;
+    }
+
+    .btn-yellow {
+        background: var(--color-accent);
+        color: var(--color-black);
+        border: 1px solid var(--color-accent);
+    }
+
+    .btn-yellow:hover {
+        background: var(--color-accent-hover);
+        transform: translateY(-1px);
+        box-shadow: var(--shadow-yellow);
+    }
+
+    .btn-primary {
+        background: var(--color-black);
+        color: var(--color-white);
+        border: 1px solid var(--color-black);
+    }
+
+    .btn-primary:hover {
+        background: #1a1a1a;
+        transform: translateY(-1px);
+        box-shadow: var(--shadow-sm);
+    }
+
+    .btn-outline-white {
+        background: transparent;
+        color: var(--color-white);
+        border: 1px solid rgba(255,255,255,0.4);
+    }
+
+    .btn-outline-white:hover {
+        border-color: var(--color-white);
+        background: rgba(255,255,255,0.08);
+    }
+
+    .btn-lg {
+        padding: 14px 32px;
+        font-size: 16px;
+    }
+
+    /* HERO */
+    .hero {
+        position: relative;
+        min-height: 640px;
+        display: flex;
+        align-items: center;
+        background: url('https://radcam.ai/cdn/shop/files/13_RADCam_Exterior_Garage.jpg?v=1741641305') center center / cover no-repeat;
+        color: var(--color-white);
+        overflow: hidden;
+    }
+
+    .hero::before {
+        content: '';
+        position: absolute;
+        inset: 0;
+        background: rgba(0,0,0,0.72);
+        pointer-events: none;
+    }
+
+    .hero-content {
+        position: relative;
+        z-index: 1;
+        padding: 100px 0;
+        text-align: center;
+        max-width: 860px;
+        margin: 0 auto;
+    }
+
+    .hero-badge {
+        display: inline-block;
+        padding: 6px 14px;
+        background: rgba(250, 204, 21, 0.12);
+        border: 1px solid var(--color-accent);
+        border-radius: 4px;
+        font-size: 12px;
+        font-weight: 600;
+        text-transform: uppercase;
+        letter-spacing: 0.1em;
+        color: var(--color-accent);
+        margin-bottom: 28px;
+    }
+
+    .hero h1 {
+        font-size: 64px;
+        letter-spacing: -0.04em;
+        margin-bottom: 24px;
+        line-height: 1.1;
+        font-weight: 600;
+        color: var(--color-white) !important;
+    }
+
+    .hero h1 .accent { color: var(--color-accent) !important; }
+
+    .hero-description {
+        font-size: 20px;
+        line-height: 1.6;
+        color: rgba(255,255,255,0.78);
+        max-width: 680px;
+        margin: 0 auto 40px;
+    }
+
+    .hero-buttons {
+        display: flex;
+        gap: 16px;
+        justify-content: center;
+        flex-wrap: wrap;
+    }
+
+    /* SECTION HEADERS */
+    .section-label {
+        font-size: 12px;
+        font-weight: 600;
+        text-transform: uppercase;
+        letter-spacing: 0.1em;
+        color: var(--color-fg-muted);
+        margin-bottom: 14px;
+        display: block;
+    }
+
+    .section-label-yellow {
+        color: var(--color-accent-hover);
+    }
+
+    .section-heading {
+        font-size: 48px;
+        letter-spacing: -0.025em;
+        margin-bottom: 16px;
+        font-weight: 600;
+    }
+
+    .section-subtext {
+        font-size: 18px;
+        color: var(--color-fg-muted);
+        max-width: 680px;
+        line-height: 1.65;
+    }
+
+    .section-header {
+        text-align: center;
+        margin-bottom: 64px;
+    }
+
+    .section-header .section-subtext {
+        margin: 0 auto;
+    }
+
+    /* ORIGIN STORY */
+    .origin-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 80px;
+        align-items: center;
+    }
+
+    .origin-content .section-label { text-align: left; }
+
+    .origin-content h2 {
+        font-size: 40px;
+        letter-spacing: -0.025em;
+        margin-bottom: 24px;
+        font-weight: 600;
+    }
+
+    .origin-content p {
+        font-size: 17px;
+        line-height: 1.75;
+        color: var(--color-fg-muted);
+        margin-bottom: 18px;
+    }
+
+    .origin-content p:last-child { margin-bottom: 0; }
+
+    .origin-visual {
+        border-radius: 12px;
+        overflow: hidden;
+        box-shadow: var(--shadow-lg);
+        aspect-ratio: 1;
+        background: var(--color-canvas-subtle);
+    }
+
+    .origin-visual img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+
+    /* PROBLEM SECTION (DARK) */
+    .problem-section {
+        background: var(--color-black);
+        color: var(--color-white);
+        position: relative;
+    }
+
+    .problem-section::before {
+        content: '';
+        position: absolute;
+        inset: 0;
+        background-image:
+            linear-gradient(rgba(255,255,255,0.025) 1px, transparent 1px),
+            linear-gradient(90deg, rgba(255,255,255,0.025) 1px, transparent 1px);
+        background-size: 50px 50px;
+        pointer-events: none;
+    }
+
+    .problem-section .section-label {
+        color: rgba(255,255,255,0.5);
+    }
+
+    .problem-section .section-heading {
+        color: var(--color-white);
+    }
+
+    .problem-section .section-subtext {
+        color: rgba(255,255,255,0.65);
+    }
+
+    .problem-grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 24px;
+        position: relative;
+        z-index: 1;
+    }
+
+    .problem-card {
+        padding: 40px 36px;
+        background: rgba(255,255,255,0.04);
+        border: 1px solid rgba(255,255,255,0.1);
+        border-radius: 10px;
+        transition: background 0.3s, border-color 0.3s, box-shadow 0.3s;
+    }
+
+    .problem-card:hover {
+        background: rgba(255,255,255,0.07);
+        border-color: rgba(250,204,21,0.35);
+        box-shadow: var(--shadow-yellow);
+    }
+
+    .problem-icon {
+        width: 52px;
+        height: 52px;
+        background: rgba(250,204,21,0.12);
+        border: 1px solid rgba(250,204,21,0.3);
+        border-radius: 10px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-bottom: 24px;
+    }
+
+    .problem-icon svg {
+        width: 26px;
+        height: 26px;
+        stroke: var(--color-accent);
+        fill: none;
+        stroke-width: 2;
+        stroke-linecap: round;
+        stroke-linejoin: round;
+    }
+
+    .problem-card h3 {
+        font-size: 20px;
+        font-weight: 600;
+        color: var(--color-white);
+        margin-bottom: 12px;
+    }
+
+    .problem-card p {
+        font-size: 15px;
+        line-height: 1.7;
+        color: rgba(255,255,255,0.6);
+    }
+
+    .problem-card .problem-label {
+        font-size: 11px;
+        font-weight: 600;
+        text-transform: uppercase;
+        letter-spacing: 0.1em;
+        color: var(--color-accent);
+        margin-bottom: 10px;
+        display: block;
+    }
+
+    /* HOW IT WORKS (TIMELINE) */
+    .timeline {
+        position: relative;
+        max-width: 800px;
+        margin: 0 auto;
+    }
+
+    .timeline::before {
+        content: '';
+        position: absolute;
+        left: 39px;
+        top: 60px;
+        bottom: 60px;
+        width: 2px;
+        background: linear-gradient(180deg, var(--color-accent) 0%, var(--color-accent-hover) 100%);
+    }
+
+    .timeline-item {
+        position: relative;
+        padding-left: 100px;
+        margin-bottom: 40px;
+    }
+
+    .timeline-item:last-child { margin-bottom: 0; }
+
+    .timeline-number {
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: 78px;
+        height: 78px;
+        background: var(--color-accent);
+        border-radius: 14px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 30px;
+        font-weight: 600;
+        color: var(--color-black);
+        box-shadow: 0 4px 20px rgba(250,204,21,0.3);
+        font-family: 'Inter Tight', sans-serif;
+        letter-spacing: -0.03em;
+    }
+
+    .timeline-content {
+        background: var(--color-white);
+        border: 1px solid var(--color-border-default);
+        border-radius: 12px;
+        padding: 32px 36px;
+        transition: box-shadow 0.2s, border-color 0.2s;
+    }
+
+    .timeline-content:hover {
+        box-shadow: var(--shadow-md);
+        border-color: var(--color-accent);
+    }
+
+    .timeline-step-label {
+        font-size: 11px;
+        font-weight: 600;
+        text-transform: uppercase;
+        letter-spacing: 0.1em;
+        color: var(--color-accent-hover);
+        margin-bottom: 8px;
+        display: block;
+    }
+
+    .timeline-content h3 {
+        font-size: 22px;
+        font-weight: 600;
+        margin-bottom: 10px;
+        color: var(--color-fg-default);
+    }
+
+    .timeline-content p {
+        font-size: 15px;
+        line-height: 1.7;
+        color: var(--color-fg-muted);
+    }
+
+    /* TECHNOLOGY ACCORDION */
+    .tech-section {
+        background: var(--color-canvas-subtle);
+    }
+
+    .accordion-wrapper {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 80px;
+        align-items: start;
+    }
+
+    .accordion-visual {
+        position: sticky;
+        top: 100px;
+        border-radius: 12px;
+        overflow: hidden;
+        box-shadow: var(--shadow-lg);
+        aspect-ratio: 1;
+        background: var(--color-canvas-subtle);
+    }
+
+    .accordion-visual img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        display: block;
+    }
+
+    .accordion-item {
+        border-bottom: 1px solid var(--color-border-default);
+        background: transparent;
+        border-radius: 0;
+    }
+
+    .accordion-item:first-child {
+        border-top: 1px solid var(--color-border-default);
+    }
+
+    .accordion-header {
+        width: 100%;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 28px 0;
+        text-align: left;
+        cursor: pointer;
+        transition: all 0.2s;
+        background: none;
+    }
+
+    .accordion-title {
+        font-size: 20px;
+        font-weight: 600;
+        color: var(--color-fg-default);
+        font-family: 'Inter Tight', sans-serif;
+    }
+
+    .accordion-toggle {
+        width: 36px;
+        height: 36px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 50%;
+        background: var(--color-white);
+        border: 1px solid var(--color-border-default);
+        font-size: 20px;
+        color: var(--color-fg-muted);
+        transition: transform 0.3s, background 0.2s;
+        flex-shrink: 0;
+    }
+
+    .accordion-item.active .accordion-toggle {
+        transform: rotate(45deg);
+        background: var(--color-accent);
+        border-color: var(--color-accent);
+        color: var(--color-black);
+    }
+
+    .accordion-content {
+        max-height: 0;
+        overflow: hidden;
+        transition: max-height 0.4s ease;
+    }
+
+    .accordion-content-inner {
+        padding: 0 0 28px 0;
+    }
+
+    .accordion-content p {
+        font-size: 15px;
+        line-height: 1.75;
+        color: var(--color-fg-muted);
+        margin-bottom: 14px;
+    }
+
+    .accordion-content p:last-child { margin-bottom: 0; }
+
+    .accordion-content ul {
+        list-style: none;
+        margin-top: 12px;
+    }
+
+    .accordion-content li {
+        font-size: 14px;
+        line-height: 1.6;
+        color: var(--color-fg-muted);
+        padding-left: 22px;
+        margin-bottom: 8px;
+        position: relative;
+    }
+
+    .accordion-content li::before {
+        content: '→';
+        position: absolute;
+        left: 0;
+        color: var(--color-accent-hover);
+        font-weight: 600;
+    }
+
+    /* LINEAGE / STATS (DARK) */
+    .lineage-section {
+        background: var(--color-black);
+        color: var(--color-white);
+        position: relative;
+        overflow: hidden;
+    }
+
+    .lineage-section::before {
+        content: '';
+        position: absolute;
+        inset: 0;
+        background-image:
+            linear-gradient(rgba(255,255,255,0.025) 1px, transparent 1px),
+            linear-gradient(90deg, rgba(255,255,255,0.025) 1px, transparent 1px);
+        background-size: 50px 50px;
+        pointer-events: none;
+    }
+
+    .lineage-inner {
+        position: relative;
+        z-index: 1;
+    }
+
+    .lineage-copy {
+        text-align: center;
+        max-width: 720px;
+        margin: 0 auto 72px;
+    }
+
+    .lineage-copy .section-label {
+        color: rgba(255,255,255,0.5);
+        display: block;
+        text-align: center;
+    }
+
+    .lineage-copy h2 {
+        font-size: 44px;
+        letter-spacing: -0.03em;
+        color: var(--color-white);
+        margin-bottom: 20px;
+        font-weight: 600;
+    }
+
+    .lineage-copy p {
+        font-size: 18px;
+        line-height: 1.65;
+        color: rgba(255,255,255,0.65);
+    }
+
+    .lineage-stats {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 2px;
+        border: 1px solid rgba(255,255,255,0.1);
+        border-radius: 12px;
+        overflow: hidden;
+    }
+
+    .lineage-stat {
+        padding: 40px 32px;
+        background: rgba(255,255,255,0.03);
+        text-align: center;
+        border-right: 1px solid rgba(255,255,255,0.08);
+        transition: background 0.3s;
+    }
+
+    .lineage-stat:last-child { border-right: none; }
+
+    .lineage-stat:hover { background: rgba(255,255,255,0.06); }
+
+    .lineage-stat-number {
+        font-family: 'Inter Tight', sans-serif;
+        font-size: 44px;
+        font-weight: 600;
+        color: var(--color-accent);
+        letter-spacing: -0.03em;
+        margin-bottom: 8px;
+        line-height: 1;
+    }
+
+    .lineage-stat-label {
+        font-size: 14px;
+        color: rgba(255,255,255,0.6);
+        line-height: 1.4;
+    }
+
+    /* CTA SECTION */
+    .cta-section {
+        background: var(--color-canvas-subtle);
+    }
+
+    .cta-cards {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 28px;
+    }
+
+    .cta-card {
+        padding: 60px 56px;
+        border-radius: 12px;
+        text-align: center;
+    }
+
+    .cta-card-black {
+        background: var(--color-black);
+        color: var(--color-white);
+        position: relative;
+        overflow: hidden;
+    }
+
+    .cta-card-black::before {
+        content: '';
+        position: absolute;
+        inset: 0;
+        background-image:
+            linear-gradient(rgba(255,255,255,0.03) 1px, transparent 1px),
+            linear-gradient(90deg, rgba(255,255,255,0.03) 1px, transparent 1px);
+        background-size: 50px 50px;
+        pointer-events: none;
+    }
+
+    .cta-card-white {
+        background: var(--color-white);
+        border: 1px solid var(--color-border-default);
+    }
+
+    .cta-card h3 {
+        font-size: 30px;
+        margin-bottom: 14px;
+        position: relative;
+        z-index: 1;
+        letter-spacing: -0.02em;
+    }
+
+    .cta-card p {
+        font-size: 16px;
+        line-height: 1.65;
+        margin-bottom: 32px;
+        position: relative;
+        z-index: 1;
+    }
+
+    .cta-card-black p { color: rgba(255,255,255,0.72); }
+    .cta-card-white p { color: var(--color-fg-muted); }
+
+    .cta-card .btn { position: relative; z-index: 1; }
+
+    /* ANIMATIONS */
+    @keyframes fadeUp {
+        from { opacity: 0; transform: translateY(16px); }
+        to { opacity: 1; transform: translateY(0); }
+    }
+
+    .fade-up { animation: fadeUp 0.5s ease forwards; }
+
+    /* RESPONSIVE */
+    @media (max-width: 1024px) {
+        :root { --container-padding: 24px; }
+
+        .hero h1 { font-size: 52px; }
+        .section-heading { font-size: 40px; }
+
+        .origin-grid,
+        .accordion-wrapper { grid-template-columns: 1fr; gap: 48px; }
+
+        .accordion-visual { position: relative; top: 0; }
+
+        .problem-grid { grid-template-columns: repeat(2, 1fr); }
+
+        .lineage-stats { grid-template-columns: repeat(2, 1fr); }
+        .lineage-stat { border-right: none; border-bottom: 1px solid rgba(255,255,255,0.08); }
+        .lineage-stat:nth-child(2n) { border-right: none; }
+
+        .cta-cards { grid-template-columns: 1fr; }
+    }
+
+    @media (max-width: 768px) {
+        .section { padding: 80px 0; }
+        .hero h1 { font-size: 38px; }
+        .section-heading { font-size: 32px; }
+        .lineage-copy h2 { font-size: 34px; }
+
+        .problem-grid { grid-template-columns: 1fr; }
+
+        .lineage-stats { grid-template-columns: 1fr 1fr; }
+
+        .cta-card { padding: 40px 28px; }
+
+        .timeline::before { left: 29px; top: 50px; bottom: 50px; }
+        .timeline-item { padding-left: 80px; }
+        .timeline-number { width: 60px; height: 60px; font-size: 24px; border-radius: 10px; }
+        .timeline-content { padding: 24px; }
+    }
+
+    @media (max-width: 480px) {
+        .hero h1 { font-size: 32px; }
+        .hero-description { font-size: 17px; }
+        .lineage-stats { grid-template-columns: 1fr; }
+        .lineage-stat { border-right: none; }
+    }
+</style>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Inter+Tight:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+
+<!-- HERO -->
+<section class="hero">
+    <div class="container">
+        <div class="hero-content">
+            <span class="hero-badge">About RADCam</span>
+            <h1>Enterprise-Grade Security.<br><span class="accent">Finally, For Your Home.</span></h1>
+            <p class="hero-description">RADCam brings the same autonomous AI that protects Fortune 500 campuses and government facilities to your front door. Not just a camera. A security responder.</p>
+            <div class="hero-buttons">
+                <a href="{{ radcam_product.url }}" class="btn btn-yellow btn-lg">Shop Now</a>
+                <a href="#how-it-works" class="btn btn-outline-white btn-lg">Learn How It Works</a>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ORIGIN STORY -->
+<section class="section">
+    <div class="container">
+        <div class="origin-grid">
+            <div class="origin-content">
+                <span class="section-label">Where It Started</span>
+                <h2>Built by the Team That Secured the Enterprise</h2>
+                <p>RAD (Robotic Assistance Devices) was founded on a single question: what if security incidents could be handled automatically, instead of relying on slow, manual processes to verify alerts and coordinate a response?</p>
+                <p>That question led to a platform now deployed across hospitals, logistics hubs, corporate campuses, and critical infrastructure. RAD's autonomous systems detect threats, verify incidents, engage suspects, and escalate per policy, all without waiting for a human to act.</p>
+                <p>RADCam is the next chapter. The same AI intelligence. The same autonomous response engine. The same award-winning platform, now built for the place that matters most: your home.</p>
+                <div style="margin-top: 32px;">
+                    <a href="https://radsecurity.com/company" target="_blank" class="btn btn-primary">Learn About RAD Security</a>
+                </div>
+            </div>
+            <div class="origin-visual">
+                <img src="https://radcam.ai/cdn/shop/files/12_RADCam_Exterior.jpg?v=1741641289" alt="RADCam installed outdoors">
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- THE PROBLEM (DARK) -->
+<section class="section problem-section">
+    <div class="container">
+        <div class="section-header" style="position: relative; z-index: 1;">
+            <span class="section-label" style="color: rgba(255,255,255,0.5);">The Problem</span>
+            <h2 class="section-heading" style="color: #fff;">Traditional Cameras Watch.<br>RADCam Acts.</h2>
+            <p class="section-subtext" style="color: rgba(255,255,255,0.6);">Every camera on the market records what happened. RADCam is built to stop it from happening in the first place.</p>
+        </div>
+        <div class="problem-grid">
+            <div class="problem-card">
+                <div class="problem-icon">
+                    <svg viewBox="0 0 24 24">
+                        <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/>
+                        <path d="M13.73 21a2 2 0 0 1-3.46 0"/>
+                    </svg>
+                </div>
+                <span class="problem-label">Alert Overload</span>
+                <h3>Flooded With Noise</h3>
+                <p>Passive cameras trigger hundreds of useless notifications: a passing car, blowing leaves, a neighbor's dog. You stop paying attention. That's when real threats go unnoticed.</p>
+            </div>
+            <div class="problem-card">
+                <div class="problem-icon">
+                    <svg viewBox="0 0 24 24">
+                        <circle cx="12" cy="12" r="10"/>
+                        <line x1="4.93" y1="4.93" x2="19.07" y2="19.07"/>
+                    </svg>
+                </div>
+                <span class="problem-label">No Deterrence</span>
+                <h3>Recording Isn't Protection</h3>
+                <p>A camera that only records is a witness, not a guardian. It documents the theft, the break-in, the porch pirate, but it does nothing to stop them. Evidence after the fact isn't security.</p>
+            </div>
+            <div class="problem-card">
+                <div class="problem-icon">
+                    <svg viewBox="0 0 24 24">
+                        <circle cx="12" cy="12" r="10"/>
+                        <polyline points="12 6 12 12 16 14"/>
+                    </svg>
+                </div>
+                <span class="problem-label">Slow Response</span>
+                <h3>Too Late to Matter</h3>
+                <p>By the time you see an alert, unlock your phone, watch the clip, and decide what to do. The moment has passed. Incidents resolve themselves, rarely in your favor.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- HOW IT WORKS -->
+<section class="section" id="how-it-works">
+    <div class="container">
+        <div class="section-header">
+            <span class="section-label section-label-yellow">How It Works</span>
+            <h2 class="section-heading">Detection. Verification.<br>Response. Automatically.</h2>
+            <p class="section-subtext">RADCam doesn't wait for you to act. The moment something happens at your door, it's already responding.</p>
+        </div>
+        <div class="timeline">
+            <div class="timeline-item">
+                <div class="timeline-number">1</div>
+                <div class="timeline-content">
+                    <span class="timeline-step-label">Step 1: Detect</span>
+                    <h3>AI Identifies What's There</h3>
+                    <p>RADCam's edge AI continuously monitors your property. The moment a person, package, or vehicle enters the frame, it's identified and classified in real time, on-device, without cloud delays. No motion blur. No false starts from shadows or animals.</p>
+                </div>
+            </div>
+            <div class="timeline-item">
+                <div class="timeline-number">2</div>
+                <div class="timeline-content">
+                    <span class="timeline-step-label">Step 2: Verify</span>
+                    <h3>AIR™ Understands Context</h3>
+                    <p>Powered by AITX's Autonomous Intelligent Response (AIR™) technology, RADCam doesn't just see. It understands. Is this a delivery driver leaving a package, or someone picking one up? A neighbor, or an unfamiliar face lingering? Context determines the response.</p>
+                </div>
+            </div>
+            <div class="timeline-item">
+                <div class="timeline-number">3</div>
+                <div class="timeline-content">
+                    <span class="timeline-step-label">Step 3: Respond</span>
+                    <h3>RADCam Speaks. Instantly.</h3>
+                    <p>RADCam engages in real time, greeting visitors, questioning suspicious activity, warning intruders that they're being monitored and that authorities are being notified. You're only alerted when it truly matters: a threat that didn't back down, a package delivered or removed, an SOS triggered.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- TECHNOLOGY ACCORDION -->
+<section class="section tech-section">
+    <div class="container">
+        <div class="accordion-wrapper">
+            <div class="accordion-visual">
+                <img src="https://radcam.ai/cdn/shop/files/11_RADCam_Side_Callout.jpg?v=1741641236" alt="RADCam side callout view">
+            </div>
+            <div>
+                <span class="section-label section-label-yellow">The Technology</span>
+                <h2 class="section-heading" style="margin-bottom: 40px;">Powered by AIR™: Autonomous Intelligent Response</h2>
+
+                <div class="accordion-item active">
+                    <button class="accordion-header">
+                        <span class="accordion-title">AIR™ Technology</span>
+                        <span class="accordion-toggle">+</span>
+                    </button>
+                    <div class="accordion-content" style="max-height: 500px;">
+                        <div class="accordion-content-inner">
+                            <p>AIR™ (Autonomous Intelligent Response) is the proprietary AI engine developed by AITX (Artificial Intelligence Technology Solutions) that powers RADCam's ability to engage in real-time, contextual conversations with people at your door.</p>
+                            <p>Unlike cloud-dependent systems that introduce latency and privacy risk, AIR™ processes events at the edge, directly on the device, enabling instant, intelligent response without waiting for a server round-trip.</p>
+                            <ul>
+                                <li>Real-time, on-device AI processing</li>
+                                <li>Contextual conversation engine, not scripted responses</li>
+                                <li>Continuous learning from deployment data</li>
+                                <li>Built on the same platform trusted by enterprise security teams</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="accordion-item">
+                    <button class="accordion-header">
+                        <span class="accordion-title">Contextual AI Awareness</span>
+                        <span class="accordion-toggle">+</span>
+                    </button>
+                    <div class="accordion-content">
+                        <div class="accordion-content-inner">
+                            <p>RADCam doesn't just detect motion. It understands what it's seeing. The AI identifies clothing, behavior patterns, and situational context to determine the appropriate response for every scenario.</p>
+                            <p>A delivery driver leaving a package gets a polite acknowledgment. Someone lingering near your door gets questioned. Someone attempting to take your package gets a firm, immediate verbal warning.</p>
+                            <ul>
+                                <li>Person, vehicle, and package classification</li>
+                                <li>Behavioral pattern recognition</li>
+                                <li>Clothing and appearance-based contextual responses</li>
+                                <li>Visitor vs. threat differentiation</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="accordion-item">
+                    <button class="accordion-header">
+                        <span class="accordion-title">Smart Alerts: Only What Matters</span>
+                        <span class="accordion-toggle">+</span>
+                    </button>
+                    <div class="accordion-content">
+                        <div class="accordion-content-inner">
+                            <p>RADCam filters out the noise so you only hear about what truly requires your attention. No more 47 notifications from a windy afternoon. No more alert fatigue.</p>
+                            <ul>
+                                <li><strong>Visitor Alerts</strong>: someone at your door who wants to speak with you or needs a signature</li>
+                                <li><strong>Security Alerts</strong>: suspicious behavior or someone who refused to leave after being warned</li>
+                                <li><strong>Package Alerts</strong>: delivery confirmed, or package removed from your property</li>
+                                <li><strong>Emergency Alerts</strong>: SOS triggered or situation escalated to law enforcement</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="accordion-item">
+                    <button class="accordion-header">
+                        <span class="accordion-title">Indoor & Outdoor Ready</span>
+                        <span class="accordion-toggle">+</span>
+                    </button>
+                    <div class="accordion-content">
+                        <div class="accordion-content-inner">
+                            <p>RADCam's weather-resistant, durable design performs in all conditions: blazing sun, heavy rain, or freezing temperatures. Mount it at your front door, garage, driveway, or anywhere you need intelligent coverage.</p>
+                            <ul>
+                                <li>Weather-resistant housing for all-climate deployment</li>
+                                <li>Optimized for both indoor and outdoor environments</li>
+                                <li>Wide-angle lens for maximum coverage area</li>
+                                <li>Night vision and low-light performance</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- RAD LINEAGE (DARK STATS) -->
+<section class="section lineage-section">
+    <div class="container">
+        <div class="lineage-inner">
+            <div class="lineage-copy">
+                <span class="section-label">The RAD Lineage</span>
+                <h2>Enterprise Trust. Home Price.</h2>
+                <p>RADCam is built on the same autonomous security platform that secures hospitals, logistics hubs, and Fortune 500 corporate campuses. The technology is proven. The difference is the price point.</p>
+            </div>
+            <div class="lineage-stats">
+                <div class="lineage-stat">
+                    <div class="lineage-stat-number">500+</div>
+                    <div class="lineage-stat-label">Enterprise Deployments</div>
+                </div>
+                <div class="lineage-stat">
+                    <div class="lineage-stat-number">SIA</div>
+                    <div class="lineage-stat-label">Award-Winning AI Platform</div>
+                </div>
+                <div class="lineage-stat">
+                    <div class="lineage-stat-number">SOC 2</div>
+                    <div class="lineage-stat-label">Type 2 Certified Security</div>
+                </div>
+                <div class="lineage-stat">
+                    <div class="lineage-stat-number">USA</div>
+                    <div class="lineage-stat-label">Designed & Built in America</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- CTA SECTION -->
+<section class="section cta-section">
+    <div class="container">
+        <div class="cta-cards">
+            <div class="cta-card cta-card-black">
+                <h3>Your Home Deserves More Than a Camera</h3>
+                <p>RADCam is the only home security device that detects, verifies, and responds, autonomously. Right out of the box.</p>
+                <a href="{{ radcam_product.url }}" class="btn btn-yellow btn-lg">Shop RADCam</a>
+            </div>
+            <div class="cta-card cta-card-white">
+                <h3>Questions? We've Got Answers.</h3>
+                <p>From setup to subscription, our FAQ covers everything you need to know before you buy, and after.</p>
+                <a href="/#faq" class="btn btn-primary btn-lg">View FAQ</a>
+            </div>
+        </div>
+    </div>
+</section>
+
+<script>
+    // Accordion
+    document.querySelectorAll('.accordion-header').forEach(header => {
+        header.addEventListener('click', () => {
+            const item = header.parentElement;
+            const content = item.querySelector('.accordion-content');
+            const isActive = item.classList.contains('active');
+
+            document.querySelectorAll('.accordion-item').forEach(i => {
+                i.classList.remove('active');
+                i.querySelector('.accordion-content').style.maxHeight = '0';
+            });
+
+            if (!isActive) {
+                item.classList.add('active');
+                content.style.maxHeight = content.scrollHeight + 'px';
+            }
+        });
+    });
+
+    // Smooth scroll
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener('click', function(e) {
+            const href = this.getAttribute('href');
+            if (href === '#') return;
+            e.preventDefault();
+            const target = document.querySelector(href);
+            if (target) {
+                target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            }
+        });
+    });
+
+    // Intersection Observer for fade-up
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('fade-up');
+                observer.unobserve(entry.target);
+            }
+        });
+    }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+
+    document.querySelectorAll('.problem-card, .timeline-item, .lineage-stat, .cta-card').forEach(el => {
+        observer.observe(el);
+    });
+</script>
