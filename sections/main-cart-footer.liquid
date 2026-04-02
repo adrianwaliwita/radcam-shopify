@@ -5,17 +5,35 @@
 
 <style>
   /* RADCam Cart Footer Styling */
+  :root {
+    --rc-color-black: #000000;
+    --rc-color-white: #ffffff;
+    --rc-color-accent: #facc15;
+    --rc-color-accent-hover: #f5c400;
+    --rc-color-canvas-subtle: #f6f8fa;
+    --rc-color-border-default: #d0d7de;
+    --rc-color-border-muted: #e1e4e8;
+    --rc-color-fg-default: #0d1117;
+    --rc-color-fg-muted: #57606a;
+    --rc-shadow-yellow: 0 4px 12px rgba(250,204,21,0.25);
+  }
+
   #main-cart-footer {
     font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    padding-bottom: 60px;
+  }
+
+  #main-cart-footer.is-empty {
+    display: none;
   }
 
   .cart__footer {
-    padding-top: 32px;
-    border-top: 1px solid #e1e4e8;
+    padding-top: 40px;
+    border-top: 2px solid var(--rc-color-border-muted);
   }
 
   .cart__blocks {
-    max-width: 400px;
+    max-width: 420px;
     margin-left: auto;
   }
 
@@ -24,38 +42,44 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-bottom: 16px;
+    margin-bottom: 12px;
+    padding-bottom: 12px;
+    border-bottom: 1px solid var(--rc-color-border-muted);
   }
 
   .totals__subtotal {
     font-family: 'Inter Tight', -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
     font-size: 18px;
     font-weight: 600;
-    color: #0d1117;
+    color: var(--rc-color-fg-default);
+    margin: 0;
   }
 
   .totals__subtotal-value {
     font-family: 'Inter Tight', -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-    font-size: 24px;
-    font-weight: 600;
-    color: #0d1117;
+    font-size: 28px;
+    font-weight: 700;
+    color: var(--rc-color-black);
+    margin: 0;
   }
 
   /* Tax note */
   .tax-note {
     font-size: 13px;
-    color: #57606a;
+    color: var(--rc-color-fg-muted);
     text-align: right;
     margin-bottom: 24px;
+    line-height: 1.5;
   }
 
   .tax-note a {
-    color: #57606a;
+    color: var(--rc-color-fg-muted);
     text-decoration: underline;
+    transition: color 0.2s;
   }
 
   .tax-note a:hover {
-    color: #0d1117;
+    color: var(--rc-color-fg-default);
   }
 
   /* Cart note */
@@ -66,27 +90,33 @@
   .cart__note label {
     display: block;
     font-size: 14px;
-    font-weight: 500;
-    color: #0d1117;
+    font-weight: 600;
+    color: var(--rc-color-fg-default);
     margin-bottom: 8px;
   }
 
   .cart__note .text-area {
     width: 100%;
-    min-height: 80px;
-    padding: 12px;
-    border: 1px solid #d0d7de;
-    border-radius: 6px;
+    min-height: 100px;
+    padding: 14px;
+    border: 1px solid var(--rc-color-border-default);
+    border-radius: 8px;
     font-family: 'Inter', sans-serif;
     font-size: 14px;
-    color: #0d1117;
+    color: var(--rc-color-fg-default);
     resize: vertical;
-    transition: border-color 0.2s;
+    transition: border-color 0.2s, box-shadow 0.2s;
+    background: var(--rc-color-white);
   }
 
   .cart__note .text-area:focus {
     outline: none;
-    border-color: #facc15;
+    border-color: var(--rc-color-accent);
+    box-shadow: 0 0 0 3px rgba(250, 204, 21, 0.15);
+  }
+
+  .cart__note .text-area::placeholder {
+    color: var(--rc-color-fg-muted);
   }
 
   /* Checkout button */
@@ -101,14 +131,14 @@
     align-items: center;
     justify-content: center;
     gap: 8px;
-    padding: 14px 32px;
-    border-radius: 6px;
+    padding: 16px 32px;
+    border-radius: 8px;
     font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
     font-size: 16px;
     font-weight: 600;
-    background: #facc15;
-    color: #000000;
-    border: 1px solid #facc15;
+    background: var(--rc-color-accent);
+    color: var(--rc-color-black);
+    border: 2px solid var(--rc-color-accent);
     text-decoration: none;
     transition: all 0.2s;
     cursor: pointer;
@@ -116,9 +146,17 @@
   }
 
   .cart__checkout-button:hover {
-    background: #f5c400;
-    transform: translateY(-1px);
-    box-shadow: 0 4px 12px rgba(250,204,21,0.25);
+    background: var(--rc-color-accent-hover);
+    border-color: var(--rc-color-accent-hover);
+    transform: translateY(-2px);
+    box-shadow: var(--rc-shadow-yellow);
+  }
+
+  .cart__checkout-button:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    transform: none;
+    box-shadow: none;
   }
 
   .cart__update-button {
@@ -126,14 +164,14 @@
     align-items: center;
     justify-content: center;
     gap: 8px;
-    padding: 11px 22px;
-    border-radius: 6px;
+    padding: 14px 24px;
+    border-radius: 8px;
     font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
     font-size: 15px;
     font-weight: 600;
     background: transparent;
-    color: #0d1117;
-    border: 1px solid #d0d7de;
+    color: var(--rc-color-fg-default);
+    border: 1px solid var(--rc-color-border-default);
     text-decoration: none;
     transition: all 0.2s;
     cursor: pointer;
@@ -141,31 +179,81 @@
   }
 
   .cart__update-button:hover {
-    background: #f6f8fa;
-    border-color: #57606a;
+    background: var(--rc-color-canvas-subtle);
+    border-color: var(--rc-color-fg-muted);
   }
 
   /* Dynamic checkout buttons */
   .cart__dynamic-checkout-buttons {
-    margin-top: 12px;
+    margin-top: 16px;
+  }
+
+  .cart__dynamic-checkout-buttons [data-shopify-buttoncontainer] {
+    justify-content: stretch;
   }
 
   /* Discounts in footer */
+  #main-cart-footer .discounts {
+    list-style: none;
+    padding: 0;
+    margin: 0 0 16px 0;
+  }
+
   #main-cart-footer .discounts__discount {
-    display: flex;
+    display: inline-flex;
     align-items: center;
     gap: 8px;
-    padding: 8px 12px;
-    background: rgba(250, 204, 21, 0.1);
-    border-radius: 6px;
+    padding: 10px 14px;
+    background: rgba(250, 204, 21, 0.15);
+    border-radius: 8px;
     font-size: 14px;
     font-weight: 500;
-    color: #0d1117;
-    margin-bottom: 12px;
+    color: var(--rc-color-fg-default);
+    margin-bottom: 8px;
   }
 
   #main-cart-footer .discounts__discount svg {
-    color: #f5c400;
+    width: 16px;
+    height: 16px;
+    color: var(--rc-color-accent-hover);
+  }
+
+  /* Cart errors */
+  #cart-errors {
+    margin-top: 16px;
+    padding: 12px 16px;
+    background: rgba(220, 38, 38, 0.05);
+    border: 1px solid rgba(220, 38, 38, 0.2);
+    border-radius: 8px;
+    color: #dc2626;
+    font-size: 14px;
+  }
+
+  #cart-errors:empty {
+    display: none;
+  }
+
+  /* Mobile responsive */
+  @media screen and (max-width: 749px) {
+    #main-cart-footer {
+      padding-bottom: 40px;
+    }
+
+    .cart__footer {
+      padding-top: 32px;
+    }
+
+    .cart__blocks {
+      max-width: 100%;
+    }
+
+    .totals__subtotal-value {
+      font-size: 24px;
+    }
+
+    .cart__checkout-button {
+      padding: 14px 24px;
+    }
   }
 </style>
 

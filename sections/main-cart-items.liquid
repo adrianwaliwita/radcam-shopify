@@ -33,22 +33,35 @@
     }
   }
 
-  /* Cart page typography */
+  /* Cart page container */
   cart-items {
+    display: block;
     font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    padding-top: 48px;
+    padding-bottom: 48px;
   }
 
+  cart-items.is-empty {
+    padding-top: 80px;
+    padding-bottom: 80px;
+  }
+
+  /* Page title */
   cart-items .title--primary {
     font-family: 'Inter Tight', -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-    font-size: 32px;
+    font-size: 36px;
     font-weight: 600;
     color: var(--rc-color-black);
     letter-spacing: -0.02em;
+    margin: 0;
   }
 
   cart-items .title-wrapper-with-link {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
     margin-bottom: 40px;
-    padding-bottom: 20px;
+    padding-bottom: 24px;
     border-bottom: 1px solid var(--rc-color-border-muted);
   }
 
@@ -62,12 +75,13 @@
 
   cart-items .underlined-link:hover {
     color: var(--rc-color-black);
-    text-decoration: none;
   }
 
   /* Cart items table */
   .cart-items {
     border: none;
+    width: 100%;
+    border-collapse: collapse;
   }
 
   .cart-items thead {
@@ -76,85 +90,163 @@
 
   .cart-item {
     border-bottom: 1px solid var(--rc-color-border-muted);
+  }
+
+  .cart-item td {
     padding: 24px 0;
+    vertical-align: top;
   }
 
   .cart-item__media {
     width: 120px;
+    padding-right: 24px !important;
   }
 
   .cart-item__image-container {
-    border-radius: 8px;
+    border-radius: 12px;
     overflow: hidden;
     background: var(--rc-color-canvas-subtle);
   }
 
   .cart-item__image {
-    border-radius: 8px;
+    border-radius: 12px;
+    width: 120px;
+    height: auto;
+  }
+
+  .cart-item__link {
+    display: block;
+  }
+
+  /* Product details */
+  .cart-item__details {
+    padding-right: 24px !important;
   }
 
   .cart-item__name {
     font-family: 'Inter Tight', -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-    font-size: 17px;
+    font-size: 18px;
     font-weight: 600;
     color: var(--rc-color-black);
     text-decoration: none;
     letter-spacing: -0.01em;
+    display: block;
+    margin-bottom: 8px;
   }
 
   .cart-item__name:hover {
-    color: var(--rc-color-fg-muted);
-    text-decoration: none;
+    color: var(--rc-color-accent-hover);
   }
 
   .cart-item__details .product-option {
     font-size: 14px;
     color: var(--rc-color-fg-muted);
+    margin-bottom: 4px;
+  }
+
+  .cart-item__details .product-option dt,
+  .cart-item__details .product-option dd {
+    display: inline;
   }
 
   /* Quantity controls */
+  .cart-item__quantity {
+    width: 180px;
+  }
+
+  .cart-item__quantity-wrapper {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
   .quantity {
+    display: flex;
+    align-items: center;
     border: 1px solid var(--rc-color-border-default);
-    border-radius: 6px;
+    border-radius: 8px;
     overflow: hidden;
+    background: var(--rc-color-white);
   }
 
   .quantity__button {
     background: var(--rc-color-canvas-subtle);
     border: none;
-    width: 36px;
-    height: 36px;
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
     transition: background 0.2s;
+    color: var(--rc-color-fg-default);
   }
 
   .quantity__button:hover {
     background: var(--rc-color-border-muted);
   }
 
+  .quantity__button svg {
+    width: 12px;
+    height: 12px;
+  }
+
   .quantity__input {
     border: none;
+    border-left: 1px solid var(--rc-color-border-default);
+    border-right: 1px solid var(--rc-color-border-default);
     font-family: 'Inter', sans-serif;
     font-size: 15px;
-    font-weight: 500;
+    font-weight: 600;
     color: var(--rc-color-fg-default);
     text-align: center;
-    width: 48px;
+    width: 56px;
+    height: 40px;
+    background: var(--rc-color-white);
+    -moz-appearance: textfield;
+  }
+
+  .quantity__input::-webkit-outer-spin-button,
+  .quantity__input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
   }
 
   /* Remove button */
-  .cart-item .button--tertiary {
+  cart-remove-button .button--tertiary {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    border-radius: 8px;
     color: var(--rc-color-fg-muted);
-    transition: color 0.2s;
+    background: transparent;
+    border: 1px solid transparent;
+    transition: all 0.2s;
+    text-decoration: none;
   }
 
-  .cart-item .button--tertiary:hover {
+  cart-remove-button .button--tertiary:hover {
     color: #dc2626;
+    background: rgba(220, 38, 38, 0.05);
+    border-color: rgba(220, 38, 38, 0.2);
+  }
+
+  cart-remove-button .button--tertiary svg {
+    width: 18px;
+    height: 18px;
   }
 
   /* Prices */
+  .cart-item__totals {
+    width: 120px;
+    text-align: right;
+  }
+
   .cart-item .price {
     font-family: 'Inter Tight', -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-    font-size: 17px;
+    font-size: 18px;
     font-weight: 600;
     color: var(--rc-color-black);
   }
@@ -162,15 +254,72 @@
   .cart-item__old-price {
     color: var(--rc-color-fg-muted);
     font-weight: 400;
+    font-size: 14px;
+  }
+
+  .cart-item__price-wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 4px;
+  }
+
+  /* Hide the default loading overlay - we don't need it */
+  .loading-overlay {
+    display: none !important;
+  }
+
+  /* Simple loading state - just dim the row */
+  .cart__items--disabled .cart-item {
+    opacity: 0.5;
+    pointer-events: none;
+  }
+
+  /* Error message */
+  .cart-item__error {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-top: 8px;
+    font-size: 13px;
+    color: #dc2626;
+  }
+
+  .cart-item__error:empty {
+    display: none;
+  }
+
+  .cart-item__error .icon-error {
+    width: 16px;
+    height: 16px;
+    flex-shrink: 0;
   }
 
   /* Empty cart */
+  cart-items.is-empty .cart__contents {
+    display: none;
+  }
+
+  cart-items.is-empty .title-wrapper-with-link {
+    display: none;
+  }
+
+  .cart__warnings {
+    display: none;
+    text-align: center;
+    padding: 60px 20px;
+  }
+
+  cart-items.is-empty .cart__warnings {
+    display: block;
+  }
+
   .cart__empty-text {
     font-family: 'Inter Tight', -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-    font-size: 24px;
+    font-size: 28px;
     font-weight: 600;
     color: var(--rc-color-black);
-    margin-bottom: 16px;
+    margin-bottom: 24px;
   }
 
   .cart__warnings .button {
@@ -179,7 +328,7 @@
     justify-content: center;
     gap: 8px;
     padding: 14px 32px;
-    border-radius: 6px;
+    border-radius: 8px;
     font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
     font-size: 16px;
     font-weight: 600;
@@ -197,27 +346,120 @@
     box-shadow: var(--rc-shadow-yellow);
   }
 
+  .cart__login-title {
+    font-family: 'Inter Tight', -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    font-size: 18px;
+    font-weight: 600;
+    color: var(--rc-color-black);
+    margin-top: 40px;
+    margin-bottom: 8px;
+  }
+
+  .cart__login-paragraph {
+    font-size: 15px;
+    color: var(--rc-color-fg-muted);
+  }
+
+  .cart__login-paragraph a {
+    color: var(--rc-color-fg-default);
+    text-decoration: underline;
+  }
+
+  .cart__login-paragraph a:hover {
+    color: var(--rc-color-accent-hover);
+  }
+
   /* Discounts */
+  .discounts {
+    margin-top: 12px;
+    list-style: none;
+    padding: 0;
+  }
+
   .discounts__discount {
-    display: flex;
+    display: inline-flex;
     align-items: center;
-    gap: 8px;
-    padding: 6px 10px;
-    background: rgba(250, 204, 21, 0.1);
-    border-radius: 4px;
+    gap: 6px;
+    padding: 6px 12px;
+    background: rgba(250, 204, 21, 0.15);
+    border-radius: 6px;
     font-size: 13px;
     font-weight: 500;
     color: var(--rc-color-fg-default);
   }
 
   .discounts__discount svg {
+    width: 14px;
+    height: 14px;
     color: var(--rc-color-accent-hover);
+  }
+
+  /* Mobile responsive */
+  @media screen and (max-width: 749px) {
+    cart-items {
+      padding-top: 32px;
+      padding-bottom: 32px;
+    }
+
+    cart-items .title--primary {
+      font-size: 28px;
+    }
+
+    cart-items .title-wrapper-with-link {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 12px;
+      margin-bottom: 24px;
+      padding-bottom: 16px;
+    }
+
+    .cart-item td {
+      padding: 16px 0;
+    }
+
+    .cart-item__media {
+      width: 80px;
+      padding-right: 16px !important;
+    }
+
+    .cart-item__image {
+      width: 80px;
+    }
+
+    .cart-item__name {
+      font-size: 16px;
+    }
+
+    .cart-item__quantity {
+      width: auto;
+      padding-top: 16px !important;
+    }
+
+    .cart-item__quantity-wrapper {
+      flex-wrap: wrap;
+    }
+
+    .quantity__button {
+      width: 36px;
+      height: 36px;
+    }
+
+    .quantity__input {
+      width: 48px;
+      height: 36px;
+    }
+
+    .cart-item__totals {
+      width: auto;
+    }
+
+    .cart-item .price {
+      font-size: 16px;
+    }
   }
 {%- endstyle -%}
 
-{%- unless settings.cart_type == 'drawer' -%}
-  <script src="{{ 'cart.js' | asset_url }}" defer="defer"></script>
-{%- endunless -%}
+<script src="{{ 'cart.js' | asset_url }}" defer="defer"></script>
 
 <cart-items class="page-width{% if cart == empty %} is-empty{% else %} section-{{ section.id }}-padding{% endif %}">
   <div class="title-wrapper-with-link">

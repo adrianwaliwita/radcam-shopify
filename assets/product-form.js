@@ -7,13 +7,11 @@ if (!customElements.get('product-form')) {
       this.form = this.querySelector('form');
       this.form.querySelector('[name=id]').disabled = false;
       this.form.addEventListener('submit', this.onSubmitHandler.bind(this));
-      this.cart = document.querySelector('cart-notification') || document.querySelector('cart-drawer');
       this.submitButton = this.querySelector('[type="submit"]');
-      if (document.querySelector('cart-drawer')) this.submitButton.setAttribute('aria-haspopup', 'dialog');
       
-      // Check for RADCam custom cart drawer
-      this.radcamCartDrawer = document.getElementById('cartDrawer');
-      if (this.radcamCartDrawer) this.submitButton.setAttribute('aria-haspopup', 'dialog');
+      // Use RADCam custom cart drawer
+      this.cartDrawer = document.getElementById('cartDrawer');
+      if (this.cartDrawer) this.submitButton.setAttribute('aria-haspopup', 'dialog');
 
       this.hideErrors = this.dataset.hideErrors === 'true';
     }
@@ -34,15 +32,9 @@ if (!customElements.get('product-form')) {
 
       const formData = new FormData(this.form);
       
-      // For RADCam custom cart drawer, request the header section
-      if (this.radcamCartDrawer) {
-        formData.append('sections', 'header');
-        formData.append('sections_url', window.location.pathname);
-      } else if (this.cart) {
-        formData.append('sections', this.cart.getSectionsToRender().map((section) => section.id));
-        formData.append('sections_url', window.location.pathname);
-        this.cart.setActiveElement(document.activeElement);
-      }
+      // Request header section for RADCam cart drawer updates
+      formData.append('sections', 'header');
+      formData.append('sections_url', window.location.pathname);
     
       // Added to generate selling plan add to cart response
       if (typeof window.getCurrentSellingPlanId === 'function') {
@@ -70,31 +62,13 @@ if (!customElements.get('product-form')) {
             return;
           }
           
-          // Handle RADCam custom cart drawer
-          if (this.radcamCartDrawer && typeof window.openCartDrawer === 'function') {
-            if (!this.error) publish(PUB_SUB_EVENTS.cartUpdate, {source: 'product-form', productVariantId: formData.get('id')});
-            this.error = false;
-            // Update cart drawer content using section rendering response
-            this.updateRadcamCartDrawer(response);
-            window.openCartDrawer();
-            return;
-          }
-          
-          if (!this.cart) {
-            window.location = window.routes.cart_url;
-            return;
-          }
-
           if (!this.error) publish(PUB_SUB_EVENTS.cartUpdate, {source: 'product-form', productVariantId: formData.get('id')});
           this.error = false;
-          const quickAddModal = this.closest('quick-add-modal');
-          if (quickAddModal) {
-            document.body.addEventListener('modalClosed', () => {
-              setTimeout(() => { this.cart.renderContents(response) });
-            }, { once: true });
-            quickAddModal.hide(true);
-          } else {
-            this.cart.renderContents(response);
+          
+          // Update and open RADCam cart drawer
+          this.updateCartDrawer(response);
+          if (typeof window.openCartDrawer === 'function') {
+            window.openCartDrawer();
           }
         })
         .catch((e) => {
@@ -102,14 +76,12 @@ if (!customElements.get('product-form')) {
         })
         .finally(() => {
           this.submitButton.classList.remove('loading');
-          if (this.cart && this.cart.classList.contains('is-empty')) this.cart.classList.remove('is-empty');
           if (!this.error) this.submitButton.removeAttribute('aria-disabled');
           this.querySelector('.loading-overlay__spinner').classList.add('hidden');
         });
     }
     
-    updateRadcamCartDrawer(response) {
-      // Use section rendering response from the cart add API
+    updateCartDrawer(response) {
       if (response.sections && response.sections.header) {
         const parser = new DOMParser();
         const doc = parser.parseFromString(response.sections.header, 'text/html');
@@ -124,12 +96,12 @@ if (!customElements.get('product-form')) {
         // Update cart drawer footer
         const newCartDrawerFooter = doc.querySelector('.radcam-cart-drawer__footer');
         const currentCartDrawer = document.getElementById('cartDrawer');
-        const currentCartDrawerFooter = currentCartDrawer.querySelector('.radcam-cart-drawer__footer');
+        const currentCartDrawerFooter = currentCartDrawer?.querySelector('.radcam-cart-drawer__footer');
         
         if (newCartDrawerFooter) {
           if (currentCartDrawerFooter) {
             currentCartDrawerFooter.outerHTML = newCartDrawerFooter.outerHTML;
-          } else {
+          } else if (currentCartDrawer) {
             currentCartDrawer.appendChild(newCartDrawerFooter.cloneNode(true));
           }
         } else if (currentCartDrawerFooter) {
@@ -158,11 +130,8 @@ if (!customElements.get('product-form')) {
             currentCartCount.appendChild(badge);
           }
         }
-      } else {
-        // Fallback: use the global update function if section rendering didn't work
-        if (typeof window.updateRadcamCartDrawer === 'function') {
-          window.updateRadcamCartDrawer();
-        }
+      } else if (typeof window.updateRadcamCartDrawer === 'function') {
+        window.updateRadcamCartDrawer();
       }
     }
 
