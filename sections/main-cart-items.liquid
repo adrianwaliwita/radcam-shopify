@@ -264,15 +264,35 @@
     gap: 4px;
   }
 
-  /* Hide the default loading overlay - we don't need it */
+  /* Hide the default loading overlay */
   .loading-overlay {
     display: none !important;
   }
 
-  /* Simple loading state - just dim the row */
-  .cart__items--disabled .cart-item {
-    opacity: 0.5;
+  /* Loading state for cart items */
+  #main-cart-items.cart__items--disabled .cart-item {
     pointer-events: none;
+  }
+
+  /* Skeleton loading effect - only on the specific item being updated */
+  .cart-item.cart-item--loading .price {
+    color: transparent !important;
+    background: linear-gradient(90deg, #e1e4e8 25%, #f6f8fa 50%, #e1e4e8 75%);
+    background-size: 200% 100%;
+    animation: skeletonShimmer 1.2s ease-in-out infinite;
+    border-radius: 4px;
+    display: inline-block;
+    min-width: 70px;
+    min-height: 22px;
+  }
+
+  .cart-item.cart-item--loading .price * {
+    visibility: hidden;
+  }
+
+  @keyframes skeletonShimmer {
+    0% { background-position: 200% 0; }
+    100% { background-position: -200% 0; }
   }
 
   /* Error message */
