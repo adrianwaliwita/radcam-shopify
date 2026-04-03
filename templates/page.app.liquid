@@ -617,6 +617,330 @@
 
     .cta-card .btn { position: relative; z-index: 1; }
 
+    /* SUBSCRIPTION SECTION */
+    .subscription-section { background: var(--color-white); }
+
+    .subscription-grid {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 24px;
+        margin-bottom: 48px;
+    }
+
+    .subscription-card {
+        background: var(--color-white);
+        border: 1px solid var(--color-border-default);
+        border-radius: 12px;
+        padding: 40px 36px;
+        transition: transform 0.3s, box-shadow 0.3s, border-color 0.3s;
+        position: relative;
+    }
+
+    .subscription-card:hover {
+        transform: translateY(-4px);
+        box-shadow: var(--shadow-md);
+    }
+
+    .subscription-card-featured {
+        border: 2px solid var(--color-accent);
+        box-shadow: var(--shadow-yellow);
+        transform: scale(1.05);
+    }
+
+    .subscription-card-featured:hover {
+        transform: scale(1.05) translateY(-4px);
+        box-shadow: var(--shadow-yellow-lg);
+    }
+
+    .subscription-badge {
+        display: inline-block;
+        padding: 6px 12px;
+        background: rgba(250,204,21,0.1);
+        border: 1px solid rgba(250,204,21,0.3);
+        border-radius: 4px;
+        font-size: 11px;
+        font-weight: 600;
+        text-transform: uppercase;
+        letter-spacing: 0.1em;
+        color: var(--color-accent-hover);
+        margin-bottom: 20px;
+    }
+
+    .subscription-badge-free {
+        background: rgba(0,0,0,0.05);
+        border-color: var(--color-border-default);
+        color: var(--color-fg-muted);
+    }
+
+    .recommended-tag {
+        position: absolute;
+        top: -12px;
+        right: 24px;
+        background: var(--color-accent);
+        color: var(--color-black);
+        padding: 4px 12px;
+        border-radius: 4px;
+        font-size: 11px;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 0.08em;
+    }
+
+    .subscription-card h3 {
+        font-size: 24px;
+        margin-bottom: 12px;
+        letter-spacing: -0.02em;
+        font-weight: 600;
+    }
+
+    .subscription-card .card-description {
+        font-size: 15px;
+        line-height: 1.7;
+        color: var(--color-fg-muted);
+        margin-bottom: 24px;
+    }
+
+    .subscription-features {
+        list-style: none;
+        margin-bottom: 24px;
+    }
+
+    .subscription-features li {
+        font-size: 14px;
+        line-height: 1.8;
+        color: var(--color-fg-default);
+        padding-left: 24px;
+        position: relative;
+        margin-bottom: 8px;
+    }
+
+    .subscription-features li:before {
+        content: '✓';
+        position: absolute;
+        left: 0;
+        color: var(--color-accent-hover);
+        font-weight: 700;
+    }
+
+    .subscription-value {
+        font-size: 15px;
+        font-weight: 600;
+        color: var(--color-fg-muted);
+        font-style: italic;
+        line-height: 1.6;
+    }
+
+    /* SOS ADD-ON BANNER */
+    .sos-banner {
+        display: flex;
+        align-items: center;
+        gap: 32px;
+        background: var(--color-black);
+        border-radius: 12px;
+        padding: 40px 48px;
+        margin-bottom: 80px;
+        position: relative;
+        overflow: hidden;
+    }
+
+    .sos-banner::before {
+        content: '';
+        position: absolute;
+        inset: 0;
+        background-image:
+            linear-gradient(rgba(255,255,255,0.03) 1px, transparent 1px),
+            linear-gradient(90deg, rgba(255,255,255,0.03) 1px, transparent 1px);
+        background-size: 50px 50px;
+        pointer-events: none;
+    }
+
+    .sos-banner-icon {
+        flex-shrink: 0;
+        width: 64px;
+        height: 64px;
+        background: rgba(250,204,21,0.15);
+        border: 2px solid var(--color-accent);
+        border-radius: 12px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        position: relative;
+        z-index: 1;
+    }
+
+    .sos-banner-icon svg {
+        width: 32px;
+        height: 32px;
+        fill: var(--color-accent);
+        stroke: none;
+    }
+
+    .sos-banner-content {
+        flex: 1;
+        position: relative;
+        z-index: 1;
+    }
+
+    .sos-banner-content h3 {
+        font-size: 28px;
+        font-weight: 600;
+        color: var(--color-white);
+        margin-bottom: 8px;
+        letter-spacing: -0.02em;
+    }
+
+    .sos-banner-price {
+        font-size: 14px;
+        font-weight: 600;
+        color: var(--color-accent);
+        text-transform: uppercase;
+        letter-spacing: 0.08em;
+        margin-bottom: 12px;
+    }
+
+    .sos-banner-description {
+        font-size: 15px;
+        line-height: 1.7;
+        color: rgba(255,255,255,0.75);
+        max-width: 900px;
+    }
+
+    /* PRICING TABLE */
+    .pricing-container {
+        max-width: 900px;
+        margin: 0 auto;
+    }
+
+    .pricing-toggle-wrapper {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 0;
+        margin: 0 auto 40px;
+        width: 100%;
+    }
+
+    .pricing-toggle-wrapper > * {
+        display: inline-flex;
+        background: var(--color-canvas-subtle);
+        border: 1px solid var(--color-border-default);
+        border-radius: 8px;
+        padding: 4px;
+    }
+
+    .pricing-tab {
+        padding: 12px 28px;
+        font-size: 15px;
+        font-weight: 600;
+        color: var(--color-fg-default);
+        background: transparent;
+        border: none;
+        border-radius: 6px;
+        cursor: pointer;
+        transition: all 0.3s cubic-bezier(0.4, 0.0, 0.2, 1);
+        white-space: nowrap;
+        position: relative;
+    }
+
+    .pricing-tab:hover:not(.active) {
+        background: rgba(0,0,0,0.04);
+        transform: translateY(-1px);
+    }
+
+    .pricing-tab.active {
+        background: var(--color-white);
+        color: var(--color-black);
+        box-shadow: 0 2px 8px rgba(0,0,0,0.12);
+        transform: translateY(-1px);
+    }
+
+    .save-badge {
+        display: inline-block;
+        background: var(--color-accent);
+        color: var(--color-black);
+        padding: 4px 10px;
+        border-radius: 4px;
+        font-size: 12px;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+        margin-left: 8px;
+    }
+
+    .pricing-table {
+        background: var(--color-white);
+        border: 1px solid var(--color-border-default);
+        border-radius: 12px;
+        overflow: hidden;
+    }
+
+    .pricing-row {
+        display: grid;
+        grid-template-columns: 2fr 1fr;
+        border-bottom: 1px solid var(--color-border-muted);
+        transition: background 0.2s;
+    }
+
+    .pricing-row:last-child {
+        border-bottom: none;
+    }
+
+    .pricing-row:hover {
+        background: var(--color-canvas-subtle);
+    }
+
+    .pricing-row-header {
+        background: var(--color-black);
+        color: var(--color-white);
+    }
+
+    .pricing-row-header:hover {
+        background: var(--color-black);
+    }
+
+    .pricing-cell {
+        padding: 20px 24px;
+        display: flex;
+        align-items: center;
+    }
+
+    .pricing-cell-header {
+        font-size: 13px;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 0.08em;
+    }
+
+    .pricing-cell-plan {
+        font-size: 16px;
+        font-weight: 600;
+    }
+
+    .pricing-cell-price {
+        font-size: 18px;
+        font-weight: 700;
+        color: var(--color-fg-default);
+        justify-content: center;
+        transition: opacity 0.2s ease;
+    }
+
+    .pricing-cell-header {
+        transition: opacity 0.2s ease;
+    }
+
+    .pricing-note {
+        text-align: center;
+        margin-top: 28px;
+        font-size: 14px;
+        color: var(--color-fg-muted);
+        line-height: 1.6;
+    }
+
+    .pricing-note strong {
+        color: var(--color-fg-default);
+        font-weight: 600;
+    }
+
     /* ANIMATIONS */
     @keyframes fadeUp {
         from { opacity: 0; transform: translateY(16px); }
@@ -631,6 +955,10 @@
         .hero h1 { font-size: 52px; }
         .section-heading { font-size: 40px; }
         .features-grid { grid-template-columns: 1fr 1fr; }
+        .subscription-grid { grid-template-columns: 1fr; }
+        .subscription-card-featured { transform: scale(1); }
+        .subscription-card-featured:hover { transform: translateY(-4px); }
+        .sos-banner { padding: 32px 36px; gap: 24px; }
         .download-platforms { grid-template-columns: 1fr; }
         .setup-steps { grid-template-columns: 1fr 1fr; }
         .setup-step { border-right: 1px solid rgba(255,255,255,0.08); border-bottom: 1px solid rgba(255,255,255,0.08); }
@@ -641,6 +969,8 @@
         .stat-item:nth-child(2n) { border-right: none; }
         .stat-item:nth-last-child(-n+2) { border-bottom: none; }
         .cta-cards { grid-template-columns: 1fr; }
+        .pricing-row { grid-template-columns: 1.5fr 1fr; }
+        .pricing-cell { padding: 16px 12px; font-size: 14px; }
     }
 
     @media (max-width: 768px) {
@@ -648,6 +978,12 @@
         .hero h1 { font-size: 38px; }
         .section-heading { font-size: 32px; }
         .features-grid { grid-template-columns: 1fr; }
+        .subscription-grid { grid-template-columns: 1fr; margin-bottom: 40px; }
+        .subscription-card { padding: 32px 24px; }
+        .sos-banner { flex-direction: column; text-align: center; padding: 32px 24px; margin-bottom: 60px; gap: 20px; }
+        .sos-banner-icon { width: 56px; height: 56px; }
+        .sos-banner-icon svg { width: 28px; height: 28px; }
+        .sos-banner-content h3 { font-size: 24px; }
         .setup-steps { grid-template-columns: 1fr; }
         .setup-step { border-right: none; border-bottom: 1px solid rgba(255,255,255,0.08); }
         .setup-step:last-child { border-bottom: none; }
@@ -656,6 +992,13 @@
         .stat-item:nth-child(2n) { border-right: none; }
         .cta-card { padding: 40px 28px; }
         .download-card { padding: 36px 28px; }
+        .pricing-row { grid-template-columns: 1fr; }
+        .pricing-cell { border-bottom: 1px solid var(--color-border-muted); padding: 16px 20px; }
+        .pricing-cell:last-child { border-bottom: none; }
+        .pricing-cell-plan { font-weight: 600; }
+        .pricing-cell-price { justify-content: flex-start; }
+        .pricing-toggle-wrapper > div { width: 100%; display: flex; flex-direction: column; }
+        .pricing-tab { width: 100%; justify-content: center; text-align: center; }
     }
 
     @media (max-width: 480px) {
@@ -663,6 +1006,13 @@
         .stats-grid { grid-template-columns: 1fr; }
         .hero-buttons { flex-direction: column; align-items: center; }
         .store-btn { width: 100%; justify-content: center; }
+        .subscription-card h3 { font-size: 22px; }
+        .sos-banner { padding: 24px 20px; }
+        .sos-banner-content h3 { font-size: 20px; }
+        .sos-banner-description { font-size: 14px; }
+        .pricing-cell-price { font-size: 15px; }
+        .pricing-cell { padding: 14px 16px; }
+        .pricing-tab { font-size: 14px; padding: 10px 20px; }
     }
 </style>
 
@@ -693,56 +1043,97 @@
     </div>
 </section>
 
-<!-- APP FEATURES -->
-<section class="section features-section">
+<!-- SUBSCRIPTION FEATURES -->
+<section class="section subscription-section">
     <div class="container">
         <div class="section-header">
-            <span class="section-label section-label-yellow">What's in the App</span>
-            <h2 class="section-heading">Your Camera.<br>Your Control.</h2>
-            <p class="section-subtext">Everything RADCam does, you can see, configure, and review from your phone. Live or after the fact.</p>
+            <span class="section-label section-label-yellow">Activate RADCam's Intelligence</span>
+            <h2 class="section-heading">Elevate Your Experience<br>Activate the Magic of Engage</h2>
+            <p class="section-subtext">RADCam's AI features don't just watch. They talk, think, and protect. Engage activates the intelligence that makes it truly different.</p>
         </div>
-        <div class="features-grid">
-            <div class="feature-card">
-                <div class="feature-icon">
-                    <svg viewBox="0 0 24 24"><path d="M23 7l-7 5 7 5V7z"/><rect x="1" y="5" width="15" height="14" rx="2" ry="2"/></svg>
-                </div>
-                <h3>Live View</h3>
-                <p>Stream 1080p footage from any RADCam directly to your phone, in real time, from anywhere in the world.</p>
+
+        <div class="subscription-grid">
+            <!-- DETECT CARD -->
+            <div class="subscription-card">
+                <span class="subscription-badge subscription-badge-free">Included Free</span>
+                <h3>Detect</h3>
+                <p class="card-description">Out-of-the-Box</p>
+                <ul class="subscription-features">
+                    <li>Live video feed access via RADCam app</li>
+                    <li>24-hour event playback</li>
+                    <li>User-friendly mobile app</li>
+                    <li>Onboard storage for recorded footage</li>
+                </ul>
+                <p class="subscription-value">Essential security features right out of the box.</p>
             </div>
-            <div class="feature-card">
-                <div class="feature-icon">
-                    <svg viewBox="0 0 24 24"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg>
-                </div>
-                <h3>Smart Alerts</h3>
-                <p>Only the four alerts that matter: Visitor, Security, Package, and Emergency. No noise. No alert fatigue.</p>
+
+            <!-- ENGAGE CARD (FEATURED) -->
+            <div class="subscription-card subscription-card-featured">
+                <span class="recommended-tag">Recommended</span>
+                <span class="subscription-badge">Autonomous Security</span>
+                <h3>Engage</h3>
+                <p class="card-description">AI Enabled</p>
+                <ul class="subscription-features">
+                    <li>Interactive visitor identification</li>
+                    <li>Personalized concierge-level greetings</li>
+                    <li>Smart alerts to minimize nuisance notifications</li>
+                    <li>Real-time face capture and notifications</li>
+                    <li>AI-driven incident summaries</li>
+                    <li>Customizable security settings</li>
+                    <li>Family-friendly access control</li>
+                </ul>
+                <p class="subscription-value"><strong>This activates RADCam's AI.</strong> Real conversations with visitors. Intelligent threat detection. A security system that actually thinks.</p>
             </div>
-            <div class="feature-card">
-                <div class="feature-icon">
-                    <svg viewBox="0 0 24 24"><polygon points="1 6 1 22 8 18 16 22 23 18 23 2 16 6 8 2 1 6"/><line x1="8" y1="2" x2="8" y2="18"/><line x1="16" y1="6" x2="16" y2="22"/></svg>
-                </div>
-                <h3>Detection Zones</h3>
-                <p>Draw your own detection zone directly in the app. Focus RADCam's AI exactly where it's needed.</p>
+        </div>
+
+        <!-- SOS ADD-ON BANNER -->
+        <div class="sos-banner">
+            <div class="sos-banner-icon">
+                <svg viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
             </div>
-            <div class="feature-card">
-                <div class="feature-icon">
-                    <svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
-                </div>
-                <h3>7-Day Scheduling</h3>
-                <p>Set RADCam to automatically switch between Concierge, Security, and Quiet modes on a custom weekly schedule.</p>
+            <div class="sos-banner-content">
+                <h3>SOS</h3>
+                <p class="sos-banner-price">$10 Per Month Per Location</p>
+                <p class="sos-banner-description">Enhance your Engage subscription with the SOS add-on. Instant law enforcement dispatch for emergencies, access to local crime statistics, and the assurance that all household RADCam AI agents are always ready to prioritize your safety.</p>
             </div>
-            <div class="feature-card">
-                <div class="feature-icon">
-                    <svg viewBox="0 0 24 24"><polyline points="1 4 1 10 7 10"/><path d="M3.51 15a9 9 0 1 0 .49-3.51"/></svg>
-                </div>
-                <h3>30-Day Event History</h3>
-                <p>Every event, conversation, and alert stored in the cloud for 30 days. Review clips and replay AI conversations any time.</p>
+        </div>
+
+        <!-- PRICING TABLE -->
+        <div class="pricing-container">
+            <div class="section-header" style="margin-bottom: 40px;">
+                <h2 class="section-heading" style="font-size: 36px;">Subscription Plans</h2>
+                <p class="section-subtext" style="font-size: 16px; font-style: italic;">Pre-pay for the year to save 20% on your subscription!</p>
             </div>
-            <div class="feature-card">
-                <div class="feature-icon">
-                    <svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+
+            <div class="pricing-toggle-wrapper">
+                <div>
+                    <button class="pricing-tab active" id="monthly-tab">Monthly Plans</button>
+                    <button class="pricing-tab" id="yearly-tab">Yearly Plans <span class="save-badge">Save 20%</span></button>
                 </div>
-                <h3>Family Sharing</h3>
-                <p>Share camera access with family members so everyone can stay informed and in control.</p>
+            </div>
+
+            <div class="pricing-table">
+                <div class="pricing-row pricing-row-header">
+                    <div class="pricing-cell pricing-cell-header">Plan</div>
+                    <div class="pricing-cell pricing-cell-header" id="pricing-header-monthly">Monthly Price</div>
+                    <div class="pricing-cell pricing-cell-header" id="pricing-header-yearly" style="display: none;">Yearly Price</div>
+                </div>
+                <div class="pricing-row">
+                    <div class="pricing-cell pricing-cell-plan">Engage30</div>
+                    <div class="pricing-cell pricing-cell-price" data-monthly="$5/month per camera" data-yearly="$40/year per camera">$5/month per camera</div>
+                </div>
+                <div class="pricing-row">
+                    <div class="pricing-cell pricing-cell-plan">Engage365</div>
+                    <div class="pricing-cell pricing-cell-price" data-monthly="$10/month per camera" data-yearly="$80/year per camera">$10/month per camera</div>
+                </div>
+                <div class="pricing-row">
+                    <div class="pricing-cell pricing-cell-plan">Add-on: SOS</div>
+                    <div class="pricing-cell pricing-cell-price" data-monthly="+$10/month per location" data-yearly="+$80/year per location">+$10/month per location</div>
+                </div>
+            </div>
+
+            <div class="pricing-note">
+                <strong>Note:</strong> Subscription setup is completed once your RADCam unit is received and activated. The services are activated during the setup process on your mobile phone.
             </div>
         </div>
     </div>
@@ -805,7 +1196,7 @@
                 <div class="setup-step-number">02</div>
                 <span class="setup-step-label">Account</span>
                 <h3>Create Your Account</h3>
-                <p>Sign up with your email. No credit card required &mdash; your subscription activates only after camera setup.</p>
+                <p>Sign up with your email. No credit card required, your subscription activates only after camera setup.</p>
             </div>
             <div class="setup-step">
                 <div class="setup-step-number">03</div>
@@ -897,7 +1288,74 @@
         });
     }, { threshold: 0.08, rootMargin: '0px 0px -40px 0px' });
 
-    document.querySelectorAll('.feature-card, .download-card, .setup-step, .stat-item, .cta-card').forEach(el => {
+    document.querySelectorAll('.feature-card, .download-card, .setup-step, .stat-item, .cta-card, .subscription-card').forEach(el => {
         observer.observe(el);
     });
+
+    // Pricing tab functionality
+    const monthlyTab = document.getElementById('monthly-tab');
+    const yearlyTab = document.getElementById('yearly-tab');
+
+    function updatePricingDisplay(isYearly) {
+        // Get all price cells
+        const priceCells = document.querySelectorAll('.pricing-cell-price');
+        const monthlyHeader = document.getElementById('pricing-header-monthly');
+        const yearlyHeader = document.getElementById('pricing-header-yearly');
+
+        // Fade out
+        priceCells.forEach(cell => cell.style.opacity = '0');
+        if (monthlyHeader) monthlyHeader.style.opacity = '0';
+        if (yearlyHeader) yearlyHeader.style.opacity = '0';
+
+        // Update content after fade out
+        setTimeout(() => {
+            // Update header
+            if (isYearly) {
+                monthlyHeader.style.display = 'none';
+                yearlyHeader.style.display = 'flex';
+            } else {
+                monthlyHeader.style.display = 'flex';
+                yearlyHeader.style.display = 'none';
+            }
+
+            // Update all pricing cells
+            priceCells.forEach(cell => {
+                const monthlyPrice = cell.getAttribute('data-monthly');
+                const yearlyPrice = cell.getAttribute('data-yearly');
+
+                if (monthlyPrice && yearlyPrice) {
+                    cell.textContent = isYearly ? yearlyPrice : monthlyPrice;
+                }
+            });
+
+            // Fade in
+            setTimeout(() => {
+                priceCells.forEach(cell => cell.style.opacity = '1');
+                if (monthlyHeader) monthlyHeader.style.opacity = '1';
+                if (yearlyHeader) yearlyHeader.style.opacity = '1';
+            }, 50);
+        }, 200);
+
+        // Update active tab
+        if (isYearly) {
+            monthlyTab.classList.remove('active');
+            yearlyTab.classList.add('active');
+        } else {
+            monthlyTab.classList.add('active');
+            yearlyTab.classList.remove('active');
+        }
+    }
+
+    if (monthlyTab && yearlyTab) {
+        monthlyTab.addEventListener('click', function() {
+            updatePricingDisplay(false);
+        });
+
+        yearlyTab.addEventListener('click', function() {
+            updatePricingDisplay(true);
+        });
+
+        // Set default active state (monthly)
+        updatePricingDisplay(false);
+    }
 </script>

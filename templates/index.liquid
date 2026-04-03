@@ -965,6 +965,94 @@
     }
 
     /* ===========================
+       SUBSCRIPTION BANNER
+       =========================== */
+    .subscription-banner-section {
+        padding: 60px 0;
+        background: var(--color-white);
+    }
+
+    .subscription-banner {
+        display: flex;
+        align-items: center;
+        gap: 32px;
+        background: var(--color-black);
+        border-radius: 12px;
+        padding: 40px 48px;
+        position: relative;
+        overflow: hidden;
+        text-decoration: none;
+        color: inherit;
+        cursor: pointer;
+    }
+
+    .subscription-banner::before {
+        content: '';
+        position: absolute;
+        inset: 0;
+        background-image:
+            linear-gradient(rgba(255,255,255,0.03) 1px, transparent 1px),
+            linear-gradient(90deg, rgba(255,255,255,0.03) 1px, transparent 1px);
+        background-size: 50px 50px;
+        pointer-events: none;
+    }
+
+    .subscription-banner-icon {
+        flex-shrink: 0;
+        width: 64px;
+        height: 64px;
+        background: rgba(250,204,21,0.15);
+        border: 2px solid var(--color-accent);
+        border-radius: 12px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        position: relative;
+        z-index: 1;
+    }
+
+    .subscription-banner-icon svg {
+        width: 32px;
+        height: 32px;
+        stroke: var(--color-accent);
+        fill: none;
+        stroke-width: 2;
+        stroke-linecap: round;
+        stroke-linejoin: round;
+    }
+
+    .subscription-banner-content {
+        flex: 1;
+        position: relative;
+        z-index: 1;
+    }
+
+    .subscription-banner-content h3 {
+        font-size: 28px;
+        font-weight: 600;
+        color: var(--color-white);
+        margin-bottom: 8px;
+        letter-spacing: -0.02em;
+    }
+
+    .subscription-banner-content h3 .accent {
+        color: var(--color-accent);
+    }
+
+    .subscription-banner-content p {
+        font-size: 15px;
+        line-height: 1.7;
+        color: rgba(255,255,255,0.75);
+        max-width: 900px;
+    }
+
+    .subscription-banner-cta {
+        position: relative;
+        z-index: 1;
+        flex-shrink: 0;
+    }
+
+    /* ===========================
        ANIMATIONS
        =========================== */
     @keyframes fadeUp {
@@ -1005,6 +1093,9 @@
         .hiw-step:last-child { border-bottom: none; }
 
         .pricing-grid { grid-template-columns: 1fr; max-width: 480px; }
+
+        .subscription-banner-section { padding: 48px 0; }
+        .subscription-banner { padding: 32px 36px; gap: 24px; }
     }
 
     @media (max-width: 768px) {
@@ -1017,12 +1108,23 @@
         .features-grid { grid-template-columns: 1fr; }
 
         .testimonials-slide { grid-template-columns: 1fr; }
+
+        .subscription-banner-section { padding: 40px 0; }
+        .subscription-banner { flex-direction: column; text-align: center; padding: 32px 24px; gap: 20px; }
+        .subscription-banner-icon { width: 56px; height: 56px; }
+        .subscription-banner-icon svg { width: 28px; height: 28px; }
+        .subscription-banner-content h3 { font-size: 24px; }
     }
 
     @media (max-width: 480px) {
         .hero h1 { font-size: 32px; }
         .hero-description { font-size: 16px; }
         .final-cta h2 { font-size: 28px; }
+
+        .subscription-banner-section { padding: 32px 0; }
+        .subscription-banner { padding: 24px 20px; }
+        .subscription-banner-content h3 { font-size: 20px; }
+        .subscription-banner-content p { font-size: 14px; }
     }
 </style>
 
@@ -1081,6 +1183,24 @@
                 </div>
             </div>
         </div>
+    </div>
+</section>
+
+<!-- SUBSCRIPTION BANNER -->
+<section class="subscription-banner-section">
+    <div class="container">
+        <a href="/pages/app#subscription-plans" class="subscription-banner">
+            <div class="subscription-banner-icon">
+                <svg viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+            </div>
+            <div class="subscription-banner-content">
+                <h3>Activate the Magic of <span class="accent">Engage</span></h3>
+                <p>RADCam's AI features don't just watch. Engage activates the intelligence that makes it truly different.</p>
+            </div>
+            <div class="subscription-banner-cta">
+                <span class="btn btn-yellow">Learn More</span>
+            </div>
+        </a>
     </div>
 </section>
 
