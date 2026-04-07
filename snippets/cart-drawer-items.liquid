@@ -1,5 +1,5 @@
 {% comment %}
-  Simple cart drawer items list
+  RADCam cart drawer items with quantity controls and remove button
 {% endcomment %}
 
 <style>
@@ -55,37 +55,164 @@
     font-size: 15px;
     font-weight: 600;
     color: #000000;
+    margin-bottom: 12px;
   }
 
-  .cart-drawer-item__quantity {
-    font-size: 13px;
+  .cart-drawer-item__actions {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-top: 8px;
+  }
+
+  /* Quantity Input */
+  .cart-drawer-item .quantity {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    border: 1px solid #d0d7de;
+    border-radius: 6px;
+    padding: 4px;
+    background: #ffffff;
+  }
+
+  .cart-drawer-item .quantity__button {
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 4px 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     color: #57606a;
-    margin-top: 4px;
+    transition: color 0.2s;
+  }
+
+  .cart-drawer-item .quantity__button:hover {
+    color: #000000;
+  }
+
+  .cart-drawer-item .quantity__button svg {
+    width: 12px;
+    height: 12px;
+  }
+
+  .cart-drawer-item .quantity__input {
+    border: none;
+    width: 40px;
+    text-align: center;
+    font-size: 14px;
+    font-weight: 600;
+    color: #000000;
+    -moz-appearance: textfield;
+  }
+
+  .cart-drawer-item .quantity__input::-webkit-outer-spin-button,
+  .cart-drawer-item .quantity__input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+  }
+
+  .cart-drawer-item .quantity__input:focus {
+    outline: none;
+  }
+
+  /* Remove Button */
+  .cart-drawer-item cart-remove-button button {
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 6px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #57606a;
+    transition: color 0.2s;
+  }
+
+  .cart-drawer-item cart-remove-button button:hover {
+    color: #d73a49;
+  }
+
+  .cart-drawer-item cart-remove-button svg {
+    width: 16px;
+    height: 16px;
+  }
+
+  .visually-hidden {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    margin: -1px;
+    padding: 0;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    border: 0;
   }
 </style>
 
-{%- for item in cart.items -%}
-  <div class="cart-drawer-item">
-    {%- if item.image -%}
-      <img class="cart-drawer-item__image" src="{{ item.image | image_url: width: 160 }}" alt="{{ item.title | escape }}">
-    {%- endif -%}
-
-    <div class="cart-drawer-item__details">
-      <div class="cart-drawer-item__title">
-        <a href="{{ item.url }}">{{ item.product.title }}</a>
-      </div>
-
-      {%- if item.variant.title != 'Default Title' -%}
-        <div class="cart-drawer-item__variant">{{ item.variant.title }}</div>
+<cart-drawer-items class="is-empty{% if cart == empty %} is-empty{% endif %}" data-id="{{ section.id }}">
+  {%- for item in cart.items -%}
+    <div class="cart-drawer-item" id="CartDrawer-Item-{{ item.index | plus: 1 }}">
+      {%- if item.image -%}
+        <img class="cart-drawer-item__image" src="{{ item.image | image_url: width: 160 }}" alt="{{ item.title | escape }}" loading="lazy">
       {%- endif -%}
 
-      <div class="cart-drawer-item__price">
-        {{ item.final_line_price | money }}
-      </div>
+      <div class="cart-drawer-item__details">
+        <div class="cart-drawer-item__title">
+          <a href="{{ item.url }}">{{ item.product.title }}</a>
+        </div>
 
-      <div class="cart-drawer-item__quantity">
-        Qty: {{ item.quantity }}
+        {%- if item.variant.title != 'Default Title' -%}
+          <div class="cart-drawer-item__variant">{{ item.variant.title }}</div>
+        {%- endif -%}
+
+        <div class="cart-drawer-item__price">
+          {{ item.final_line_price | money }}
+        </div>
+
+        <div class="cart-drawer-item__actions">
+          <quantity-input class="quantity cart-quantity">
+            <button class="quantity__button no-js-hidden" name="minus" type="button">
+              <span class="visually-hidden">Decrease quantity for {{ item.product.title | escape }}</span>
+              {% render 'icon-minus' %}
+            </button>
+            <input
+              class="quantity__input"
+              type="number"
+              name="updates[]"
+              value="{{ item.quantity }}"
+              {% # theme-check-disable %}
+              data-cart-quantity="{{ cart | item_count_for_variant: item.variant.id }}"
+              min="0"
+              {% if item.variant.quantity_rule.max != null %}
+                max="{{ item.variant.quantity_rule.max }}"
+              {% endif %}
+              step="{{ item.variant.quantity_rule.increment }}"
+              {% # theme-check-enable %}
+              aria-label="Quantity for {{ item.product.title | escape }}"
+              id="Drawer-quantity-{{ item.index | plus: 1 }}"
+              data-index="{{ item.index | plus: 1 }}"
+            >
+            <button class="quantity__button no-js-hidden" name="plus" type="button">
+              <span class="visually-hidden">Increase quantity for {{ item.product.title | escape }}</span>
+              {% render 'icon-plus' %}
+            </button>
+          </quantity-input>
+
+          <cart-remove-button
+            id="CartDrawer-Remove-{{ item.index | plus: 1 }}"
+            data-index="{{ item.index | plus: 1 }}"
+          >
+            <button
+              type="button"
+              aria-label="Remove {{ item.title | escape }}"
+            >
+              {% render 'icon-remove' %}
+            </button>
+          </cart-remove-button>
+        </div>
       </div>
     </div>
-  </div>
-{%- endfor -%}
+  {%- endfor -%}
+</cart-drawer-items>
