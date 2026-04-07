@@ -88,8 +88,13 @@
     transition: color 0.2s;
   }
 
-  .cart-drawer-item .quantity__button:hover {
+  .cart-drawer-item .quantity__button:hover:not(:disabled) {
     color: #000000;
+  }
+
+  .cart-drawer-item .quantity__button:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
   }
 
   .cart-drawer-item .quantity__button svg {
@@ -105,6 +110,7 @@
     font-weight: 600;
     color: #000000;
     -moz-appearance: textfield;
+    pointer-events: none;
   }
 
   .cart-drawer-item .quantity__input::-webkit-outer-spin-button,
@@ -118,7 +124,7 @@
   }
 
   /* Remove Button */
-  .cart-drawer-item cart-remove-button button {
+  .cart-drawer-item .remove-button {
     background: none;
     border: none;
     cursor: pointer;
@@ -130,11 +136,16 @@
     transition: color 0.2s;
   }
 
-  .cart-drawer-item cart-remove-button button:hover {
+  .cart-drawer-item .remove-button:hover:not(:disabled) {
     color: #d73a49;
   }
 
-  .cart-drawer-item cart-remove-button svg {
+  .cart-drawer-item .remove-button:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+
+  .cart-drawer-item .remove-button svg {
     width: 16px;
     height: 16px;
   }
@@ -151,68 +162,127 @@
   }
 </style>
 
-<cart-drawer-items class="is-empty{% if cart == empty %} is-empty{% endif %}" data-id="{{ section.id }}">
-  {%- for item in cart.items -%}
-    <div class="cart-drawer-item" id="CartDrawer-Item-{{ item.index | plus: 1 }}">
-      {%- if item.image -%}
-        <img class="cart-drawer-item__image" src="{{ item.image | image_url: width: 160 }}" alt="{{ item.title | escape }}" loading="lazy">
+{%- for item in cart.items -%}
+  <div class="cart-drawer-item" id="cart-item-{{ item.key }}">
+    {%- if item.image -%}
+      <img class="cart-drawer-item__image" src="{{ item.image | image_url: width: 160 }}" alt="{{ item.title | escape }}" loading="lazy">
+    {%- endif -%}
+
+    <div class="cart-drawer-item__details">
+      <div class="cart-drawer-item__title">
+        <a href="{{ item.url }}">{{ item.product.title }}</a>
+      </div>
+
+      {%- if item.variant.title != 'Default Title' -%}
+        <div class="cart-drawer-item__variant">{{ item.variant.title }}</div>
       {%- endif -%}
 
-      <div class="cart-drawer-item__details">
-        <div class="cart-drawer-item__title">
-          <a href="{{ item.url }}">{{ item.product.title }}</a>
-        </div>
+      <div class="cart-drawer-item__price">
+        {{ item.final_line_price | money }}
+      </div>
 
-        {%- if item.variant.title != 'Default Title' -%}
-          <div class="cart-drawer-item__variant">{{ item.variant.title }}</div>
-        {%- endif -%}
-
-        <div class="cart-drawer-item__price">
-          {{ item.final_line_price | money }}
-        </div>
-
-        <div class="cart-drawer-item__actions">
-          <quantity-input class="quantity cart-quantity">
-            <button class="quantity__button no-js-hidden" name="minus" type="button">
-              <span class="visually-hidden">Decrease quantity for {{ item.product.title | escape }}</span>
-              {% render 'icon-minus' %}
-            </button>
-            <input
-              class="quantity__input"
-              type="number"
-              name="updates[]"
-              value="{{ item.quantity }}"
-              {% # theme-check-disable %}
-              data-cart-quantity="{{ cart | item_count_for_variant: item.variant.id }}"
-              min="0"
-              {% if item.variant.quantity_rule.max != null %}
-                max="{{ item.variant.quantity_rule.max }}"
-              {% endif %}
-              step="{{ item.variant.quantity_rule.increment }}"
-              {% # theme-check-enable %}
-              aria-label="Quantity for {{ item.product.title | escape }}"
-              id="Drawer-quantity-{{ item.index | plus: 1 }}"
-              data-index="{{ item.index | plus: 1 }}"
-            >
-            <button class="quantity__button no-js-hidden" name="plus" type="button">
-              <span class="visually-hidden">Increase quantity for {{ item.product.title | escape }}</span>
-              {% render 'icon-plus' %}
-            </button>
-          </quantity-input>
-
-          <cart-remove-button
-            id="CartDrawer-Remove-{{ item.index | plus: 1 }}"
-            data-index="{{ item.index | plus: 1 }}"
+      <div class="cart-drawer-item__actions">
+        <div class="quantity">
+          <button
+            class="quantity__button"
+            type="button"
+            onclick="updateCartQuantity('{{ item.key }}', {{ item.quantity | minus: 1 }})"
+            {% if item.quantity <= 1 %}disabled{% endif %}
+            aria-label="Decrease quantity"
           >
-            <button
-              type="button"
-              aria-label="Remove {{ item.title | escape }}"
-            >
-              {% render 'icon-remove' %}
-            </button>
-          </cart-remove-button>
+            <span class="visually-hidden">Decrease quantity for {{ item.product.title | escape }}</span>
+            {% render 'icon-minus' %}
+          </button>
+          <input
+            class="quantity__input"
+            type="number"
+            value="{{ item.quantity }}"
+            min="0"
+            readonly
+            aria-label="Quantity for {{ item.product.title | escape }}"
+          >
+          <button
+            class="quantity__button"
+            type="button"
+            onclick="updateCartQuantity('{{ item.key }}', {{ item.quantity | plus: 1 }})"
+            aria-label="Increase quantity"
+          >
+            <span class="visually-hidden">Increase quantity for {{ item.product.title | escape }}</span>
+            {% render 'icon-plus' %}
+          </button>
         </div>
+
+        <button
+          class="remove-button"
+          type="button"
+          onclick="removeCartItem('{{ item.key }}')"
+          aria-label="Remove {{ item.title | escape }}"
+        >
+          {% render 'icon-remove' %}
+        </button>
       </div>
     </div>
-  {%- endfor -%}
-</cart-drawer-items>
+  </div>
+{%- endfor -%}
+
+<script>
+  // Update cart item quantity
+  window.updateCartQuantity = function(key, quantity) {
+    if (quantity < 1) return; // Don't allow quantity less than 1
+
+    // Disable all buttons while updating
+    document.querySelectorAll('.cart-drawer-item button').forEach(btn => btn.disabled = true);
+
+    fetch('/cart/change.js', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        id: key,
+        quantity: quantity
+      })
+    })
+    .then(response => response.json())
+    .then(data => {
+      // Refresh the cart drawer
+      if (window.updateRadcamCartDrawer) {
+        window.updateRadcamCartDrawer();
+      }
+    })
+    .catch(error => {
+      console.error('Error updating cart:', error);
+      // Re-enable buttons on error
+      document.querySelectorAll('.cart-drawer-item button').forEach(btn => btn.disabled = false);
+    });
+  }
+
+  // Remove cart item
+  window.removeCartItem = function(key) {
+    // Disable all buttons while updating
+    document.querySelectorAll('.cart-drawer-item button').forEach(btn => btn.disabled = true);
+
+    fetch('/cart/change.js', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        id: key,
+        quantity: 0
+      })
+    })
+    .then(response => response.json())
+    .then(data => {
+      // Refresh the cart drawer
+      if (window.updateRadcamCartDrawer) {
+        window.updateRadcamCartDrawer();
+      }
+    })
+    .catch(error => {
+      console.error('Error removing item:', error);
+      // Re-enable buttons on error
+      document.querySelectorAll('.cart-drawer-item button').forEach(btn => btn.disabled = false);
+    });
+  }
+</script>
