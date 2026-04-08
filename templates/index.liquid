@@ -274,40 +274,57 @@
         box-shadow: 0 40px 100px rgba(0,0,0,0.6), 0 0 0 1px rgba(255,255,255,0.06);
     }
 
-    .hero-product-badge {
+    .hero-video-controls {
         position: absolute;
-        bottom: 24px;
-        left: 24px;
-        right: 24px;
-        background: rgba(0,0,0,0.85);
-        backdrop-filter: blur(12px);
-        border: 1px solid rgba(255,255,255,0.1);
-        border-radius: 10px;
-        padding: 16px 20px;
+        bottom: 20px;
+        right: 20px;
+        display: flex;
+        gap: 12px;
         z-index: 2;
+    }
+
+    .hero-video-btn {
+        background: rgba(0,0,0,0.6);
+        backdrop-filter: blur(8px);
+        border: 1px solid rgba(255,255,255,0.2);
+        border-radius: 8px;
+        padding: 12px;
+        color: white;
+        cursor: pointer;
+        transition: all 0.2s;
         display: flex;
         align-items: center;
-        justify-content: space-between;
+        justify-content: center;
+        width: 44px;
+        height: 44px;
     }
 
-    .hero-product-badge-text {
-        font-size: 14px;
-        font-weight: 600;
-        color: var(--color-white);
+    .hero-video-btn:hover {
+        background: rgba(0,0,0,0.8);
+        border-color: rgba(255,255,255,0.4);
+        transform: scale(1.05);
     }
 
-    .hero-product-badge-sub {
-        font-size: 12px;
-        color: rgba(255,255,255,0.5);
-        margin-top: 2px;
+    .hero-video-btn svg {
+        width: 20px;
+        height: 20px;
+        stroke: currentColor;
+        fill: none;
+        stroke-width: 2;
+        stroke-linecap: round;
+        stroke-linejoin: round;
     }
 
-    .hero-product-badge-price {
-        font-family: 'Inter Tight', sans-serif;
-        font-size: 22px;
-        font-weight: 600;
-        color: var(--color-accent);
-        letter-spacing: -0.02em;
+    .hero-video-btn .icon-unmuted {
+        display: none;
+    }
+
+    .hero-video-btn.unmuted .icon-muted {
+        display: none;
+    }
+
+    .hero-video-btn.unmuted .icon-unmuted {
+        display: block;
     }
 
     /* ===========================
@@ -1170,15 +1187,27 @@
             <div class="hero-visual">
                 <div class="hero-product-wrap">
                     <div class="hero-product-glow"></div>
-                    <video class="hero-product-img" autoplay muted loop playsinline>
+                    <video class="hero-product-img" autoplay muted loop playsinline id="heroVideo">
                         <source src="https://cdn.shopify.com/videos/c/o/v/e82559dd23394f8492704147aff63904.mp4" type="video/mp4">
                     </video>
-                    <div class="hero-product-badge">
-                        <div>
-                            <div class="hero-product-badge-text">{{ radcam_product.title }}</div>
-                            <div class="hero-product-badge-sub">Free shipping · {% if radcam_product.available %}In stock{% else %}Pre-order{% endif %}</div>
-                        </div>
-                        <div class="hero-product-badge-price">{{ radcam_variant.price | money }}</div>
+                    <div class="hero-video-controls">
+                        <button class="hero-video-btn" id="muteBtn" aria-label="Unmute video">
+                            <svg class="icon-muted" viewBox="0 0 24 24">
+                                <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/>
+                                <line x1="23" y1="9" x2="17" y2="15"/>
+                                <line x1="17" y1="9" x2="23" y2="15"/>
+                            </svg>
+                            <svg class="icon-unmuted" viewBox="0 0 24 24">
+                                <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/>
+                                <path d="M15.54 8.46a5 5 0 0 1 0 7.07"/>
+                                <path d="M19.07 4.93a10 10 0 0 1 0 14.14"/>
+                            </svg>
+                        </button>
+                        <button class="hero-video-btn" id="fullscreenBtn" aria-label="Fullscreen">
+                            <svg viewBox="0 0 24 24">
+                                <path d="M8 3H5a2 2 0 0 0-2 2v3m18 0V5a2 2 0 0 0-2-2h-3m0 18h3a2 2 0 0 0 2-2v-3M3 16v3a2 2 0 0 0 2 2h3"/>
+                            </svg>
+                        </button>
                     </div>
                 </div>
             </div>
@@ -1621,6 +1650,34 @@ No noise. Just action.</p>
 </section>
 
 <script>
+    // Hero video controls
+    (function() {
+        const video = document.getElementById('heroVideo');
+        const muteBtn = document.getElementById('muteBtn');
+        const fullscreenBtn = document.getElementById('fullscreenBtn');
+
+        if (video && muteBtn && fullscreenBtn) {
+            // Toggle mute
+            muteBtn.addEventListener('click', function() {
+                video.muted = !video.muted;
+                this.classList.toggle('unmuted');
+            });
+
+            // Fullscreen
+            fullscreenBtn.addEventListener('click', function() {
+                if (video.requestFullscreen) {
+                    video.requestFullscreen();
+                } else if (video.webkitRequestFullscreen) {
+                    video.webkitRequestFullscreen();
+                } else if (video.mozRequestFullScreen) {
+                    video.mozRequestFullScreen();
+                } else if (video.msRequestFullscreen) {
+                    video.msRequestFullscreen();
+                }
+            });
+        }
+    })();
+
     // Product image swap
     function swapShowcase(thumb, src) {
         document.getElementById('mainShowcaseImg').src = src;
