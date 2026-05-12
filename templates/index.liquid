@@ -210,6 +210,33 @@
         max-width: 520px;
     }
 
+    .hero-alexa-badge {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 10px;
+        background: linear-gradient(135deg, rgba(0,170,255,0.12) 0%, rgba(0,120,220,0.08) 100%);
+        border: 1.5px solid transparent;
+        border-radius: 100px;
+        padding: 10px 20px;
+        font-size: 14px;
+        color: rgba(255,255,255,0.9);
+        text-decoration: none;
+        margin-bottom: 24px;
+        transition: box-shadow 0.25s, background 0.25s;
+        width: fit-content;
+        min-width: 340px;
+        outline: 1.5px solid rgba(0,180,255,0.55);
+        box-shadow: 0 0 12px rgba(0,170,255,0.25), inset 0 0 12px rgba(0,170,255,0.06);
+    }
+    .hero-alexa-badge:hover {
+        background: linear-gradient(135deg, rgba(0,170,255,0.2) 0%, rgba(0,120,220,0.14) 100%);
+        outline-color: rgba(0,200,255,0.8);
+        box-shadow: 0 0 22px rgba(0,180,255,0.45), inset 0 0 16px rgba(0,170,255,0.1);
+        color: #fff;
+        text-decoration: none;
+    }
+
     .hero-buttons {
         display: flex;
         gap: 14px;
@@ -982,6 +1009,103 @@
     }
 
     /* ===========================
+       RETAILERS SECTION
+       =========================== */
+    .retailers-section {
+        background: var(--color-white);
+        padding: 80px 0;
+    }
+
+    .retailers-grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 32px;
+        max-width: 1100px;
+        margin: 0 auto;
+    }
+
+    .retailer-card {
+        background: var(--color-white);
+        border: 2px solid var(--color-border-default);
+        border-radius: 12px;
+        padding: 48px 40px;
+        text-align: center;
+        transition: transform 0.3s cubic-bezier(0.4,0,0.2,1),
+                    box-shadow 0.3s cubic-bezier(0.4,0,0.2,1),
+                    border-color 0.3s cubic-bezier(0.4,0,0.2,1);
+        text-decoration: none;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 24px;
+    }
+
+    .retailer-card.amazon {
+        border-color: #FF9900;
+    }
+
+    .retailer-card.walmart {
+        border-color: #0071CE;
+    }
+
+    .retailer-card.hammacher {
+        border-color: #1a7a5e;
+    }
+
+    .retailer-card:hover {
+        transform: translateY(-4px);
+        box-shadow: var(--shadow-md);
+    }
+
+    .retailer-card.amazon:hover {
+        box-shadow: 0 14px 28px rgba(255, 153, 0, 0.25), 0 10px 10px rgba(255, 153, 0, 0.15);
+    }
+
+    .retailer-card.walmart:hover {
+        box-shadow: 0 14px 28px rgba(0, 113, 206, 0.25), 0 10px 10px rgba(0, 113, 206, 0.15);
+    }
+
+    .retailer-card.hammacher:hover {
+        box-shadow: 0 14px 28px rgba(26, 122, 94, 0.25), 0 10px 10px rgba(26, 122, 94, 0.15);
+    }
+
+    .retailer-logo {
+        height: 120px;
+        width: auto;
+        max-width: 300px;
+        object-fit: contain;
+        transition: transform 0.3s;
+    }
+
+    .retailer-card:hover .retailer-logo {
+        transform: scale(1.05);
+    }
+
+    .retailer-cta {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        color: var(--color-fg-muted);
+        font-size: 15px;
+        font-weight: 600;
+        transition: color 0.2s;
+    }
+
+    .retailer-card:hover .retailer-cta {
+        color: var(--color-fg-default);
+    }
+
+    .retailer-cta svg {
+        width: 16px;
+        height: 16px;
+        stroke: currentColor;
+        fill: none;
+        stroke-width: 2;
+        stroke-linecap: round;
+        stroke-linejoin: round;
+    }
+
+    /* ===========================
        SUBSCRIPTION BANNER
        =========================== */
     .subscription-banner-section {
@@ -1100,9 +1224,24 @@
 
         .features-grid { grid-template-columns: 1fr; }
 
+        .retailers-grid { grid-template-columns: 1fr; max-width: 480px; margin: 0 auto; }
+
         .showcase-grid {
             grid-template-columns: 1fr;
             gap: 48px;
+        }
+
+        .alexa-grid {
+            grid-template-columns: 1fr !important;
+            gap: 48px !important;
+        }
+
+        .alexa-content h2 {
+            font-size: 32px !important;
+        }
+
+        .alexa-content p {
+            font-size: 16px !important;
         }
 
         .hiw-steps { grid-template-columns: 1fr; }
@@ -1155,7 +1294,7 @@
 
 <!-- HERO -->
 <section class="hero">
-    <img src="https://radcam.ai/cdn/shop/files/13_RADCam_Exterior_Garage.jpg?v=1741641305" alt="" class="hero-bg-image">
+    <img src="{{ 'radcam-home.png' | asset_url }}" alt="" class="hero-bg-image">
     <div class="container">
         <div class="hero-content">
             <div class="hero-text">
@@ -1164,7 +1303,11 @@
                     World's First AI Talking Camera
                 </div>
                 <h1>Protection That Speaks When You Can’t.</h1>
-                <p class="hero-description">RADCam uses AI-driven detection and automated voice response to screen visitors, deter suspicious activity, and act on your behalf when attention is needed.</p>
+                <p class="hero-description">RADCam uses AI-driven detection and automated voice response to deter suspicious activity and act on your behalf when attention is needed.</p>
+                <a href="#alexa" class="hero-alexa-badge">
+                    <img src="{{ 'Amazon_Alexa_Logo_2024.svg.png' | asset_url }}" alt="Amazon Alexa" style="height: 20px; filter: brightness(0) invert(1);">
+                    Now integrated with Amazon Alexa
+                </a>
                 <div class="hero-buttons">
                     <a href="{{ radcam_product.url }}" class="btn btn-yellow btn-xl">Shop RADCam</a>
                     <a href="/pages/about" class="btn btn-outline-white btn-xl">Learn More</a>
@@ -1188,7 +1331,7 @@
                 <div class="hero-product-wrap">
                     <div class="hero-product-glow"></div>
                     <video class="hero-product-img" autoplay muted loop playsinline id="heroVideo">
-                        <source src="https://cdn.shopify.com/videos/c/o/v/e82559dd23394f8492704147aff63904.mp4" type="video/mp4">
+                        <source src="{{ 'radcam.webm' | asset_url }}" type="video/webm">
                     </video>
                     <div class="hero-video-controls">
                         <button class="hero-video-btn" id="muteBtn" aria-label="Unmute video">
@@ -1250,25 +1393,11 @@
                 </div>
             </div>
             <div class="feature-card">
-                <img class="feature-card-img" src="https://aitxwebportal.blob.core.windows.net/rad/radcam/poarch-pirates.webp" alt="RADCam detecting porch pirate">
-                <div class="feature-card-body">
-                    <h3>Stop Porch Pirates</h3>
-                    <p>RADCam watches your deliveries. The moment someone approaches a package without authorization, it questions their intentions out loud before they can grab it and run.</p>
-                </div>
-            </div>
-            <div class="feature-card">
                 <img class="feature-card-img" src="https://aitxwebportal.blob.core.windows.net/rad/radcam/talks-back.webp" alt="RADCam talking to intruder at door">
                 <div class="feature-card-body">
                     <h3>RADCam Acts. You’re Notified.</h3>
                     <p>RADCam speaks immediately, greeting, questioning, or warning depending on the situation. You get alerted when attention is needed, without the constant stream of unnecessary notifications.
 No noise. Just action.</p>
-                </div>
-            </div>
-            <div class="feature-card">
-                <img class="feature-card-img" src="https://aitxwebportal.blob.core.windows.net/rad/radcam/smart-visitor.webp" alt="RADCam greeting delivery driver">
-                <div class="feature-card-body">
-                    <h3>Smart Visitor Greetings</h3>
-                    <p>Delivery drivers and expected visitors get a friendly, professional greeting. RADCam knows the difference between a welcome guest and an unwelcome one, and responds accordingly.</p>
                 </div>
             </div>
         </div>
@@ -1307,7 +1436,7 @@ No noise. Just action.</p>
                         </div>
                         <div class="spec-text">
                             <strong>Two-Way Audio with Active Deterrence</strong>
-                            <span>Speaks to visitors, warns intruders, and escalates when needed</span>
+                            <span>Warns intruders and escalates when needed</span>
                         </div>
                     </li>
                     <li class="spec-item">
@@ -1316,7 +1445,7 @@ No noise. Just action.</p>
                         </div>
                         <div class="spec-text">
                             <strong>Smart Alert Filtering</strong>
-                            <span>Only 4 alert types: visitor, security, package, and emergency</span>
+                            <span>Two alert types: Quiet and Security</span>
                         </div>
                     </li>
                     <li class="spec-item">
@@ -1348,6 +1477,28 @@ No noise. Just action.</p>
                     </li>
                 </ul>
                 <a href="{{ radcam_product.url }}" class="btn btn-yellow btn-lg">Get RADCam</a>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ALEXA INTEGRATION -->
+<section class="section alexa-section" id="alexa" style="background: var(--color-canvas-subtle);">
+    <div class="container">
+        <div class="alexa-grid" style="display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: center;">
+            <div class="alexa-content">
+                <span class="section-label section-label-yellow">Voice Control</span>
+                <h2 style="font-size: 42px; font-weight: 600; margin: 16px 0 24px 0; line-height: 1.1;">Now Works with Alexa</h2>
+                <p style="font-size: 18px; line-height: 1.7; color: var(--color-fg-muted); margin-bottom: 20px;">
+                    Control your RADCam with simple voice commands through Amazon Alexa. Check your camera feed, receive alerts, and manage your home security hands-free.
+                </p>
+                <p style="font-size: 18px; line-height: 1.7; color: var(--color-fg-muted); margin-bottom: 32px;">
+                    "Alexa, show me the front door camera." It's that easy.
+                </p>
+                <a href="https://aitx.ai/press-releases/compatibility-between-alexa-and-radcam-adding-unique-agentic-ai-powered-awareness" class="btn btn-yellow btn-lg">Explore Further</a>
+            </div>
+            <div class="alexa-visual">
+                <img src="{{ 'alexa-2.jpg' | asset_url }}" alt="RADCam works with Amazon Alexa" style="border-radius: 12px; box-shadow: var(--shadow-lg); width: 100%; max-width: 500px; margin: 0 auto;">
             </div>
         </div>
     </div>
@@ -1531,7 +1682,7 @@ No noise. Just action.</p>
                             <svg class="star" viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
                             <svg class="star" viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
                         </div>
-                        <p class="testimonial-quote">"Finally something better than Ring! It can actually tell if someone is stealing your packages or just deciphering what is a human or an animal. No more 10,000 notifications."</p>
+                        <p class="testimonial-quote">"Finally, something better than a standard camera. I love the peace of mind knowing that if a threat doesn't back down, the system can automatically trigger an SOS and call for help. I don't get the thousands of useless notifications I used to get with my old setup."</p>
                         <div class="testimonial-author">
                             <div class="testimonial-avatar">F</div>
                             <div>
@@ -1548,7 +1699,7 @@ No noise. Just action.</p>
                             <svg class="star" viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
                             <svg class="star" viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
                         </div>
-                        <p class="testimonial-quote">"I love that AI is used to engage a visitor or intruder and the ability to automatically escalate to calling the police if necessary. Can't wait to get it!"</p>
+                        <p class="testimonial-quote">"I love that AI is used to engage the intruder and the ability to automatically escalate to calling the police if necessary. Can't wait to get it!"</p>
                         <div class="testimonial-author">
                             <div class="testimonial-avatar">T</div>
                             <div>
@@ -1564,6 +1715,40 @@ No noise. Just action.</p>
 
         <!-- Dot notch navigation -->
         <div class="testimonials-dots" id="testimonialsDots"></div>
+    </div>
+</section>
+
+<!-- AVAILABLE AT RETAILERS -->
+<section class="retailers-section">
+    <div class="container">
+        <div class="section-header">
+            <span class="section-label section-label-yellow">Where to Buy</span>
+            <h2 class="section-heading">Available at Trusted Retailers</h2>
+            <p class="section-subtext">Get RADCam from the retailers you already know and trust.</p>
+        </div>
+        <div class="retailers-grid">
+            <a href="https://www.amazon.com/RADCam-Security-Monitoring-Voice-Activated-Detection/dp/B0DRZ4PS9D" target="_blank" rel="noopener noreferrer" class="retailer-card amazon">
+                <img src="{{ 'aws-logo.webp' | asset_url }}" alt="Amazon" class="retailer-logo">
+                <span class="retailer-cta">
+                    Shop on Amazon
+                    <svg viewBox="0 0 24 24"><line x1="7" y1="17" x2="17" y2="7"/><polyline points="7 7 17 7 17 17"/></svg>
+                </span>
+            </a>
+            <a href="https://www.walmart.com/ip/RADCam-the-World-s-First-Talking-Security-Camera-with-Two-Way-Audio-White-1/12902906027" target="_blank" rel="noopener noreferrer" class="retailer-card walmart">
+                <img src="{{ 'new-Walmart-logo-02 (1).webp' | asset_url }}" alt="Walmart" class="retailer-logo">
+                <span class="retailer-cta">
+                    Shop on Walmart
+                    <svg viewBox="0 0 24 24"><line x1="7" y1="17" x2="17" y2="7"/><polyline points="7 7 17 7 17 17"/></svg>
+                </span>
+            </a>
+            <a href="https://hammacher.com/deals/the-world-s-first-talking-ai-home-camera-system" target="_blank" rel="noopener noreferrer" class="retailer-card hammacher">
+                <img src="{{ 'Hammacher_Schlemmer_Logo.jpg' | asset_url }}" alt="Hammacher Schlemmer" class="retailer-logo">
+                <span class="retailer-cta">
+                    Shop on Hammacher Schlemmer
+                    <svg viewBox="0 0 24 24"><line x1="7" y1="17" x2="17" y2="7"/><polyline points="7 7 17 7 17 17"/></svg>
+                </span>
+            </a>
+        </div>
     </div>
 </section>
 
@@ -1583,7 +1768,7 @@ No noise. Just action.</p>
                 </button>
                 <div class="faq-answer" style="max-height: 500px;">
                     <div class="faq-answer-inner">
-                        RADCam uses AITX's AIR™ (Autonomous Intelligent Response) technology to engage in real-time, contextual conversations. It's not scripted. The AI understands what it's seeing (a delivery, a visitor, suspicious activity) and responds accordingly. It can welcome visitors, question suspicious individuals, warn intruders, and monitor packages, all autonomously and in real time.
+                        RADCam uses AIR™ (Autonomous Intelligent Response) technology to engage in real-time, contextual conversations. It is not scripted; the AI understands what it is seeing in the moment—whether it's a delivery, a visitor, or suspicious activity—and responds accordingly. Additionally, when set to Security Mode, it can question suspicious individuals and warn intruders.
                     </div>
                 </div>
             </div>
@@ -1594,7 +1779,7 @@ No noise. Just action.</p>
                 </button>
                 <div class="faq-answer">
                     <div class="faq-answer-inner">
-                        RADCam filters out nuisance notifications and only sends you four types of meaningful alerts: <strong>Visitor Alerts</strong> (someone at your door who wants to speak with you or needs a signature), <strong>Security Alerts</strong> (suspicious behavior or someone who refused to leave after being warned), <strong>Package Alerts</strong> (delivery confirmed or package removed), and <strong>Emergency Alerts</strong> (SOS triggered or situation escalated to law enforcement).
+                        RADCam filters out nuisance notifications and only sends you two types of meaningful alerts: <strong>Security Alerts</strong> (suspicious behavior or someone who refused to leave after being warned) and <strong>Emergency Alerts</strong> (SOS triggered or situation escalated to law enforcement).
                     </div>
                 </div>
             </div>
